@@ -29,7 +29,7 @@ const Profile = () => {
             alt="Profile"
             className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
           />
-          <button className="absolute bottom-0 right-0 bg-[#7553ff] text-white p-2 rounded-full hover:bg-[#4e2a9a] transition-colors">
+          <button className="absolute bottom-0 right-0 bg-[#382c5c] text-white p-2 rounded-full hover:bg-[#2a1f45] transition-colors">
             <Edit3 className="w-4 h-4" />
           </button>
         </div>
@@ -46,18 +46,18 @@ const Profile = () => {
               type="text"
               value={profileData.name}
               onChange={(e) => setProfileData({...profileData, name: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7553ff]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c]"
             />
             <input
               type="email"
               value={profileData.email}
               onChange={(e) => setProfileData({...profileData, email: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7553ff]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c]"
             />
             <textarea
               value={profileData.bio}
               onChange={(e) => setProfileData({...profileData, bio: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7553ff] resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c] resize-none"
               rows="2"
             />
           </div>
@@ -68,7 +68,7 @@ const Profile = () => {
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="w-full bg-[#7553ff] text-white py-2 px-4 rounded-lg hover:bg-[#4e2a9a] transition-colors flex items-center justify-center space-x-2"
+            className="w-full bg-[#382c5c] text-white py-2 px-4 rounded-lg hover:bg-[#2a1f45] transition-colors flex items-center justify-center space-x-2"
           >
             <Edit3 className="w-4 h-4" />
             <span>Edit Profile</span>
@@ -77,7 +77,7 @@ const Profile = () => {
           <div className="flex space-x-2">
             <button
               onClick={handleSave}
-              className="flex-1 bg-[#7553ff] text-white py-2 px-4 rounded-lg hover:bg-[#4e2a9a] transition-colors"
+              className="flex-1 bg-[#382c5c] text-white py-2 px-4 rounded-lg hover:bg-[#2a1f45] transition-colors"
             >
               Save
             </button>

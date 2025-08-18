@@ -5,11 +5,11 @@ const FoodPlaceList = ({ foodPlaces, onDelete }) => {
   if (foodPlaces.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="w-28 h-28 bg-gradient-to-br from-[#7553ff] to-[#4e2a9a] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+        <div className="w-28 h-28 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
           <span className="text-5xl">🍽️</span>
         </div>
         <h3 className="text-2xl font-semibold text-[#181225] mb-3 font-rubik">No Food Places Yet</h3>
-        <p className="text-[#6e47ae] font-rubik">Start adding your favorite restaurants to see them here!</p>
+        <p className="text-[#382c5c] font-rubik">Start adding your favorite restaurants to see them here!</p>
       </div>
     )
   }
@@ -36,11 +36,11 @@ const FoodPlaceCard = ({ place, onDelete }) => {
     if (activeOptions.length === 0) return null
 
     const dietaryColors = {
-      glutenFree: 'bg-[#92dd00] text-[#181225]',
-      vegan: 'bg-[#ff45a8] text-white',
-      vegetarian: 'bg-[#fdb81b] text-[#181225]',
-      dairyFree: 'bg-[#226dfc] text-white',
-      nutFree: 'bg-[#a737b4] text-white'
+      glutenFree: 'bg-[#fdb81b] text-white',
+      vegan: 'bg-[#ff70bc] text-white',
+      vegetarian: 'bg-[#ee8019] text-white',
+      dairyFree: 'bg-[#6e47ae] text-white',
+      nutFree: 'bg-[#4d0a55] text-white'
     }
 
     return (
@@ -78,7 +78,7 @@ const FoodPlaceCard = ({ place, onDelete }) => {
             {emoji}
           </span>
         ))}
-        <span className="text-sm text-[#6e47ae] ml-2 font-rubik">
+        <span className="text-sm text-[#382c5c] ml-2 font-rubik">
           ({rating}/5 {isSweetPlace(type) ? 'sweet potatoes' : 'potatoes'})
         </span>
       </div>
@@ -87,36 +87,36 @@ const FoodPlaceCard = ({ place, onDelete }) => {
 
   const getPriceColor = (price) => {
     const priceColors = {
-      '$': 'text-[#92dd00]',
-      '$$': 'text-[#fdb81b]',
-      '$$$': 'text-[#ff9838]',
-      '$$$$': 'text-[#ff45a8]'
+      '$': 'text-[#fdb81b]',
+      '$$': 'text-[#ee8019]',
+      '$$$': 'text-[#6e47ae]',
+      '$$$$': 'text-[#4d0a55]'
     }
-    return priceColors[price] || 'text-[#7553ff]'
+    return priceColors[price] || 'text-[#382c5c]'
   }
 
   const getCuisineColor = () => {
-    const colors = ['bg-[#7553ff]', 'bg-[#4e2a9a]', 'bg-[#a737b4]', 'bg-[#6e47ae]', 'bg-[#36166b]']
+    const colors = ['bg-[#382c5c]', 'bg-[#6e47ae]', 'bg-[#a737b4]', 'bg-[#4d0a55]', 'bg-[#36166b]']
     return colors[Math.floor(Math.random() * colors.length)]
   }
 
   const getTypeColor = (type) => {
     const typeColors = {
-      'Restaurant': 'bg-[#7553ff]',
-      'Cafe': 'bg-[#ff45a8]',
-      'Bar': 'bg-[#4e2a9a]',
+      'Restaurant': 'bg-[#382c5c]',
+      'Cafe': 'bg-[#ff70bc]',
+      'Bar': 'bg-[#36166b]',
       'Ice Cream Shop': 'bg-[#ff70bc]',
       'Boba Shop': 'bg-[#a737b4]',
       'Bakery': 'bg-[#fdb81b]',
-      'Food Truck': 'bg-[#92dd00]',
-      'Food Court': 'bg-[#226dfc]',
-      'Diner': 'bg-[#ff9838]',
-      'Pizzeria': 'bg-[#ff45a8]',
-      'Sushi Bar': 'bg-[#3edcff]',
-      'Steakhouse': 'bg-[#36166b]',
-      'Other': 'bg-[#6e47ae]'
+      'Food Truck': 'bg-[#ee8019]',
+      'Food Court': 'bg-[#6e47ae]',
+      'Diner': 'bg-[#ee8019]',
+      'Pizzeria': 'bg-[#ff70bc]',
+      'Sushi Bar': 'bg-[#6e47ae]',
+      'Steakhouse': 'bg-[#4d0a55]',
+      'Other': 'bg-[#382c5c]'
     }
-    return typeColors[type] || 'bg-[#6e47ae]'
+    return typeColors[type] || 'bg-[#382c5c]'
   }
 
   return (
@@ -125,8 +125,8 @@ const FoodPlaceCard = ({ place, onDelete }) => {
         <div className="flex-1">
           <h3 className="text-2xl font-bold text-[#181225] mb-3 font-rubik">{place.name}</h3>
           
-          <div className="flex items-center text-[#6e47ae] mb-4">
-            <MapPin className="w-5 h-5 mr-2 flex-shrink-0 text-[#7553ff]" />
+          <div className="flex items-center text-[#382c5c] mb-4">
+            <MapPin className="w-5 h-5 mr-2 flex-shrink-0 text-[#382c5c]" />
             <span className="text-sm font-rubik">{place.address}</span>
           </div>
           
@@ -150,12 +150,12 @@ const FoodPlaceCard = ({ place, onDelete }) => {
           
           {/* Comment Section */}
           {place.comment && (
-            <div className="mb-4 p-4 bg-gradient-to-r from-[#f6f6f8] to-white rounded-lg border-l-4 border-[#7553ff]">
+            <div className="mb-4 p-4 bg-gradient-to-r from-[#f6f6f8] to-white rounded-lg border-l-4 border-[#382c5c]">
               <h4 className="text-sm font-semibold text-[#181225] mb-2 font-rubik flex items-center">
-                <span className="text-[#7553ff] mr-2">💬</span>
+                <span className="text-[#382c5c] mr-2">💬</span>
                 Food Recommendations & Notes
               </h4>
-              <p className="text-sm text-[#6e47ae] font-rubik leading-relaxed">
+              <p className="text-sm text-[#382c5c] font-rubik leading-relaxed">
                 {place.comment}
               </p>
             </div>

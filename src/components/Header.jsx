@@ -16,8 +16,8 @@ const Header = ({ onAddNew, activeTab, onTabChange, onProfileClick }) => {
               onClick={() => onTabChange('home')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                 activeTab === 'home'
-                  ? 'bg-white text-[#7553ff] shadow-md'
-                  : 'text-gray-600 hover:text-[#7553ff] hover:bg-white/50'
+                  ? 'bg-white text-[#382c5c] shadow-md'
+                  : 'text-gray-600 hover:text-[#382c5c] hover:bg-white/50'
               }`}
             >
               <Home className="w-4 h-4" />
@@ -28,8 +28,8 @@ const Header = ({ onAddNew, activeTab, onTabChange, onProfileClick }) => {
               onClick={() => onTabChange('map')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                 activeTab === 'map'
-                  ? 'bg-white text-[#7553ff] shadow-md'
-                  : 'text-gray-600 hover:text-[#7553ff] hover:bg-white/50'
+                  ? 'bg-white text-[#382c5c] shadow-md'
+                  : 'text-gray-600 hover:text-[#382c5c] hover:bg-white/50'
               }`}
             >
               <MapPin className="w-4 h-4" />
@@ -40,7 +40,7 @@ const Header = ({ onAddNew, activeTab, onTabChange, onProfileClick }) => {
           <div className="flex items-center space-x-3">
             <button
               onClick={onAddNew}
-              className="bg-gradient-to-r from-[#7553ff] to-[#4e2a9a] hover:from-[#4e2a9a] hover:to-[#36166b] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
+              className="bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
             >
               <Plus className="w-5 h-5" />
               <span>Add New Place</span>
@@ -49,7 +49,7 @@ const Header = ({ onAddNew, activeTab, onTabChange, onProfileClick }) => {
             {/* Profile Button */}
             <button
               onClick={onProfileClick}
-              className="w-12 h-12 bg-gradient-to-br from-[#7553ff] to-[#4e2a9a] rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95"
+              className="w-12 h-12 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95"
             >
               <User className="w-6 h-6 text-white" />
             </button>

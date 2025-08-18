@@ -6,7 +6,7 @@ const FoodPlaceList = ({ foodPlaces, onDelete }) => {
     return (
       <div className="text-center py-12">
         <div className="w-28 h-28 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-          <span className="text-5xl">🍽️</span>
+          <img src="/sentry-glyph.png" alt="SentrEats Logo" className="w-16 h-16" />
         </div>
         <h3 className="text-2xl font-semibold text-[#181225] mb-3 font-rubik">No Food Places Yet</h3>
         <p className="text-[#382c5c] font-rubik">Start adding your favorite restaurants to see them here!</p>

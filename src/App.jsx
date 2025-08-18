@@ -9,7 +9,6 @@ function App() {
   const [foodPlaces, setFoodPlaces] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [activeTab, setActiveTab] = useState('home')
-  const [showProfile, setShowProfile] = useState(false)
 
   const addFoodPlace = (newPlace) => {
     setFoodPlaces([...foodPlaces, { ...newPlace, id: Date.now() }])
@@ -22,16 +21,19 @@ function App() {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab)
-    setShowProfile(false)
-  }
-
-  const handleProfileClick = () => {
-    setShowProfile(!showProfile)
   }
 
   const renderMainContent = () => {
     if (activeTab === 'map') {
       return <Map />
+    }
+    
+    if (activeTab === 'profile') {
+      return <Profile 
+        foodPlaces={foodPlaces}
+        onDelete={deleteFoodPlace}
+        onAddNew={() => setShowForm(true)}
+      />
     }
     
     return (
@@ -43,10 +45,6 @@ function App() {
   }
 
   const renderSideContent = () => {
-    if (showProfile) {
-      return <Profile />
-    }
-    
     if (activeTab === 'home') {
       return (
         <FoodPlaceForm 
@@ -66,15 +64,29 @@ function App() {
         onAddNew={() => setShowForm(true)} 
         activeTab={activeTab}
         onTabChange={handleTabChange}
-        onProfileClick={handleProfileClick}
       />
       
       {activeTab === 'map' ? (
         <div className="w-full">
           {renderMainContent()}
         </div>
+      ) : activeTab === 'profile' ? (
+        <div className="container mx-auto px-4 py-8">
+          <div className="lg:col-span-3">
+            {renderMainContent()}
+          </div>
+        </div>
       ) : (
         <div className="container mx-auto px-4 py-8">
+          {/* Slogan Section */}
+          <div className="text-center mb-12 pt-8">
+            <h1 className="text-6xl font-bold text-[#382c5c] mb-2 font-rubik">
+              Code <span className="inline-block origin-right animate-swing-down">breaks</span>, fix it faster
+            </h1>
+            <p className="text-xl text-[#FDB81B] font-medium font-rubik">
+              (after lunch)
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}

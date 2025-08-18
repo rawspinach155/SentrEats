@@ -136,7 +136,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
       <div className="card text-center">
         <div className="text-[#382c5c] mb-4">
           <div className="w-20 h-20 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <span className="text-3xl">🍽️</span>
+            <img src="/sentry-glyph.png" alt="SentrEats Logo" className="w-12 h-12" />
           </div>
           <h3 className="text-xl font-semibold text-[#181225] mb-2 font-rubik">Add New Food Place</h3>
           <p className="text-sm text-[#382c5c]">Click the button above to start adding your favorite restaurants!</p>

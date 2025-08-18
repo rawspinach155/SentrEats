@@ -39,4 +39,47 @@
   .filter-btn-inactive {
     @apply text-[#181225] hover:text-white;
   }
+  
+  .animate-swing-down {
+    animation: swingDown 2.5s infinite;
+  }
+  
+  @keyframes swingDown {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    60% {
+      transform: rotate(-8deg);
+    }
+    65% {
+      transform: rotate(-7deg);
+    }
+    70% {
+      transform: rotate(-7.8deg);
+    }
+    75% {
+      transform: rotate(-7.2deg);
+    }
+    80% {
+      transform: rotate(-7.5deg);
+    }
+    85% {
+      transform: rotate(-7.4deg);
+    }
+    85% {
+      transform: rotate(-7.5deg);
+    }
+    90% {
+      transform: rotate(-6deg);
+    }
+    95% {
+      transform: rotate(-3deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
 }

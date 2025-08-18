@@ -88,15 +88,15 @@ const Map = () => {
 
   return (
     <div className="w-full">
-      <div className="mb-4">
-        <h2 className="text-2xl font-bold text-[#181225] mb-2">Food Places Map</h2>
-        <p className="text-gray-600">Explore food places in your area</p>
+      <div className="text-center py-8 px-6">
+        <h2 className="text-3xl font-bold text-[#181225] mb-3">Food Places Map</h2>
+        <p className="text-gray-600 text-lg">Explore food places in your area</p>
       </div>
       
       <div className="relative px-6">
         <div 
           ref={mapRef} 
-          className="w-full rounded-lg border border-gray-200"
+          className="w-full rounded-lg border border-gray-200 shadow-lg"
           style={{ height: '70vh', minHeight: '500px' }}
         />
         
@@ -110,7 +110,7 @@ const Map = () => {
         )}
       </div>
       
-      <div className="px-6 mt-4 text-sm text-gray-500">
+      <div className="px-6 mt-6 text-sm text-gray-500 text-center">
         <p>📍 Click and drag to explore the map</p>
         <p>🔍 Use the zoom controls to get a closer look</p>
       </div>

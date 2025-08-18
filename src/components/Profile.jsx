@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { User, Settings, LogOut, Edit3 } from 'lucide-react'
+import { User, Settings, LogOut, Edit3, MapPin, Star, Trash2, Plus } from 'lucide-react'
 
-const Profile = () => {
+const Profile = ({ foodPlaces, onDelete, onAddNew }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState({
     name: 'John Doe',
@@ -20,8 +20,14 @@ const Profile = () => {
     // Reset to original data
   }
 
+  const getRatingEmoji = (type, rating) => {
+    const isSweetPlace = ['Cafe', 'Ice Cream Shop', 'Boba Shop', 'Bakery'].includes(type)
+    return isSweetPlace ? '🍠'.repeat(rating) : '🥔'.repeat(rating)
+  }
+
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
+      {/* Profile Header */}
       <div className="text-center mb-6">
         <div className="relative inline-block">
           <img
@@ -52,7 +58,7 @@ const Profile = () => {
               type="email"
               value={profileData.email}
               onChange={(e) => setProfileData({...profileData, email: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2a1f45]"
             />
             <textarea
               value={profileData.bio}
@@ -64,6 +70,85 @@ const Profile = () => {
         )}
       </div>
 
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="text-center p-3 bg-[#f6f6f8] rounded-lg">
+          <div className="text-2xl font-bold text-[#382c5c]">{foodPlaces.length}</div>
+          <div className="text-sm text-gray-600">Places</div>
+        </div>
+        <div className="text-center p-3 bg-[#f6f6f8] rounded-lg">
+          <div className="text-2xl font-bold text-[#382c5c]">
+            {foodPlaces.length > 0 ? (foodPlaces.reduce((sum, place) => sum + place.rating, 0) / foodPlaces.length).toFixed(1) : 0}
+          </div>
+          <div className="text-sm text-gray-600">Avg Rating</div>
+        </div>
+        <div className="text-center p-3 bg-[#f6f6f8] rounded-lg">
+          <div className="text-2xl font-bold text-[#382c5c]">
+            {foodPlaces.filter(place => place.dietaryOptions?.vegan).length}
+          </div>
+          <div className="text-sm text-gray-600">Vegan</div>
+        </div>
+      </div>
+
+      {/* My Restaurants Section */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-[#181225]">My Restaurants</h3>
+          <button
+            onClick={onAddNew}
+            className="bg-[#382c5c] text-white p-2 rounded-lg hover:bg-[#2a1f45] transition-colors flex items-center space-x-2"
+          >
+            <Plus className="w-4 h-4" />
+            <span className="text-sm">Add New</span>
+          </button>
+        </div>
+        
+        {foodPlaces.length === 0 ? (
+          <div className="text-center py-8 bg-[#f6f6f8] rounded-lg">
+            <div className="text-4xl mb-2">🍽️</div>
+            <p className="text-gray-600 mb-2">No restaurants added yet</p>
+            <p className="text-sm text-gray-500">Start building your food collection!</p>
+          </div>
+        ) : (
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {foodPlaces.map((place) => (
+              <div key={place.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-[#181225] mb-1">{place.name}</h4>
+                    <div className="flex items-center text-sm text-gray-600 mb-2">
+                      <MapPin className="w-3 h-3 mr-1" />
+                      <span className="truncate">{place.address}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs bg-[#382c5c] text-white px-2 py-1 rounded">
+                          {place.type}
+                        </span>
+                        <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                          {place.cuisine}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm text-gray-600">{getRatingEmoji(place.type, place.rating)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => onDelete(place.id)}
+                    className="ml-2 text-red-500 hover:text-red-700 transition-colors p-1"
+                    title="Delete restaurant"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Profile Actions */}
       <div className="space-y-3">
         {!isEditing ? (
           <button

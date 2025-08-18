@@ -1,7 +1,7 @@
 {
   "name": "sentre-eats",
   "version": "1.0.0",
-  "description": "A food place management app for tracking restaurants with dietary options",
+  "description": "An eatery management app for tracking restaurants with dietary options",
   "main": "index.js",
   "scripts": {
     "dev": "vite",

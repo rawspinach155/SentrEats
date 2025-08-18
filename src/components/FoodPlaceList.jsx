@@ -1,14 +1,14 @@
 import React from 'react'
 import { MapPin, Trash2, Star } from 'lucide-react'
 
-const FoodPlaceList = ({ foodPlaces, onDelete }) => {
-  if (foodPlaces.length === 0) {
+const FoodPlaceList = ({ eateries, onDelete }) => {
+  if (eateries.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="w-28 h-28 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
           <img src="/sentry-glyph.png" alt="SentrEats Logo" className="w-16 h-16" />
         </div>
-        <h3 className="text-2xl font-semibold text-[#181225] mb-3 font-rubik">No Food Places Yet</h3>
+        <h3 className="text-2xl font-semibold text-[#181225] mb-3 font-rubik">No Eateries Yet</h3>
         <p className="text-[#382c5c] font-rubik">Start adding your favorite restaurants to see them here!</p>
       </div>
     )
@@ -16,10 +16,10 @@ const FoodPlaceList = ({ foodPlaces, onDelete }) => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-[#181225] font-rubik">Your Food Places</h2>
+              <h2 className="text-3xl font-bold text-[#181225] font-rubik">Your Eateries</h2>
       
       <div className="grid gap-6">
-        {foodPlaces.map((place) => (
+        {eateries.map((place) => (
           <FoodPlaceCard key={place.id} place={place} onDelete={onDelete} />
         ))}
       </div>

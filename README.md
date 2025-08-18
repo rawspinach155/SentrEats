@@ -1,20 +1,20 @@
 # SentrEats
 
-A food place management app for tracking restaurants with dietary options.
+An eatery management app for tracking restaurants with dietary options.
 
 ## Features
 
 - **Sticky Navigation Bar**: Always visible navigation with Home and Map tabs
-- **Food Place Management**: Add, view, and delete food places
-- **Interactive Map**: Google Maps integration for viewing food places geographically
+- **Eatery Management**: Add, view, and delete eateries
+- **Interactive Map**: Google Maps integration for viewing eateries geographically
 - **User Profile**: Editable profile with avatar, name, email, and bio
 - **Responsive Design**: Modern UI built with Tailwind CSS
 
 ## New Features
 
 ### Sticky Navigation
-- **Home Tab**: View and manage your food places list
-- **Map Tab**: Interactive Google Maps view of food places
+- **Home Tab**: View and manage your eateries list
+- **Map Tab**: Interactive Google Maps view of eateries
 - **Profile Button**: Click to view and edit your profile
 
 ### Google Maps Integration

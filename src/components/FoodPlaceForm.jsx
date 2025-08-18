@@ -138,7 +138,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
           <div className="w-20 h-20 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
             <img src="/sentry-glyph.png" alt="SentrEats Logo" className="w-12 h-12" />
           </div>
-          <h3 className="text-xl font-semibold text-[#181225] mb-2 font-rubik">Add New Food Place</h3>
+          <h3 className="text-xl font-semibold text-[#181225] mb-2 font-rubik">Add New Eatery</h3>
           <p className="text-sm text-[#382c5c]">Click the button above to start adding your favorite restaurants!</p>
         </div>
       </div>
@@ -161,7 +161,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
         {/* Name */}
         <div>
           <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Restaurant Name *
+            Name *
           </label>
           <input
             type="text"
@@ -170,7 +170,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
             onChange={handleInputChange}
             required
             className="input-field font-rubik"
-            placeholder="Enter restaurant name"
+            placeholder="Enter eatery name"
           />
         </div>
 
@@ -415,7 +415,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
             type="submit"
             className="w-full bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl font-rubik"
           >
-            Add Food Place
+            Add Eatery
           </button>
         </div>
       </form>

@@ -6,17 +6,17 @@ import Map from './components/Map'
 import Profile from './components/Profile'
 
 function App() {
-  const [foodPlaces, setFoodPlaces] = useState([])
+  const [eateries, setEateries] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [activeTab, setActiveTab] = useState('home')
 
-  const addFoodPlace = (newPlace) => {
-    setFoodPlaces([...foodPlaces, { ...newPlace, id: Date.now() }])
+  const addEatery = (newPlace) => {
+    setEateries([...eateries, { ...newPlace, id: Date.now() }])
     setShowForm(false)
   }
 
-  const deleteFoodPlace = (id) => {
-    setFoodPlaces(foodPlaces.filter(place => place.id !== id))
+  const deleteEatery = (id) => {
+    setEateries(eateries.filter(place => place.id !== id))
   }
 
   const handleTabChange = (tab) => {
@@ -30,16 +30,16 @@ function App() {
     
     if (activeTab === 'profile') {
       return <Profile 
-        foodPlaces={foodPlaces}
-        onDelete={deleteFoodPlace}
+        eateries={eateries}
+        onDelete={deleteEatery}
         onAddNew={() => setShowForm(true)}
       />
     }
     
     return (
       <FoodPlaceList 
-        foodPlaces={foodPlaces} 
-        onDelete={deleteFoodPlace}
+        eateries={eateries} 
+        onDelete={deleteEatery}
       />
     )
   }
@@ -48,7 +48,7 @@ function App() {
     if (activeTab === 'home') {
       return (
         <FoodPlaceForm 
-          onSubmit={addFoodPlace}
+          onSubmit={addEatery}
           isOpen={showForm}
           onClose={() => setShowForm(false)}
         />

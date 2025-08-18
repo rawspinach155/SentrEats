@@ -59,7 +59,7 @@ const Header = ({ onAddNew, activeTab, onTabChange }) => {
                 className="bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
               >
                 <Plus className="w-5 h-5" />
-                <span>Add New Place</span>
+                <span>Add New Eatery</span>
               </button>
             )}
           </div>

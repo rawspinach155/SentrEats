@@ -89,8 +89,8 @@ const Map = () => {
   return (
     <div className="w-full">
       <div className="text-center py-8 px-6">
-        <h2 className="text-3xl font-bold text-[#181225] mb-3">Food Places Map</h2>
-        <p className="text-gray-600 text-lg">Explore food places in your area</p>
+        <h2 className="text-3xl font-bold text-[#181225] mb-3">Eateries Map</h2>
+        <p className="text-gray-600 text-lg">Explore eateries in your area</p>
       </div>
       
       <div className="relative px-6">

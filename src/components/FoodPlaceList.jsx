@@ -147,6 +147,19 @@ const FoodPlaceCard = ({ place, onDelete }) => {
           <div className="mb-4">
             {renderRating(place.rating, place.type)}
           </div>
+          
+          {/* Comment Section */}
+          {place.comment && (
+            <div className="mb-4 p-4 bg-gradient-to-r from-[#f6f6f8] to-white rounded-lg border-l-4 border-[#7553ff]">
+              <h4 className="text-sm font-semibold text-[#181225] mb-2 font-rubik flex items-center">
+                <span className="text-[#7553ff] mr-2">💬</span>
+                Food Recommendations & Notes
+              </h4>
+              <p className="text-sm text-[#6e47ae] font-rubik leading-relaxed">
+                {place.comment}
+              </p>
+            </div>
+          )}
         </div>
         
         <button

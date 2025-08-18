@@ -29,7 +29,7 @@ const Map = () => {
     const initMap = () => {
       try {
         if (mapRef.current && window.google) {
-          const defaultLocation = { lat: 40.7128, lng: -74.0060 } // New York City as default
+          const defaultLocation = { lat: 37.7912, lng: -122.3971 } // SF as default
           
           mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
             center: defaultLocation,
@@ -87,17 +87,17 @@ const Map = () => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
-      <div className="mb-4">
+    <div className="w-full h-screen">
+      <div className="mb-4 px-6 pt-6">
         <h2 className="text-2xl font-bold text-[#181225] mb-2">Food Places Map</h2>
         <p className="text-gray-600">Explore food places in your area</p>
       </div>
       
-      <div className="relative">
+      <div className="relative px-6">
         <div 
           ref={mapRef} 
-          className="w-full h-96 rounded-lg border border-gray-200"
-          style={{ minHeight: '400px' }}
+          className="w-full rounded-lg border border-gray-200"
+          style={{ height: 'calc(100vh - 140px)' }}
         />
         
         {isLoading && (
@@ -110,7 +110,7 @@ const Map = () => {
         )}
       </div>
       
-      <div className="mt-4 text-sm text-gray-500">
+      <div className="px-6 mt-4 text-sm text-gray-500">
         <p>📍 Click and drag to explore the map</p>
         <p>🔍 Use the zoom controls to get a closer look</p>
       </div>

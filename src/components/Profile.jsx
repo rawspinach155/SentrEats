@@ -95,15 +95,8 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {} }) =>
 
       {/* My Restaurants Section */}
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4">
           <h3 className="text-lg font-semibold text-[#181225]">My Eateries</h3>
-          <button
-            onClick={onAddNew}
-            className="bg-[#382c5c] text-white p-2 rounded-lg hover:bg-[#2a1f45] transition-colors flex items-center space-x-2"
-          >
-            <Plus className="w-4 h-4" />
-            <span className="text-sm">Add New</span>
-          </button>
         </div>
         
         {eateries.length === 0 ? (

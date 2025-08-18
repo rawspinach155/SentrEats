@@ -318,21 +318,6 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
           </select>
         </div>
 
-        {/* Comment Section */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Food Recommendations & Notes
-          </label>
-          <textarea
-            name="comment"
-            value={formData.comment}
-            onChange={handleInputChange}
-            rows="4"
-            className="input-field font-rubik"
-            placeholder="Share your favorite dishes, must-try items, or any helpful tips about this place..."
-          />
-        </div>
-
         {/* Rating */}
         <div>
           <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
@@ -359,6 +344,21 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
           <p className="text-sm text-[#6e47ae] mt-2 font-rubik">
             {formData.rating > 0 ? `${formData.rating} ${isSweetPlace(formData.type) ? 'sweet potato' : 'potato'}${formData.rating > 1 ? 'es' : ''}` : 'Select rating'}
           </p>
+        </div>
+
+        {/* Comment Section */}
+        <div>
+          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+            Food Recommendations & Notes
+          </label>
+          <textarea
+            name="comment"
+            value={formData.comment}
+            onChange={handleInputChange}
+            rows="4"
+            className="input-field font-rubik"
+            placeholder="Share your favorite dishes, must-try items, or any helpful tips about this place..."
+          />
         </div>
 
         {/* Image Upload */}

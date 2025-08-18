@@ -110,19 +110,19 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
 
   // Dynamic color mapping for dietary options
   const dietaryColors = {
-    glutenFree: { bg: '#92dd00', hover: '#c0ed49', text: '#181225' },
-    vegan: { bg: '#ff45a8', hover: '#ff70bc', text: 'white' },
-    vegetarian: { bg: '#fdb81b', hover: '#ffd00e', text: '#181225' },
-    dairyFree: { bg: '#226dfc', hover: '#3edcff', text: 'white' },
-    nutFree: { bg: '#a737b4', hover: '#9e86ff', text: 'white' }
+    glutenFree: { bg: '#fdb81b', hover: '#ffd00e', text: 'white', border: '#fdb81b' },
+    vegan: { bg: '#ff70bc', hover: '#ff70bc', text: 'white', border: '#ff45a8' },
+    vegetarian: { bg: '#ee8019', hover: '#fdb81b', text: 'white', border: '#ee8019' },
+    dairyFree: { bg: '#6e47ae', hover: '#a737b4', text: 'white', border: '#6e47ae' },
+    nutFree: { bg: '#4d0a55', hover: '#6e47ae', text: 'white', border: '#4d0a55' }
   }
 
-  // Dynamic color mapping for price options - using same color family for outline and highlight
+  // Dynamic color mapping for price options - using your preferred color palette
   const priceColors = [
-    { bg: '#92dd00', hover: '#c0ed49', outline: '#92dd00' }, // Green family - Fixed outline/highlight matching
-    { bg: '#fdb81b', hover: '#ffd00e', outline: '#fdb81b' }, // Yellow family - Fixed outline/highlight matching
-    { bg: '#ff9838', hover: '#ffb366', outline: '#ff9838' }, // Orange family - Fixed outline/highlight matching (same family)
-    { bg: '#ff45a8', hover: '#ff70bc', outline: '#ff45a8' }  // Pink family - Fixed outline/highlight matching
+    { bg: '#fdb81b', hover: '#ffd00e', outline: '#fdb81b' }, // Dk Yellow to Lt Yellow
+    { bg: '#ee8019', hover: '#fdb81b', outline: '#ee8019' }, // Dk Orange to Dk Yellow
+    { bg: '#6e47ae', hover: '#a737b4', outline: '#6e47ae' }, // Lt Violet to Lt Purple
+    { bg: '#4d0a55', hover: '#6e47ae', outline: '#4d0a55' }  // Dk Purple to Lt Violet
   ]
 
   // Check if place type is sweet/dessert related - Updated for sweet potato ratings
@@ -134,12 +134,12 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
   if (!isOpen) {
     return (
       <div className="card text-center">
-        <div className="text-[#6e47ae] mb-4">
-          <div className="w-20 h-20 bg-gradient-to-br from-[#7553ff] to-[#4e2a9a] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+        <div className="text-[#382c5c] mb-4">
+          <div className="w-20 h-20 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
             <span className="text-3xl">🍽️</span>
           </div>
           <h3 className="text-xl font-semibold text-[#181225] mb-2 font-rubik">Add New Food Place</h3>
-          <p className="text-sm text-[#6e47ae]">Click the button above to start adding your favorite restaurants!</p>
+          <p className="text-sm text-[#382c5c]">Click the button above to start adding your favorite restaurants!</p>
         </div>
       </div>
     )
@@ -151,7 +151,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
         <h2 className="text-2xl font-bold text-[#181225] font-rubik">Add New Place</h2>
         <button
           onClick={onClose}
-          className="text-[#6e47ae] hover:text-[#4e2a9a] transition-colors p-2 hover:bg-[#f6f6f8] rounded-lg"
+          className="text-[#382c5c] hover:text-[#2a1f45] transition-colors p-2 hover:bg-[#f6f6f8] rounded-lg"
         >
           <X className="w-6 h-6" />
         </button>
@@ -231,8 +231,8 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
                   } font-rubik`}
                   style={{
                     backgroundColor: checked ? colors.bg : 'transparent',
-                    border: checked ? `2px solid ${colors.bg}` : `2px solid ${colors.bg}`,
-                    color: checked ? colors.text : colors.bg
+                    border: `2px solid ${colors.border}`,
+                    color: checked ? colors.text : colors.border
                   }}
                   onMouseEnter={(e) => {
                     if (!checked) {
@@ -243,7 +243,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
                   onMouseLeave={(e) => {
                     if (!checked) {
                       e.target.style.backgroundColor = 'transparent'
-                      e.target.style.color = colors.bg
+                      e.target.style.color = colors.border
                     }
                   }}
                 >
@@ -341,7 +341,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
               </button>
             ))}
           </div>
-          <p className="text-sm text-[#6e47ae] mt-2 font-rubik">
+          <p className="text-sm text-[#382c5c] mt-2 font-rubik">
             {formData.rating > 0 ? `${formData.rating} ${isSweetPlace(formData.type) ? 'sweet potato' : 'potato'}${formData.rating > 1 ? 'es' : ''}` : 'Select rating'}
           </p>
         </div>
@@ -366,7 +366,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
           <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
             Images
           </label>
-          <div className="border-2 border-dashed border-[#7553ff] rounded-lg p-6 text-center bg-gradient-to-br from-[#f6f6f8] to-white">
+          <div className="border-2 border-dashed border-[#382c5c] rounded-lg p-6 text-center bg-gradient-to-br from-[#f6f6f8] to-white">
             <input
               type="file"
               multiple
@@ -376,11 +376,11 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
               id="image-upload"
             />
             <label htmlFor="image-upload" className="cursor-pointer">
-              <Upload className="w-10 h-10 text-[#7553ff] mx-auto mb-3" />
+              <Upload className="w-10 h-10 text-[#382c5c] mx-auto mb-3" />
               <p className="text-sm text-[#181225] font-rubik">
                 Click to upload images or drag and drop
               </p>
-              <p className="text-xs text-[#6e47ae] mt-1 font-rubik">
+              <p className="text-xs text-[#382c5c] mt-1 font-rubik">
                 PNG, JPG, GIF up to 10MB
               </p>
             </label>
@@ -413,7 +413,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
         <div className="pt-4">
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-[#7553ff] to-[#4e2a9a] hover:from-[#4e2a9a] hover:to-[#36166b] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl font-rubik"
+            className="w-full bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl font-rubik"
           >
             Add Food Place
           </button>

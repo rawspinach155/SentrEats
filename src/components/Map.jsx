@@ -77,7 +77,7 @@ const Map = () => {
           <p className="text-gray-600 mb-4">{error}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="bg-[#7553ff] text-white px-4 py-2 rounded-lg hover:bg-[#4e2a9a] transition-colors"
+            className="bg-[#382c5c] text-white px-4 py-2 rounded-lg hover:bg-[#2a1f45] transition-colors"
           >
             Retry
           </button>
@@ -87,8 +87,8 @@ const Map = () => {
   }
 
   return (
-    <div className="w-full h-screen">
-      <div className="mb-4 px-6 pt-6">
+    <div className="w-full">
+      <div className="mb-4">
         <h2 className="text-2xl font-bold text-[#181225] mb-2">Food Places Map</h2>
         <p className="text-gray-600">Explore food places in your area</p>
       </div>
@@ -97,13 +97,13 @@ const Map = () => {
         <div 
           ref={mapRef} 
           className="w-full rounded-lg border border-gray-200"
-          style={{ height: 'calc(100vh - 140px)' }}
+          style={{ height: '70vh', minHeight: '500px' }}
         />
         
         {isLoading && (
           <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7553ff] mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#382c5c] mx-auto mb-4"></div>
               <p className="text-gray-600">Loading map...</p>
             </div>
           </div>

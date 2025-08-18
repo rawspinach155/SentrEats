@@ -29,7 +29,7 @@ const Map = () => {
     const initMap = () => {
       try {
         if (mapRef.current && window.google) {
-          const defaultLocation = { lat: 37.7912, lng: -122.3971 } // SFO Office as default
+          const defaultLocation = { lat: 37.7912, lng: -122.3971 } // SF as default
           
           mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
             center: defaultLocation,
@@ -93,7 +93,7 @@ const Map = () => {
         <p className="text-gray-600">Explore food places in your area</p>
       </div>
       
-      <div className="relative">
+      <div className="relative px-6">
         <div 
           ref={mapRef} 
           className="w-full rounded-lg border border-gray-200"
@@ -110,7 +110,7 @@ const Map = () => {
         )}
       </div>
       
-      <div className="mt-4 text-sm text-gray-500">
+      <div className="px-6 mt-4 text-sm text-gray-500">
         <p>📍 Click and drag to explore the map</p>
         <p>🔍 Use the zoom controls to get a closer look</p>
       </div>

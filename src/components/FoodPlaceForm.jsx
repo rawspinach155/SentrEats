@@ -16,7 +16,8 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
     price: '',
     cuisine: '',
     rating: 0,
-    images: []
+    images: [],
+    comment: ''
   })
 
   const [imagePreview, setImagePreview] = useState([])
@@ -89,7 +90,8 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
       price: '',
       cuisine: '',
       rating: 0,
-      images: []
+      images: [],
+      comment: ''
     })
     setImagePreview([])
   }
@@ -119,7 +121,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
   const priceColors = [
     { bg: '#92dd00', hover: '#c0ed49', outline: '#92dd00' }, // Green family - Fixed outline/highlight matching
     { bg: '#fdb81b', hover: '#ffd00e', outline: '#fdb81b' }, // Yellow family - Fixed outline/highlight matching
-    { bg: '#ff9838', hover: '#ff70bc', outline: '#ff9838' }, // Orange family - Fixed outline/highlight matching
+    { bg: '#ff9838', hover: '#ffb366', outline: '#ff9838' }, // Orange family - Fixed outline/highlight matching (same family)
     { bg: '#ff45a8', hover: '#ff70bc', outline: '#ff45a8' }  // Pink family - Fixed outline/highlight matching
   ]
 
@@ -265,13 +267,15 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
                   key={price}
                   type="button"
                   onClick={() => setFormData(prev => ({ ...prev, price }))}
-                  className={`filter-btn font-rubik ${
+                  className={`filter-btn font-rubik text-center ${
                     formData.price === price ? 'filter-btn-active' : 'filter-btn-inactive'
                   }`}
                   style={{
                     backgroundColor: formData.price === price ? colors.bg : 'transparent',
                     border: `2px solid ${colors.outline}`,
-                    color: formData.price === price ? 'white' : colors.outline
+                    color: formData.price === price ? 'white' : colors.outline,
+                    minWidth: '0',
+                    width: '100%'
                   }}
                   onMouseEnter={(e) => {
                     if (formData.price !== price) {
@@ -312,6 +316,21 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Comment Section */}
+        <div>
+          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+            Food Recommendations & Notes
+          </label>
+          <textarea
+            name="comment"
+            value={formData.comment}
+            onChange={handleInputChange}
+            rows="4"
+            className="input-field font-rubik"
+            placeholder="Share your favorite dishes, must-try items, or any helpful tips about this place..."
+          />
         </div>
 
         {/* Rating */}

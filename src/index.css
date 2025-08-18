@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#f6f6f8] text-[#181225];
+    font-family: 'Rubik', sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#7553ff] hover:bg-[#4e2a9a] text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply bg-[#f6f6f8] hover:bg-[#e8e8ea] text-[#181225] font-medium py-2 px-4 rounded-lg transition-all duration-200 border border-[#d1d1d3];
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-[#d1d1d3] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7553ff] focus:border-transparent font-rubik;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-[#e8e8ea] p-6;
+  }
+  
+  .filter-btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg;
+  }
+  
+  .filter-btn-active {
+    @apply text-white shadow-lg;
+  }
+  
+  .filter-btn-inactive {
+    @apply text-[#181225] hover:text-white;
+  }
+}

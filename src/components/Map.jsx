@@ -29,7 +29,7 @@ const Map = () => {
     const initMap = () => {
       try {
         if (mapRef.current && window.google) {
-          const defaultLocation = { lat: 40.7128, lng: -74.0060 } // New York City as default
+          const defaultLocation = { lat: 37.7912, lng: -122.3971 } // SFO Office as default
           
           mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
             center: defaultLocation,

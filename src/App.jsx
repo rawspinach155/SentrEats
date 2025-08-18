@@ -70,19 +70,25 @@ function App() {
       />
       
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
+        {activeTab === 'map' ? (
+          <div className="w-full">
             {renderMainContent()}
           </div>
-          
-          {/* Side Content */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-8">
-              {renderSideContent()}
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2">
+              {renderMainContent()}
+            </div>
+            
+            {/* Side Content */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8">
+                {renderSideContent()}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )

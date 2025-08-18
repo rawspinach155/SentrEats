@@ -87,7 +87,7 @@ const Map = () => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="w-full">
       <div className="mb-4">
         <h2 className="text-2xl font-bold text-[#181225] mb-2">Food Places Map</h2>
         <p className="text-gray-600">Explore food places in your area</p>
@@ -96,8 +96,8 @@ const Map = () => {
       <div className="relative">
         <div 
           ref={mapRef} 
-          className="w-full h-96 rounded-lg border border-gray-200"
-          style={{ minHeight: '400px' }}
+          className="w-full rounded-lg border border-gray-200"
+          style={{ height: '70vh', minHeight: '500px' }}
         />
         
         {isLoading && (

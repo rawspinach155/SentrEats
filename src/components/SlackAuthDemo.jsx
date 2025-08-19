@@ -5,47 +5,17 @@ const SlackAuthDemo = ({ onAuthSuccess, onAuthError, isSignUp = false }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState('initial') // initial, connecting, success
 
-  const handleDemoSignIn = async () => {
+  const handleRealSignIn = async () => {
     setIsLoading(true)
-    setStep('connecting')
+    setError(null)
     
-    // Simulate OAuth flow
-    setTimeout(() => {
-      setStep('success')
-      
-      // Create mock user data
-      const mockUser = {
-        id: 'U1234567890',
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-        profile: {
-          real_name: 'John Doe',
-          display_name: 'johndoe',
-          email: 'john.doe@example.com',
-          image_192: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-          status_emoji: '🍕',
-          status_text: 'Hungry for good food!'
-        },
-        teamId: 'T1234567890',
-        teamName: 'Demo Team',
-        signedInAt: new Date().toISOString()
-      }
-
-      // Store user data
-      localStorage.setItem('slackUser', JSON.stringify(mockUser))
-      localStorage.setItem('slackConnection', JSON.stringify({
-        profile: mockUser.profile,
-        accessToken: 'demo-token',
-        teamId: mockUser.teamId,
-        connectedAt: new Date().toISOString()
-      }))
-
-      // Call success callback
-      if (onAuthSuccess) {
-        onAuthSuccess(mockUser)
-      }
-    }, 2000)
+    try {
+      const authUrl = slackService.getAuthUrl()
+      window.location.href = authUrl  // Redirect to Slack
+    } catch (error) {
+      setError('Failed to start authentication')
+      setIsLoading(false)
+    }
   }
 
   if (step === 'connecting') {
@@ -89,9 +59,6 @@ const SlackAuthDemo = ({ onAuthSuccess, onAuthError, isSignUp = false }) => {
             : 'Sign in using your Slack workspace'
           }
         </p>
-        <div className="mt-2 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">
-          Demo Mode
-        </div>
       </div>
 
       <div className="space-y-4">
@@ -120,7 +87,7 @@ const SlackAuthDemo = ({ onAuthSuccess, onAuthError, isSignUp = false }) => {
 
         {/* Demo Sign In Button */}
         <button
-          onClick={handleDemoSignIn}
+          onClick={handleRealSignIn}
           disabled={isLoading}
           className="w-full bg-[#4A154B] text-white py-3 px-4 rounded-lg hover:bg-[#3a0f3a] transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
         >

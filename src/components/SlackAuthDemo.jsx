@@ -100,14 +100,6 @@ const SlackAuthDemo = ({ onAuthSuccess, onAuthError, isSignUp = false }) => {
           </span>
           <ArrowRight className="w-4 h-4" />
         </button>
-
-        {/* Demo Notice */}
-        <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-xs text-blue-700">
-            <strong>Demo Mode:</strong> This simulates the Slack OAuth flow. 
-            In production, this would redirect to Slack for real authentication.
-          </p>
-        </div>
       </div>
     </div>
   )

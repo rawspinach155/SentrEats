@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Plus, User, MapPin, Home } from 'lucide-react'
+import { Plus, User, MapPin, Home, Slack } from 'lucide-react'
 
-const Header = ({ onAddNew, activeTab, onTabChange }) => {
+const Header = ({ onAddNew, activeTab, onTabChange, onSlackSignIn }) => {
   return (
     <header className="bg-white shadow-lg border-b border-[#e8e8ea] sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
@@ -51,16 +51,25 @@ const Header = ({ onAddNew, activeTab, onTabChange }) => {
             </div>
           </div>
           
-          {/* Right: Add New Place Button */}
-          <div className="flex items-center justify-end">
+          {/* Right: Action Buttons */}
+          <div className="flex items-center justify-end space-x-3">
             {activeTab === 'home' && (
-              <button
-                onClick={onAddNew}
-                className="bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
-              >
-                <Plus className="w-5 h-5" />
-                <span>Add New Eatery</span>
-              </button>
+              <>
+                <button
+                  onClick={onSlackSignIn}
+                  className="bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
+                >
+                  <Slack className="w-5 h-5" />
+                  <span>Sign In with Slack</span>
+                </button>
+                <button
+                  onClick={onAddNew}
+                  className="bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  <span>Add New Eatery</span>
+                </button>
+              </>
             )}
           </div>
         </div>

@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Map from './components/Map'
 import Profile from './components/Profile'
 import eateryService from './services/eateryService'
+import SlackAuthDemo from './components/SlackAuthDemo'
 
 function App() {
   const [eateries, setEateries] = useState([])
@@ -12,6 +13,8 @@ function App() {
   const [activeTab, setActiveTab] = useState('home')
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [showSlackAuth, setShowSlackAuth] = useState(false)
+  const [user, setUser] = useState(null)
 
   // Load eateries on component mount
   useEffect(() => {
@@ -55,6 +58,30 @@ function App() {
     }
   }
 
+  // Check for authenticated user on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('slackUser')
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser)
+        setUser(userData)
+      } catch (err) {
+        console.error('Error parsing stored user:', err)
+        localStorage.removeItem('slackUser')
+      }
+    }
+  }, [])
+
+  const handleSlackAuthSuccess = (userData) => {
+    setUser(userData)
+    setShowSlackAuth(false)
+  }
+
+  const handleSlackAuthError = (error) => {
+    console.error('Slack auth error:', error)
+    setUser(null)
+  }
+
   const handleTabChange = (tab) => {
     setActiveTab(tab)
   }
@@ -94,6 +121,21 @@ function App() {
     return null
   }
 
+  // Show Slack auth modal if needed
+  if (showSlackAuth) {
+    return (
+      <div className="min-h-screen bg-[#f6f6f8] flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <SlackAuthDemo 
+            onAuthSuccess={handleSlackAuthSuccess}
+            onAuthError={handleSlackAuthError}
+            isSignUp={false}
+          />
+        </div>
+      </div>
+    )
+  }
+
   // Show loading state
   if (isLoading) {
     return (
@@ -112,6 +154,7 @@ function App() {
         onAddNew={() => setShowForm(true)} 
         activeTab={activeTab}
         onTabChange={handleTabChange}
+        onSlackSignIn={() => setShowSlackAuth(true)}
       />
       
       {/* Error Display */}

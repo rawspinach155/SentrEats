@@ -21,7 +21,7 @@ A Node.js/Express backend API for the SentrEats application with user authentica
 2. **Environment Configuration**
    Create a `.env` file in the backend directory:
    ```env
-   PORT=5000
+   PORT=9000
    NODE_ENV=development
    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
    ```

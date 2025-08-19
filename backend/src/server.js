@@ -4,12 +4,11 @@ const path = require('path');
 require('dotenv').config();
 
 const { initDatabase } = require('./config/database');
-const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const eateryRoutes = require('./routes/eateries');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 9000;
 
 // Middleware
 app.use(cors()); // Allow all origins for now
@@ -25,7 +24,6 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/eateries', eateryRoutes);
 

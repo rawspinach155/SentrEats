@@ -3,8 +3,225 @@ const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const { db } = require('../config/database');
 const { authenticateToken } = require('../middleware/auth');
+const path = require('path');
+const fs = require('fs');
 
 const router = express.Router();
+
+// Get all users from JSON file
+router.get('/get-all-users', (req, res) => {
+  try {
+    const usersPath = path.join(__dirname, '../../data/users.json');
+    
+    // Check if file exists
+    if (!fs.existsSync(usersPath)) {
+      return res.status(404).json({ error: 'Users data file not found' });
+    }
+    
+    // Read and parse the JSON file
+    const usersData = fs.readFileSync(usersPath, 'utf8');
+    const users = JSON.parse(usersData);
+    
+    // Return all users (excluding sensitive info like passwords in a real app)
+    const safeUsers = users.map(user => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      // Note: In production, you'd want to exclude passwords
+      // password: user.password // Only for development/hackathon
+    }));
+    
+    res.json({
+      success: true,
+      count: safeUsers.length,
+      users: safeUsers
+    });
+    
+  } catch (error) {
+    console.error('Error reading users:', error);
+    res.status(500).json({ 
+      error: 'Failed to read users data',
+      message: error.message 
+    });
+  }
+});
+
+// Login endpoint - validates user credentials
+router.post('/login', [
+  body('email').isEmail().normalizeEmail(),
+  body('password').notEmpty()
+], (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, password } = req.body;
+    const usersPath = path.join(__dirname, '../../data/users.json');
+    
+    // Check if file exists
+    if (!fs.existsSync(usersPath)) {
+      return res.status(500).json({ error: 'Users data file not found' });
+    }
+    
+    // Read existing users
+    const usersData = fs.readFileSync(usersPath, 'utf8');
+    const users = JSON.parse(usersData);
+    
+    // Find user with matching email and password
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+      // Login successful - return user data (excluding password)
+      const { password: _, ...userWithoutPassword } = user;
+      
+      res.json({
+        success: true,
+        message: 'Login successful',
+        user: userWithoutPassword
+      });
+    } else {
+      res.status(401).json({ error: 'Invalid email or password' });
+    }
+    
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ 
+      error: 'Failed to authenticate user',
+      message: error.message 
+    });
+  }
+});
+
+// Update user profile endpoint
+router.put('/profile', [
+  body('name').optional().trim().escape(),
+  body('email').optional().isEmail().normalizeEmail(),
+  body('bio').optional().trim().escape(),
+  body('avatar').optional().trim()
+], (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, email, bio, avatar } = req.body;
+    const usersPath = path.join(__dirname, '../../data/users.json');
+    
+    // Check if file exists
+    if (!fs.existsSync(usersPath)) {
+      return res.status(500).json({ error: 'Users data file not found' });
+    }
+    
+    // Read existing users
+    const usersData = fs.readFileSync(usersPath, 'utf8');
+    const users = JSON.parse(usersData);
+    
+    // For now, we'll update the first user (in a real app, you'd get this from auth)
+    // You can modify this to find by email or other identifier
+    const userIndex = 0; // Update first user for demo purposes
+    
+    if (userIndex >= 0) {
+      // Update user fields
+      if (name !== undefined) users[userIndex].name = name;
+      if (email !== undefined) users[userIndex].email = email;
+      if (bio !== undefined) users[userIndex].bio = bio || '';
+      if (avatar !== undefined) users[userIndex].avatar = avatar;
+      
+      // Add updated timestamp
+      users[userIndex].updatedAt = new Date().toISOString();
+      
+      // Write back to file
+      fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), 'utf8');
+      
+      // Return updated user (excluding password)
+      const { password: _, ...updatedUser } = users[userIndex];
+      
+      res.json({
+        success: true,
+        message: 'Profile updated successfully',
+        user: updatedUser
+      });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+    
+  } catch (error) {
+    console.error('Profile update error:', error);
+    res.status(500).json({ 
+      error: 'Failed to update profile',
+      message: error.message 
+    });
+  }
+});
+
+// Sign up endpoint - adds new user to users.json file
+router.post('/signup', [
+  body('name').notEmpty().trim().escape(),
+  body('email').isEmail().normalizeEmail(),
+  body('password').isLength({ min: 6 }),
+  body('bio').optional().trim().escape(),
+], (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, email, password } = req.body;
+    const usersPath = path.join(__dirname, '../../data/users.json');
+    
+    // Check if file exists
+    if (!fs.existsSync(usersPath)) {
+      return res.status(500).json({ error: 'Users data file not found' });
+    }
+    
+    // Read existing users
+    const usersData = fs.readFileSync(usersPath, 'utf8');
+    const users = JSON.parse(usersData);
+    
+    // Check if email already exists
+    const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(400).json({ error: 'User with this email already exists' });
+    }
+    
+    // Create new user
+    const newUser = {
+      id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+      name: name,
+      email: email,
+      password: password, // In production, this should be hashed
+      createdAt: new Date().toISOString()
+    };
+    
+    // Add new user to array
+    users.push(newUser);
+    
+    // Write back to file
+    fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), 'utf8');
+    
+    // Return success (excluding password)
+    const { password: _, ...userWithoutPassword } = newUser;
+    
+    res.status(201).json({
+      success: true,
+      message: 'User created successfully',
+      user: userWithoutPassword
+    });
+    
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({ 
+      error: 'Failed to create user',
+      message: error.message 
+    });
+  }
+});
+
+
 
 // Update user profile
 router.put('/profile', authenticateToken, [

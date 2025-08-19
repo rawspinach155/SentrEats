@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "name": "vishnus",
+    "email": "vishnus@vishnus.com",
+    "password": "password123",
+    "bio": "test bio",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=vishnus",
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2025-08-19T23:48:48.191Z"
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "password": "password456",
+    "bio": "I love to eat and travel",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane%20Smith",
+    "createdAt": "2024-01-16T12:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "vishnu satish",
+    "email": "vishnu@sentry.io",
+    "password": "hellohello",
+    "bio": "Food enthusiast and tech lover",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=vishnu%20satish",
+    "createdAt": "2025-08-19T23:08:25.937Z"
+  },
+  {
+    "id": 4,
+    "name": "vishnus",
+    "email": "vishnus@vishnus.com",
+    "password": "vishnus",
+    "bio": "Passionate about great food",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=vishnus",
+    "createdAt": "2025-08-19T23:36:20.937Z"
+  }
+]

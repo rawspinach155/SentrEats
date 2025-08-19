@@ -14,13 +14,23 @@ const Map = () => {
         return
       }
 
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+      
+      console.log('Google Maps API Key:', apiKey ? 'Present' : 'Missing')
+      
+      if (!apiKey) {
+        setError('Google Maps API key is missing. Please check your environment configuration.')
+        setIsLoading(false)
+        return
+      }
+      
       const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9n-EO-9RwtTlyxbqgwyNsFlU7LTlnBg&libraries=places`
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`
       script.async = true
       script.defer = true
       script.onload = initMap
       script.onerror = () => {
-        setError('Failed to load Google Maps')
+        setError('Failed to load Google Maps API. Please check your internet connection and API key.')
         setIsLoading(false)
       }
       document.head.appendChild(script)
@@ -53,7 +63,8 @@ const Map = () => {
           setIsLoading(false)
         }
       } catch (err) {
-        setError('Failed to initialize map')
+        console.error('Map initialization error:', err)
+        setError(`Failed to initialize map: ${err.message}`)
         setIsLoading(false)
       }
     }

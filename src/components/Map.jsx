@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Search, MapPin } from 'lucide-react'
 
 const Map = () => {
   const mapRef = useRef(null)
   const mapInstanceRef = useRef(null)
+  const searchInputRef = useRef(null)
+  const autocompleteRef = useRef(null)
+  const markerRef = useRef(null)
+  const infowindowRef = useRef(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [selectedPlace, setSelectedPlace] = useState(null)
 
   useEffect(() => {
     // Load Google Maps API
@@ -44,6 +50,7 @@ const Map = () => {
           mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
             center: defaultLocation,
             zoom: 13,
+            mapTypeControl: false,
             styles: [
               {
                 featureType: 'poi.business',
@@ -53,12 +60,74 @@ const Map = () => {
             ]
           })
 
-          // Add a marker for the default location
-          new window.google.maps.Marker({
-            position: defaultLocation,
-            map: mapInstanceRef.current,
-            title: 'Default Location'
-          })
+          // Initialize autocomplete
+          if (searchInputRef.current && window.google.maps.places) {
+            const options = {
+              fields: ["formatted_address", "geometry", "name"],
+              strictBounds: false,
+            }
+
+            autocompleteRef.current = new window.google.maps.places.Autocomplete(
+              searchInputRef.current,
+              options
+            )
+
+            // Bind the map's bounds to the autocomplete object
+            autocompleteRef.current.bindTo("bounds", mapInstanceRef.current)
+
+            // Create info window
+            infowindowRef.current = new window.google.maps.InfoWindow()
+
+            // Create marker
+            markerRef.current = new window.google.maps.Marker({
+              map: mapInstanceRef.current,
+              anchorPoint: new window.google.maps.Point(0, -29),
+            })
+
+            // Add place_changed listener
+            autocompleteRef.current.addListener("place_changed", () => {
+              infowindowRef.current.close()
+              markerRef.current.setVisible(false)
+
+              const place = autocompleteRef.current.getPlace()
+
+              if (!place.geometry || !place.geometry.location) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                window.alert("No details available for input: '" + place.name + "'")
+                return
+              }
+
+              // If the place has a geometry, then present it on a map.
+              if (place.geometry.viewport) {
+                mapInstanceRef.current.fitBounds(place.geometry.viewport)
+              } else {
+                mapInstanceRef.current.setCenter(place.geometry.location)
+                mapInstanceRef.current.setZoom(17)
+              }
+
+              markerRef.current.setPosition(place.geometry.location)
+              markerRef.current.setVisible(true)
+
+              // Update state with selected place
+              setSelectedPlace({
+                name: place.name,
+                address: place.formatted_address,
+                location: place.geometry.location
+              })
+
+              // Create info window content
+              const content = `
+                <div class="p-3 max-w-xs">
+                  <h3 class="font-semibold text-sm mb-1">${place.name}</h3>
+                  <p class="text-xs text-gray-600">${place.formatted_address}</p>
+                </div>
+              `
+
+              infowindowRef.current.setContent(content)
+              infowindowRef.current.open(mapInstanceRef.current, markerRef.current)
+            })
+          }
 
           setIsLoading(false)
         }
@@ -105,6 +174,22 @@ const Map = () => {
       </div>
       
       <div className="relative px-6">
+        {/* Search Input */}
+        <div className="absolute top-4 left-4 z-10 w-80">
+          <div className="bg-white rounded-lg shadow-lg p-3">
+            <div className="flex items-center space-x-2">
+              <Search className="w-5 h-5 text-gray-400" />
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search for a location..."
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c] focus:border-transparent"
+                style={{ fontSize: '14px' }}
+              />
+            </div>
+          </div>
+        </div>
+
         <div 
           ref={mapRef} 
           className="w-full rounded-lg border border-gray-200 shadow-lg"
@@ -121,9 +206,28 @@ const Map = () => {
         )}
       </div>
       
+      {/* Selected Place Info */}
+      {selectedPlace && (
+        <div className="px-6 mt-4">
+          <div className="bg-white rounded-lg shadow-lg p-4 border border-gray-200">
+            <div className="flex items-start space-x-3">
+              <MapPin className="w-5 h-5 text-[#382c5c] mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-[#181225] mb-1">{selectedPlace.name}</h3>
+                <p className="text-sm text-gray-600 mb-2">{selectedPlace.address}</p>
+                <div className="text-xs text-gray-500">
+                  Coordinates: {selectedPlace.location.lat().toFixed(6)}, {selectedPlace.location.lng().toFixed(6)}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <div className="px-6 mt-6 text-sm text-gray-500 text-center">
         <p>📍 Click and drag to explore the map</p>
         <p>🔍 Use the zoom controls to get a closer look</p>
+        <p>🔎 Type in the search box to find locations</p>
       </div>
     </div>
   )

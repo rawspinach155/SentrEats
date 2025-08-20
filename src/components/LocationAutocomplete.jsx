@@ -26,8 +26,17 @@ const LocationAutocomplete = ({
     setIsLoading(true)
     
     try {
+      // Build search parameters for San Francisco area (more flexible)
+      const params = new URLSearchParams({
+        format: 'json',
+        q: `${query} San Francisco`,
+        limit: '5',
+        addressdetails: '1',
+        countrycodes: 'us'
+      })
+
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1&countrycodes=us`
+        `https://nominatim.openstreetmap.org/search?${params.toString()}`
       )
       
       if (response.ok) {
@@ -36,7 +45,18 @@ const LocationAutocomplete = ({
         setShowDropdown(true)
       } else {
         console.error('Search failed:', response.status)
-        setPredictions([])
+        // Fallback to broader search if SF-specific search fails
+        const fallbackResponse = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1&countrycodes=us`
+        )
+        
+        if (fallbackResponse.ok) {
+          const fallbackData = await fallbackResponse.json()
+          setPredictions(fallbackData)
+          setShowDropdown(true)
+        } else {
+          setPredictions([])
+        }
       }
     } catch (error) {
       console.error('Error searching locations:', error)

@@ -1,23 +1,80 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { User, Settings, LogOut, Edit3, MapPin, Star, Trash2, Plus } from 'lucide-react'
+import { buildApiUrl, API_ENDPOINTS } from '../config/api'
 
-const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {} }) => {
+const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, currentUser, onLogout }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    bio: 'Food enthusiast and restaurant explorer'
+    name: '',
+    email: '',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=default',
+    bio: ''
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
-  const handleSave = () => {
-    setIsEditing(false)
-    // Here you would typically save to backend
+  // Load user data when component mounts or currentUser changes
+  useEffect(() => {
+    if (currentUser) {
+      setProfileData({
+        name: currentUser.name || '',
+        email: currentUser.email || '',
+        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`,
+        bio: currentUser.bio || ''
+      })
+    }
+  }, [currentUser])
+
+  const handleSave = async () => {
+    setIsLoading(true)
+    setError('')
+    setSuccess('')
+
+    try {
+      const response = await fetch(buildApiUrl(`${API_ENDPOINTS.USERS}/profile`), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: profileData.name,
+          email: profileData.email,
+          bio: profileData.bio,
+          avatar: profileData.avatar
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSuccess('Profile updated successfully!')
+        setIsEditing(false)
+        // Update the currentUser in parent component if needed
+        setTimeout(() => setSuccess(''), 3000)
+      } else {
+        setError(data.error || 'Failed to update profile')
+      }
+    } catch (error) {
+      setError('Network error. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleCancel = () => {
     setIsEditing(false)
-    // Reset to original data
+    // Reset to original user data
+    if (currentUser) {
+      setProfileData({
+        name: currentUser.name || '',
+        email: currentUser.email || '',
+        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`,
+        bio: currentUser.bio || ''
+      })
+    }
+    setError('')
+    setSuccess('')
   }
 
   const getRatingEmoji = (type, rating) => {
@@ -47,7 +104,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {} }) =>
           <div className="mt-4">
             <h2 className="text-2xl font-bold text-[#181225]">{profileData.name}</h2>
             <p className="text-gray-600">{profileData.email}</p>
-            <p className="text-gray-500 mt-2">{profileData.bio}</p>
+            <p className="text-gray-500 mt-2">{profileData.bio || 'No bio added yet'}</p>
           </div>
         ) : (
           <div className="mt-4 space-y-3">
@@ -69,6 +126,18 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {} }) =>
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c] resize-none"
               rows="2"
             />
+          </div>
+        )}
+        
+        {/* Error and Success Messages */}
+        {error && (
+          <div className="mt-3 text-red-500 text-sm bg-red-50 p-3 rounded-lg">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="mt-3 text-green-500 text-sm bg-green-50 p-3 rounded-lg">
+            {success}
           </div>
         )}
       </div>
@@ -158,13 +227,15 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {} }) =>
           <div className="flex space-x-2">
             <button
               onClick={handleSave}
-              className="flex-1 bg-[#382c5c] text-white py-2 px-4 rounded-lg hover:bg-[#2a1f45] transition-colors"
+              disabled={isLoading}
+              className="flex-1 bg-[#382c5c] text-white py-2 px-4 rounded-lg hover:bg-[#2a1f45] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Save
+              {isLoading ? 'Saving...' : 'Save'}
             </button>
             <button
               onClick={handleCancel}
-              className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+              disabled={isLoading}
+              className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </button>
@@ -176,7 +247,10 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {} }) =>
           <span>Settings</span>
         </button>
         
-        <button className="w-full bg-red-100 text-red-600 py-2 px-4 rounded-lg hover:bg-red-200 transition-colors flex items-center justify-center space-x-2">
+        <button 
+          onClick={onLogout}
+          className="w-full bg-red-100 text-red-600 py-2 px-4 rounded-lg hover:bg-red-200 transition-colors flex items-center justify-center space-x-2"
+        >
           <LogOut className="w-4 h-4" />
           <span>Logout</span>
         </button>

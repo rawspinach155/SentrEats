@@ -182,222 +182,223 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Name *
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-            className="input-field font-rubik"
-            placeholder="Enter eatery name"
-          />
-        </div>
-
-        {/* Address */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Address *
-          </label>
-          <textarea
-            name="address"
-            value={formData.address}
-            onChange={handleInputChange}
-            required
-            rows="3"
-            className="input-field font-rubik"
-            placeholder="Enter full address"
-          />
-        </div>
-
-        {/* Type */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Place Type *
-          </label>
-          <select
-            name="type"
-            value={formData.type}
-            onChange={handleInputChange}
-            required
-            className="input-field font-rubik"
-          >
-            <option value="">Select place type</option>
-            {typeOptions.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Dietary Options */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-3 font-rubik">
-            Dietary Options
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            {Object.entries(formData.dietaryOptions).map(([option, checked]) => {
-              const colors = dietaryColors[option]
-              return (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() => handleDietaryChange(option)}
-                  className={`filter-btn ${
-                    checked 
-                      ? 'filter-btn-active' 
-                      : 'filter-btn-inactive'
-                  } font-rubik`}
-                  style={{
-                    backgroundColor: checked ? colors.bg : 'transparent',
-                    border: `2px solid ${colors.border}`,
-                    color: checked ? colors.text : colors.border
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!checked) {
-                      e.target.style.backgroundColor = colors.hover
-                      e.target.style.color = colors.text
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!checked) {
-                      e.target.style.backgroundColor = 'transparent'
-                      e.target.style.color = colors.border
-                    }
-                  }}
-                >
-                  {option.replace(/([A-Z])/g, ' $1').replace('Free', 'free')}
-                </button>
-              )
-            })}
+      {/* Scrollable form container */}
+      <div className="max-h-[70vh] overflow-y-auto pr-2">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+              Name *
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              className="input-field font-rubik"
+              placeholder="Enter eatery name"
+            />
           </div>
-        </div>
 
-        {/* Price Range */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Price Range *
-          </label>
-          <div className="grid grid-cols-4 gap-2">
-            {priceOptions.map((price, index) => {
-              const colors = priceColors[index]
-              return (
+          {/* Address */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+              Address *
+            </label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              required
+              rows="3"
+              className="input-field font-rubik"
+              placeholder="Enter full address"
+            />
+          </div>
+
+          {/* Type */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+              Place Type *
+            </label>
+            <select
+              name="type"
+              value={formData.type}
+              onChange={handleInputChange}
+              required
+              className="input-field font-rubik"
+            >
+              <option value="">Select place type</option>
+              {typeOptions.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Dietary Options */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-3 font-rubik">
+              Dietary Options
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {Object.entries(formData.dietaryOptions).map(([option, checked]) => {
+                const colors = dietaryColors[option]
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => handleDietaryChange(option)}
+                    className={`filter-btn ${
+                      checked 
+                        ? 'filter-btn-active' 
+                        : 'filter-btn-inactive'
+                    } font-rubik`}
+                    style={{
+                      backgroundColor: checked ? colors.bg : 'transparent',
+                      border: `2px solid ${colors.border}`,
+                      color: checked ? colors.text : colors.border
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!checked) {
+                        e.target.style.backgroundColor = colors.hover
+                        e.target.style.color = colors.text
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!checked) {
+                        e.target.style.backgroundColor = 'transparent'
+                        e.target.style.color = colors.border
+                      }
+                    }}
+                  >
+                    {option.replace(/([A-Z])/g, ' $1').replace('Free', 'free')}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Price Range */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+              Price Range *
+            </label>
+            <div className="grid grid-cols-4 gap-2">
+              {priceOptions.map((price, index) => {
+                const colors = priceColors[index]
+                return (
+                  <button
+                    key={price}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, price }))}
+                    className={`filter-btn font-rubik text-center ${
+                      formData.price === price ? 'filter-btn-active' : 'filter-btn-inactive'
+                    }`}
+                    style={{
+                      backgroundColor: formData.price === price ? colors.bg : 'transparent',
+                      border: `2px solid ${colors.outline}`,
+                      color: formData.price === price ? 'white' : colors.outline,
+                      minWidth: '0',
+                      width: '100%'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (formData.price !== price) {
+                        e.target.style.backgroundColor = colors.hover
+                        e.target.style.color = 'white'
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (formData.price !== price) {
+                        e.target.style.backgroundColor = 'transparent'
+                        e.target.style.color = colors.outline
+                      }
+                    }}
+                  >
+                    {price}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Cuisine Type */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+              Cuisine Type *
+            </label>
+            <select
+              name="cuisine"
+              value={formData.cuisine}
+              onChange={handleInputChange}
+              required
+              className="input-field font-rubik"
+            >
+              <option value="">Select cuisine type</option>
+              {cuisineOptions.map((cuisine) => (
+                <option key={cuisine} value={cuisine}>
+                  {cuisine}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Rating */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+              Rating ({isSweetPlace(formData.type) ? 'Sweet Potatoes' : 'Potatoes'}) *
+            </label>
+            <div className="flex space-x-2">
+              {[1, 2, 3, 4, 5].map((star) => (
                 <button
-                  key={price}
+                  key={star}
                   type="button"
-                  onClick={() => setFormData(prev => ({ ...prev, price }))}
-                  className={`filter-btn font-rubik text-center ${
-                    formData.price === price ? 'filter-btn-active' : 'filter-btn-inactive'
+                  onClick={() => handleRatingChange(star)}
+                  className={`p-2 rounded-lg transition-all duration-200 transform hover:scale-110 ${
+                    star <= formData.rating
+                      ? 'animate-pulse-glow' 
+                      : 'hover:bg-[#f6f6f8]'
                   }`}
-                  style={{
-                    backgroundColor: formData.price === price ? colors.bg : 'transparent',
-                    border: `2px solid ${colors.outline}`,
-                    color: formData.price === price ? 'white' : colors.outline,
-                    minWidth: '0',
-                    width: '100%'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (formData.price !== price) {
-                      e.target.style.backgroundColor = colors.hover
-                      e.target.style.color = 'white'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (formData.price !== price) {
-                      e.target.style.backgroundColor = 'transparent'
-                      e.target.style.color = colors.outline
-                    }
-                  }}
                 >
-                  {price}
+                  <span className="text-3xl">
+                    {isSweetPlace(formData.type) ? '🍠' : '🥔'}
+                  </span>
                 </button>
-              )
-            })}
+              ))}
+            </div>
+            <p className="text-sm text-[#382c5c] mt-2 font-rubik">
+              {formData.rating > 0 ? `${formData.rating} ${isSweetPlace(formData.type) ? 'sweet potato' : 'potato'}${formData.rating > 1 ? 'es' : ''}` : 'Select rating'}
+            </p>
           </div>
-        </div>
 
-        {/* Cuisine Type */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Cuisine Type *
-          </label>
-          <select
-            name="cuisine"
-            value={formData.cuisine}
-            onChange={handleInputChange}
-            required
-            className="input-field font-rubik"
-          >
-            <option value="">Select cuisine type</option>
-            {cuisineOptions.map((cuisine) => (
-              <option key={cuisine} value={cuisine}>
-                {cuisine}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Rating */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Rating ({isSweetPlace(formData.type) ? 'Sweet Potatoes' : 'Potatoes'}) *
-          </label>
-          <div className="flex space-x-2">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                onClick={() => handleRatingChange(star)}
-                className={`p-2 rounded-lg transition-all duration-200 transform hover:scale-110 ${
-                  star <= formData.rating
-                    ? 'animate-pulse-glow' 
-                    : 'hover:bg-[#f6f6f8]'
-                }`}
-              >
-                <span className="text-3xl">
-                  {isSweetPlace(formData.type) ? '🍠' : '🥔'}
-                </span>
-              </button>
-            ))}
+          {/* Comment Section */}
+          <div>
+            <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
+              Food Recommendations & Notes
+            </label>
+            <textarea
+              name="comment"
+              value={formData.comment}
+              onChange={handleInputChange}
+              rows="4"
+              className="input-field font-rubik"
+              placeholder="Share your favorite dishes, must-try items, or any helpful tips about this place..."
+            />
           </div>
-          <p className="text-sm text-[#382c5c] mt-2 font-rubik">
-            {formData.rating > 0 ? `${formData.rating} ${isSweetPlace(formData.type) ? 'sweet potato' : 'potato'}${formData.rating > 1 ? 'es' : ''}` : 'Select rating'}
-          </p>
-        </div>
 
-        {/* Comment Section */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Food Recommendations & Notes
-          </label>
-          <textarea
-            name="comment"
-            value={formData.comment}
-            onChange={handleInputChange}
-            rows="4"
-            className="input-field font-rubik"
-            placeholder="Share your favorite dishes, must-try items, or any helpful tips about this place..."
-          />
-        </div>
-
-
-
-        {/* Submit Button */}
-        <div className="pt-4">
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl font-rubik"
-          >
-            Add Eatery
-          </button>
-        </div>
-      </form>
+          {/* Submit Button */}
+          <div className="pt-4">
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl font-rubik"
+            >
+              Add Eatery
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

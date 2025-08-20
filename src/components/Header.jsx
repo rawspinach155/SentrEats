@@ -9,6 +9,17 @@ const Header = ({ activeTab, onTabChange, onLogoutClick, isAuthenticated, curren
     setShowSearch(!showSearch)
   }
 
+  // Generate consistent avatar color based on user name (fallback)
+  const getAvatarColor = (name) => {
+    if (!name) return '#7553ff'
+    const brandColors = ['#7553ff', '#ff45a8', '#ee8019', '#fdb81b', '#92dd00', '#226dfc']
+    let hash = 0
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    return brandColors[Math.abs(hash) % brandColors.length]
+  }
+
   return (
     <>
       <header className="bg-white shadow-lg border-b border-[#e8e8ea] sticky top-0 z-50">
@@ -77,6 +88,18 @@ const Header = ({ activeTab, onTabChange, onLogoutClick, isAuthenticated, curren
               
               {/* User is logged in - show user info and logout */}
               <div className="flex items-center space-x-3">
+                {/* User Avatar */}
+                <div 
+                  className="w-10 h-10 rounded-full border-2 border-white shadow-md flex items-center justify-center"
+                  style={{ backgroundColor: currentUser?.avatarColor || getAvatarColor(currentUser?.name) }}
+                >
+                  <img
+                    src="/sentry-glyph.png"
+                    alt="User Avatar"
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                
                 <div className="text-right">
                   <p className="text-sm font-medium text-[#382c5c]">{currentUser?.name}</p>
                   <p className="text-xs text-gray-500">{currentUser?.email}</p>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { X, Mail, Lock } from 'lucide-react'
 import { buildApiUrl, API_ENDPOINTS } from '../config/api'
 
-const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
+const LoginModal = ({ isOpen, onClose, onLoginSuccess, onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -128,7 +128,11 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-6">
           Don't have an account?{' '}
-          <button className="text-[#382c5c] hover:underline font-medium">
+          <button 
+            type="button"
+            onClick={onSwitchToSignup}
+            className="text-[#382c5c] hover:underline font-medium cursor-pointer"
+          >
             Sign Up
           </button>
         </p>

@@ -258,7 +258,7 @@ const SearchAndFilter = ({ onSearch, onFilter, isVisible, onToggle }) => {
                           star <= filters.rating ? 'text-[#fdb81b]' : 'text-gray-300'
                         } hover:text-[#fdb81b] hover:scale-110`}
                       >
-                        🍠
+                        🥔
                       </button>
                     ))}
                     {filters.rating > 0 && (

@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "name": "test",
-    "email": "test@sentry.io",
+    "name": "Alex Chen",
+    "email": "alex.chen@example.com",
     "password": "password123",
     "avatarColor": "#7553ff",
     "createdAt": "2024-01-15T10:00:00Z",
@@ -10,35 +10,60 @@
   },
   {
     "id": 2,
-    "name": "Jane Smith",
-    "email": "jane.smith@example.com",
+    "name": "Maria Rodriguez",
+    "email": "maria.rodriguez@example.com",
     "password": "password456",
     "avatarColor": "#ff45a8",
     "createdAt": "2024-01-16T12:00:00Z"
   },
   {
     "id": 3,
-    "name": "vishnu satish",
-    "email": "vishnu@sentry.io",
-    "password": "hellohello",
+    "name": "David Kim",
+    "email": "david.kim@example.com",
+    "password": "password789",
     "avatarColor": "#ee8019",
     "createdAt": "2025-08-19T23:08:25.937Z"
   },
   {
     "id": 4,
-    "name": "vishnus",
-    "email": "vishnus@vishnus.com",
-    "password": "vishnus",
-    "avatarColor": "#fdb81b",
-    "createdAt": "2025-08-19T23:36:20.937Z"
+    "name": "Arielle Johnson",
+    "email": "sarah.johnson@example.com",
+    "password": "password101",
+    "avatarColor": "#4CAF50",
+    "createdAt": "2025-08-19T23:36:20.937Z",
+    "updatedAt": "2025-08-20T23:05:11.392Z"
   },
   {
     "id": 5,
-    "name": "arielle",
-    "email": "arielle.blumenfeld@sentry.io",
-    "password": "123456",
-    "avatarColor": "#ff45a8",
+    "name": "Marcus Thompson",
+    "email": "marcus.thompson@example.com",
+    "password": "password202",
+    "avatarColor": "#9C27B0",
     "createdAt": "2025-08-20T15:55:52.803Z",
     "updatedAt": "2025-08-20T22:01:15.402Z"
+  },
+  {
+    "id": 6,
+    "name": "Priya Patel",
+    "email": "priya.patel@example.com",
+    "password": "password303",
+    "avatarColor": "#FF9800",
+    "createdAt": "2025-08-21T09:15:30.000Z"
+  },
+  {
+    "id": 7,
+    "name": "James Wilson",
+    "email": "james.wilson@example.com",
+    "password": "password404",
+    "avatarColor": "#2196F3",
+    "createdAt": "2025-08-21T14:22:45.000Z"
+  },
+  {
+    "id": 8,
+    "name": "Aisha Hassan",
+    "email": "aisha.hassan@example.com",
+    "password": "password505",
+    "avatarColor": "#E91E63",
+    "createdAt": "2025-08-21T16:40:12.000Z"
   }
 ]

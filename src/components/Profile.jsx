@@ -7,8 +7,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=default',
-    bio: ''
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=default'
   })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -20,8 +19,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       setProfileData({
         name: currentUser.name || '',
         email: currentUser.email || '',
-        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`,
-        bio: currentUser.bio || ''
+        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`
       })
     }
   }, [currentUser])
@@ -40,7 +38,6 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
         body: JSON.stringify({
           name: profileData.name,
           email: profileData.email,
-          bio: profileData.bio,
           avatar: profileData.avatar
         })
       })
@@ -69,8 +66,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       setProfileData({
         name: currentUser.name || '',
         email: currentUser.email || '',
-        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`,
-        bio: currentUser.bio || ''
+        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`
       })
     }
     setError('')
@@ -104,7 +100,6 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
           <div className="mt-4">
             <h2 className="text-2xl font-bold text-[#181225]">{profileData.name}</h2>
             <p className="text-gray-600">{profileData.email}</p>
-            <p className="text-gray-500 mt-2">{profileData.bio || 'No bio added yet'}</p>
           </div>
         ) : (
           <div className="mt-4 space-y-3">
@@ -119,12 +114,6 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
               value={profileData.email}
               onChange={(e) => setProfileData({...profileData, email: e.target.value})}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2a1f45]"
-            />
-            <textarea
-              value={profileData.bio}
-              onChange={(e) => setProfileData({...profileData, bio: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c] resize-none"
-              rows="2"
             />
           </div>
         )}
@@ -143,7 +132,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="text-center p-3 bg-[#f6f6f8] rounded-lg">
           <div className="text-2xl font-bold text-[#382c5c]">{eateries.length}</div>
           <div className="text-sm text-gray-600">Places</div>
@@ -153,12 +142,6 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
             {eateries.length > 0 ? (eateries.reduce((sum, place) => sum + (place.rating || 0), 0) / eateries.length).toFixed(1) : 0}
           </div>
           <div className="text-sm text-gray-600">Avg Rating</div>
-        </div>
-        <div className="text-center p-3 bg-[#f6f6f8] rounded-lg">
-          <div className="text-2xl font-bold text-[#382c5c]">
-            {eateries.filter(place => place.dietaryOptions && place.dietaryOptions.vegan).length}
-          </div>
-          <div className="text-sm text-gray-600">Vegan</div>
         </div>
       </div>
 
@@ -185,7 +168,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
                       <MapPin className="w-3 h-3 mr-1" />
                       <span className="truncate">{place.address}</span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center space-x-2">
                         <span className="text-xs bg-[#382c5c] text-white px-2 py-1 rounded">
                           {place.type}
@@ -198,6 +181,32 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
                         <span className="text-sm text-gray-600">{getRatingEmoji(place.type, place.rating)}</span>
                       </div>
                     </div>
+                    
+                    {/* Dietary Options */}
+                    {place.dietaryOptions && Object.values(place.dietaryOptions).some(Boolean) && (
+                      <div className="flex flex-wrap gap-1">
+                        {Object.entries(place.dietaryOptions).map(([option, isActive]) => {
+                          if (!isActive) return null
+                          
+                          const dietaryColors = {
+                            glutenFree: 'bg-[#fdb81b] text-white',
+                            vegan: 'bg-[#ff70bc] text-white',
+                            vegetarian: 'bg-[#ee8019] text-white',
+                            dairyFree: 'bg-[#6e47ae] text-white',
+                            nutFree: 'bg-[#4d0a55] text-white'
+                          }
+                          
+                          return (
+                            <span
+                              key={option}
+                              className={`px-2 py-1 ${dietaryColors[option]} text-xs rounded-full font-semibold shadow-sm font-rubik`}
+                            >
+                              {option.replace(/([A-Z])/g, ' $1').replace('Free', 'free')}
+                            </span>
+                          )
+                        })}
+                      </div>
+                    )}
                   </div>
                   <button
                     onClick={() => onDelete(place.id)}

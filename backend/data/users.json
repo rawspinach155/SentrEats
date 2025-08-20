@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "name": "vishnus",
-    "email": "vishnus@vishnus.com",
+    "name": "arielle",
+    "email": "arielle.blumenfeld@sentry.io",
     "password": "password123",
-    "bio": "test bio",
-    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=vishnus",
+    "bio": "",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=arielle",
     "createdAt": "2024-01-15T10:00:00Z",
-    "updatedAt": "2025-08-19T23:48:48.191Z"
+    "updatedAt": "2025-08-20T16:20:14.209Z"
   },
   {
     "id": 2,
@@ -35,5 +35,12 @@
     "bio": "Passionate about great food",
     "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=vishnus",
     "createdAt": "2025-08-19T23:36:20.937Z"
+  },
+  {
+    "id": 5,
+    "name": "arielle",
+    "email": "arielle.blumenfeld@sentry.io",
+    "password": "123456",
+    "createdAt": "2025-08-20T15:55:52.803Z"
   }
 ]

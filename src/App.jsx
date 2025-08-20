@@ -11,10 +11,13 @@ import { buildApiUrl, API_ENDPOINTS } from './config/api'
 
 function App() {
   const [eateries, setEateries] = useState([])
+  const [filteredEateries, setFilteredEateries] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [activeTab, setActiveTab] = useState('home')
   const [showSignupModal, setShowSignupModal] = useState(false)
   const [showLoginModal, setShowLoginModal] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [activeFilters, setActiveFilters] = useState({})
   
   // Use the auth hook
   const { isAuthenticated, currentUser, login, logout, signup } = useAuth()
@@ -54,7 +57,72 @@ function App() {
     fetchEateries()
   }, [])
 
+  // Apply search and filters whenever they change
+  useEffect(() => {
+    applySearchAndFilters()
+  }, [searchTerm, activeFilters, eateries])
 
+  const applySearchAndFilters = () => {
+    let filtered = [...eateries]
+
+    // Apply search term
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase()
+      filtered = filtered.filter(place => 
+        place.name.toLowerCase().includes(searchLower) ||
+        place.address.toLowerCase().includes(searchLower) ||
+        place.cuisine.toLowerCase().includes(searchLower) ||
+        place.type.toLowerCase().includes(searchLower)
+      )
+    }
+
+    // Apply dietary filters
+    if (activeFilters.dietaryOptions) {
+      Object.entries(activeFilters.dietaryOptions).forEach(([option, isActive]) => {
+        if (isActive) {
+          filtered = filtered.filter(place => place.dietaryOptions?.[option])
+        }
+      })
+    }
+
+    // Apply cuisine filters
+    if (activeFilters.cuisines && activeFilters.cuisines.length > 0) {
+      filtered = filtered.filter(place => 
+        activeFilters.cuisines.includes(place.cuisine)
+      )
+    }
+
+    // Apply place type filters
+    if (activeFilters.placeTypes && activeFilters.placeTypes.length > 0) {
+      filtered = filtered.filter(place => 
+        activeFilters.placeTypes.includes(place.type)
+      )
+    }
+
+    // Apply price filters
+    if (activeFilters.priceRange && activeFilters.priceRange.length > 0) {
+      filtered = filtered.filter(place => 
+        activeFilters.priceRange.includes(place.price)
+      )
+    }
+
+    // Apply rating filter
+    if (activeFilters.rating && activeFilters.rating > 0) {
+      filtered = filtered.filter(place => 
+        place.rating >= activeFilters.rating
+      )
+    }
+
+    setFilteredEateries(filtered)
+  }
+
+  const handleSearch = (term) => {
+    setSearchTerm(term)
+  }
+
+  const handleFilter = (filters) => {
+    setActiveFilters(filters)
+  }
 
   const addEatery = async (newPlace) => {
     try {
@@ -145,8 +213,15 @@ function App() {
     
     return (
       <FoodPlaceList 
-        eateries={eateries} 
+        eateries={filteredEateries} 
         onDelete={deleteEatery}
+        totalEateries={eateries.length}
+        hasActiveFilters={searchTerm.trim() !== '' || Object.keys(activeFilters).some(key => {
+          if (key === 'dietaryOptions') {
+            return Object.values(activeFilters.dietaryOptions).some(Boolean)
+          }
+          return Array.isArray(activeFilters[key]) ? activeFilters[key].length > 0 : activeFilters[key] > 0
+        })}
       />
     )
   }
@@ -158,6 +233,7 @@ function App() {
           onSubmit={addEatery}
           isOpen={showForm}
           onClose={() => setShowForm(false)}
+          onOpen={() => setShowForm(true)}
         />
       )
     }
@@ -168,7 +244,6 @@ function App() {
   return (
     <div className="min-h-screen bg-[#f6f6f8]">
       <Header 
-        onAddNew={() => setShowForm(true)} 
         activeTab={activeTab}
         onTabChange={handleTabChange}
         onSignupClick={handleSignupClick}
@@ -176,6 +251,10 @@ function App() {
         onLogoutClick={handleLogoutClick}
         isAuthenticated={isAuthenticated}
         currentUser={currentUser}
+        onSearch={handleSearch}
+        onFilter={handleFilter}
+        searchTerm={searchTerm}
+        activeFilters={activeFilters}
       />
       
       {activeTab === 'map' ? (
@@ -201,6 +280,25 @@ function App() {
             
 
           </div>
+
+          {/* Search Summary */}
+          {(searchTerm.trim() !== '' || Object.keys(activeFilters).some(key => {
+            if (key === 'dietaryOptions') {
+              return Object.values(activeFilters.dietaryOptions).some(Boolean)
+            }
+            return Array.isArray(activeFilters[key]) ? activeFilters[key].length > 0 : activeFilters[key] > 0
+          })) && (
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 mb-8">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-[#181225] font-rubik">
+                  Search & Filter Results
+                </h3>
+                <p className="text-sm text-gray-600 font-rubik">
+                  Found {filteredEateries.length} eateries matching your criteria
+                </p>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}

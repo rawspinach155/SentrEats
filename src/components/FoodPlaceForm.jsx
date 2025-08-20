@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { X, Upload, Star } from 'lucide-react'
+import { X, Upload, Star, Plus } from 'lucide-react'
 
-const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
+const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -139,7 +139,15 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose }) => {
             <img src="/sentry-glyph.png" alt="SentrEats Logo" className="w-12 h-12" />
           </div>
           <h3 className="text-xl font-semibold text-[#181225] mb-2 font-rubik">Add New Eatery</h3>
-          <p className="text-sm text-[#382c5c]">Click the button above to start adding your favorite restaurants!</p>
+          <p className="text-sm text-[#382c5c] mb-6">Click the button below to start adding your favorite restaurants!</p>
+          
+          <button
+            onClick={onOpen}
+            className="bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2 mx-auto"
+          >
+            <Plus className="w-5 h-5" />
+            <span>Add New Eatery</span>
+          </button>
         </div>
       </div>
     )

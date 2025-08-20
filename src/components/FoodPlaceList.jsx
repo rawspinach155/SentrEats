@@ -1,22 +1,29 @@
 import React from 'react'
 import { MapPin, Trash2, Star } from 'lucide-react'
 
-const FoodPlaceList = ({ eateries, onDelete }) => {
+const FoodPlaceList = ({ eateries, onDelete, totalEateries, hasActiveFilters }) => {
   if (eateries.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="w-28 h-28 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
           <img src="/sentry-glyph.png" alt="SentrEats Logo" className="w-16 h-16" />
         </div>
-        <h3 className="text-2xl font-semibold text-[#181225] mb-3 font-rubik">No Eateries Yet</h3>
-        <p className="text-[#382c5c] font-rubik">Start adding your favorite restaurants to see them here!</p>
+        <h3 className="text-2xl font-semibold text-[#181225] mb-3 font-rubik">
+          {hasActiveFilters ? 'No Results Found' : 'No Eateries Yet'}
+        </h3>
+        <p className="text-[#382c5c] font-rubik">
+          {hasActiveFilters 
+            ? 'Try adjusting your search or filters to find more eateries.' 
+            : 'Start adding your favorite restaurants to see them here!'
+          }
+        </p>
       </div>
     )
   }
 
   return (
     <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-[#181225] font-rubik">Your Eateries</h2>
+      <h2 className="text-3xl font-bold text-[#181225] font-rubik">Your Eateries</h2>
       
       <div className="grid gap-6">
         {eateries.map((place) => (

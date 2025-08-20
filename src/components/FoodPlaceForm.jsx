@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { X, Star, Plus } from 'lucide-react'
+import LocationAutocomplete from './LocationAutocomplete'
 
 const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
     rating: 0,
     comment: ''
   })
+  const [selectedLocation, setSelectedLocation] = useState(null)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -97,6 +99,16 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
       comment: ''
     })
     setImagePreview([])
+    setSelectedLocation(null)
+  }
+
+  const handleLocationSelected = (locationData) => {
+    setSelectedLocation(locationData)
+    // Update the address field with the formatted address
+    setFormData(prev => ({
+      ...prev,
+      address: locationData ? locationData.formatted_address : ''
+    }))
   }
 
   // Place type options including sweet places for sweet potato ratings
@@ -204,14 +216,12 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
           <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
             Address *
           </label>
-          <textarea
-            name="address"
+          <LocationAutocomplete
             value={formData.address}
-            onChange={handleInputChange}
-            required
-            rows="3"
-            className="input-field font-rubik"
-            placeholder="Enter full address"
+            onChange={(value) => setFormData(prev => ({ ...prev, address: value }))}
+            onLocationSelected={handleLocationSelected}
+            placeholder="Search for a location..."
+            className="w-full"
           />
         </div>
 

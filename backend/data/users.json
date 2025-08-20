@@ -4,9 +4,9 @@
     "name": "test",
     "email": "test@sentry.io",
     "password": "password123",
-    "avatarColor": "#7553ff",
+    "avatarColor": "#ff45a8",
     "createdAt": "2024-01-15T10:00:00Z",
-    "updatedAt": "2025-08-20T21:28:54.309Z"
+    "updatedAt": "2025-08-20T21:48:00.895Z"
   },
   {
     "id": 2,

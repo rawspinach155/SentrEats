@@ -99,5 +99,26 @@
     "createdAt": "2025-08-20T21:29:29.454Z",
     "createdBy": "test",
     "userId": 1
+  },
+  {
+    "id": 7,
+    "name": "andy",
+    "address": "Andytown, 800, Great Highway, San Francisco, California, 94121, United States",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 3,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:52:07.003Z",
+    "createdBy": "test",
+    "userId": 1
   }
 ]

@@ -27,6 +27,7 @@ router.get('/get-all-users', (req, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      avatarColor: user.avatarColor,
       // Note: In production, you'd want to exclude passwords
       // password: user.password // Only for development/hackathon
     }));
@@ -98,8 +99,7 @@ router.post('/login', [
 router.put('/profile', [
   body('name').optional().trim().escape(),
   body('email').optional().isEmail().normalizeEmail(),
-  body('bio').optional().trim().escape(),
-  body('avatar').optional().trim()
+  body('avatarColor').optional().trim()
 ], (req, res) => {
   try {
     const errors = validationResult(req);
@@ -107,7 +107,7 @@ router.put('/profile', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, bio, avatar } = req.body;
+    const { name, email, avatarColor } = req.body;
     const usersPath = path.join(__dirname, '../../data/users.json');
     
     // Check if file exists
@@ -127,8 +127,7 @@ router.put('/profile', [
       // Update user fields
       if (name !== undefined) users[userIndex].name = name;
       if (email !== undefined) users[userIndex].email = email;
-      if (bio !== undefined) users[userIndex].bio = bio || '';
-      if (avatar !== undefined) users[userIndex].avatar = avatar;
+      if (avatarColor !== undefined) users[userIndex].avatarColor = avatarColor;
       
       // Add updated timestamp
       users[userIndex].updatedAt = new Date().toISOString();
@@ -162,12 +161,11 @@ router.post('/signup', [
   body('name').notEmpty().trim().escape(),
   body('email').isEmail().normalizeEmail(),
   body('password').isLength({ min: 6 }),
-  body('bio').optional().trim().escape(),
 ], (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ error: errors.array() });
     }
 
     const { name, email, password } = req.body;
@@ -188,12 +186,17 @@ router.post('/signup', [
       return res.status(400).json({ error: 'User with this email already exists' });
     }
     
+    // Generate a random avatar color from the brand palette
+    const brandColors = ['#7553ff', '#ff45a8', '#ee8019', '#fdb81b', '#92dd00', '#226dfc'];
+    const randomColor = brandColors[Math.floor(Math.random() * brandColors.length)];
+    
     // Create new user
     const newUser = {
       id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
       name: name,
       email: email,
       password: password, // In production, this should be hashed
+      avatarColor: randomColor,
       createdAt: new Date().toISOString()
     };
     

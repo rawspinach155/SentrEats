@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { X, User, Mail, Lock, FileText } from 'lucide-react'
+import { X, User, Mail, Lock } from 'lucide-react'
 import { buildApiUrl, API_ENDPOINTS } from '../config/api'
 
 const SignupModal = ({ isOpen, onClose, onSignupSuccess }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    bio: ''
+    password: ''
   })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -45,7 +44,7 @@ const SignupModal = ({ isOpen, onClose, onSignupSuccess }) => {
         
         // Close modal and reset form
         onClose()
-        setFormData({ name: '', email: '', password: '', bio: '' })
+        setFormData({ name: '', email: '', password: '' })
       } else {
         setError(data.error || 'Signup failed')
       }
@@ -126,21 +125,7 @@ const SignupModal = ({ isOpen, onClose, onSignupSuccess }) => {
             />
           </div>
 
-          {/* Bio */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <FileText className="w-4 h-4 inline mr-2" />
-              Bio (Optional)
-            </label>
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleInputChange}
-              rows={3}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#382c5c] focus:border-transparent transition-all resize-none"
-              placeholder="Tell us about yourself..."
-            />
-          </div>
+
 
           {/* Error Message */}
           {error && (

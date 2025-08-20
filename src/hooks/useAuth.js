@@ -19,10 +19,15 @@ export const useAuth = () => {
   const checkAuthStatus = () => {
     const userEmail = localStorage.getItem('userEmail')
     const userName = localStorage.getItem('userName')
+    const userAvatarColor = localStorage.getItem('userAvatarColor')
     
     if (userEmail && userName) {
       setIsAuthenticated(true)
-      setCurrentUser({ email: userEmail, name: userName })
+      setCurrentUser({ 
+        email: userEmail, 
+        name: userName,
+        avatarColor: userAvatarColor 
+      })
     } else {
       setIsAuthenticated(false)
       setCurrentUser(null)
@@ -32,6 +37,9 @@ export const useAuth = () => {
   const login = (userData) => {
     localStorage.setItem('userEmail', userData.email)
     localStorage.setItem('userName', userData.name)
+    if (userData.avatarColor) {
+      localStorage.setItem('userAvatarColor', userData.avatarColor)
+    }
     setIsAuthenticated(true)
     setCurrentUser(userData)
   }
@@ -50,12 +58,22 @@ export const useAuth = () => {
     setCurrentUser(userData)
   }
 
+  const updateProfile = (updatedUserData) => {
+    localStorage.setItem('userEmail', updatedUserData.email)
+    localStorage.setItem('userName', updatedUserData.name)
+    if (updatedUserData.avatarColor) {
+      localStorage.setItem('userAvatarColor', updatedUserData.avatarColor)
+    }
+    setCurrentUser(updatedUserData)
+  }
+
   return {
     isAuthenticated,
     currentUser,
     login,
     logout,
     signup,
+    updateProfile,
     checkAuthStatus
   }
 }

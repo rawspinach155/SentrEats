@@ -20,7 +20,7 @@ function App() {
   const [activeFilters, setActiveFilters] = useState({})
   
   // Use the auth hook
-  const { isAuthenticated, currentUser, login, logout, signup } = useAuth()
+  const { isAuthenticated, currentUser, login, logout, signup, updateProfile } = useAuth()
 
   // API call to health endpoint
   useEffect(() => {
@@ -208,6 +208,12 @@ function App() {
         onAddNew={() => setShowForm(true)}
         currentUser={currentUser}
         onLogout={handleLogoutClick}
+        onProfileUpdate={(updatedUser) => {
+          // Update the currentUser state with the new data
+          if (updatedUser) {
+            updateProfile(updatedUser);
+          }
+        }}
       />
     }
     

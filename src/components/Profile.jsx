@@ -2,13 +2,34 @@ import React, { useState, useEffect } from 'react'
 import { User, Settings, LogOut, Edit3, MapPin, Star, Trash2, Plus } from 'lucide-react'
 import { buildApiUrl, API_ENDPOINTS } from '../config/api'
 
-const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, currentUser, onLogout }) => {
+const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, currentUser, onLogout, onProfileUpdate }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=default'
+    avatar: '',
+    avatarColor: ''
   })
+
+  // Brand colors for avatar backgrounds - limited selection for users
+  const brandColors = [
+    '#7553ff', // Blurple
+    '#ff45a8', // Dark Pink
+    '#ee8019', // Dark Orange
+    '#fdb81b', // Dark Yellow
+    '#92dd00', // Dark Green
+    '#226dfc'  // Dark Blue
+  ]
+
+  // Generate consistent avatar color based on user name
+  const getAvatarColor = (name) => {
+    if (!name) return brandColors[0]
+    let hash = 0
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    return brandColors[Math.abs(hash) % brandColors.length]
+  }
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -19,7 +40,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       setProfileData({
         name: currentUser.name || '',
         email: currentUser.email || '',
-        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`
+        avatarColor: currentUser.avatarColor || getAvatarColor(currentUser.name || '')
       })
     }
   }, [currentUser])
@@ -38,7 +59,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
         body: JSON.stringify({
           name: profileData.name,
           email: profileData.email,
-          avatar: profileData.avatar
+          avatarColor: profileData.avatarColor
         })
       })
 
@@ -47,7 +68,20 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       if (response.ok) {
         setSuccess('Profile updated successfully!')
         setIsEditing(false)
-        // Update the currentUser in parent component if needed
+        
+        // Create updated user object
+        const updatedUser = {
+          ...currentUser,
+          name: profileData.name,
+          email: profileData.email,
+          avatarColor: profileData.avatarColor
+        }
+        
+        // Call the callback to update parent component
+        if (onProfileUpdate) {
+          onProfileUpdate(updatedUser)
+        }
+        
         setTimeout(() => setSuccess(''), 3000)
       } else {
         setError(data.error || 'Failed to update profile')
@@ -66,7 +100,7 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       setProfileData({
         name: currentUser.name || '',
         email: currentUser.email || '',
-        avatar: currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || 'default'}`
+        avatarColor: currentUser.avatarColor || getAvatarColor(currentUser.name || '')
       })
     }
     setError('')
@@ -83,11 +117,16 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       {/* Profile Header */}
       <div className="text-center mb-6">
         <div className="relative inline-block">
-          <img
-            src={profileData.avatar}
-            alt="Profile"
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
-          />
+          <div 
+            className="w-24 h-24 rounded-full border-4 border-white shadow-lg flex items-center justify-center"
+            style={{ backgroundColor: profileData.avatarColor || getAvatarColor(profileData.name) }}
+          >
+            <img
+              src="/sentry-glyph.png"
+              alt="Profile"
+              className="w-12 h-12 object-contain"
+            />
+          </div>
           <button 
             onClick={() => setIsEditing(true)}
             className="absolute bottom-0 right-0 bg-[#382c5c] text-white p-2 rounded-full hover:bg-[#2a1f45] transition-colors"
@@ -103,17 +142,57 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
           </div>
         ) : (
           <div className="mt-4 space-y-3">
+            {/* Avatar Preview in Edit Mode */}
+            <div className="flex justify-center mb-3">
+              <div 
+                className="w-16 h-16 rounded-full border-2 border-gray-300 flex items-center justify-center"
+                style={{ backgroundColor: profileData.avatarColor || getAvatarColor(profileData.name) }}
+              >
+                <img
+                  src="/sentry-glyph.png"
+                  alt="Profile Preview"
+                  className="w-8 h-8 object-contain"
+                />
+              </div>
+            </div>
+            
+            {/* Color Picker */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2 font-rubik text-center">
+                Choose Avatar Color
+              </label>
+              <div className="flex justify-center">
+                <div className="grid grid-cols-3 gap-3">
+                  {brandColors.map((color) => (
+                    <button
+                      key={color}
+                      onClick={() => setProfileData({...profileData, avatarColor: color})}
+                      className={`w-10 h-10 rounded-full border-2 transition-all duration-200 hover:scale-110 ${
+                        profileData.avatarColor === color 
+                          ? 'border-[#382c5c] scale-110 shadow-lg' 
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                      style={{ backgroundColor: color }}
+                      title={`Color: ${color}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+            
             <input
               type="text"
               value={profileData.name}
               onChange={(e) => setProfileData({...profileData, name: e.target.value})}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#382c5c]"
+              placeholder="Enter your name"
             />
             <input
               type="email"
               value={profileData.email}
               onChange={(e) => setProfileData({...profileData, email: e.target.value})}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2a1f45]"
+              placeholder="Enter your email"
             />
           </div>
         )}

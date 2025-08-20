@@ -157,7 +157,7 @@ router.post('/', [
       comment,
       images,
       createdAt: new Date().toISOString(),
-      createdBy: user.name,
+      createdBy: user.email,
       userId: parseInt(userId)
     };
     

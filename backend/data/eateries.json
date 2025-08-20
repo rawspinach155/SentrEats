@@ -1,63 +1,87 @@
 [
   {
-    "id": 2,
-    "name": "Bug Buster Bistro",
-    "address": "456 Debug Avenue, San Francisco, CA 94105",
+    "id": 1,
+    "name": "Zuni Café",
+    "address": "1658 Market Street, San Francisco, CA 94102",
     "type": "Restaurant",
     "dietaryOptions": {
-      "glutenFree": false,
-      "vegan": false,
+      "glutenFree": true,
+      "vegan": true,
       "vegetarian": true,
       "dairyFree": false,
-      "nutFree": true
-    },
-    "price": "$$$",
-    "cuisine": "American",
-    "rating": 4,
-    "comment": "Great burgers and fries. Perfect for celebrating after fixing a tough bug!",
-    "createdAt": "2024-01-16T12:00:00Z",
-    "createdBy": "Jane Smith",
-    "userId": 2
-  },
-  {
-    "id": 3,
-    "name": "Stack Overflow Sushi",
-    "address": "789 Algorithm Way, San Francisco, CA 94105",
-    "type": "Sushi Bar",
-    "dietaryOptions": {
-      "glutenFree": true,
-      "vegan": true,
-      "vegetarian": true,
-      "dairyFree": true,
-      "nutFree": true
-    },
-    "price": "$$",
-    "cuisine": "Japanese",
-    "rating": 5,
-    "comment": "Fresh sushi and amazing ramen. Named after the famous programming Q&A site!",
-    "createdAt": "2024-01-17T18:00:00Z",
-    "createdBy": "vishnu satish",
-    "userId": 3
-  },
-  {
-    "id": 4,
-    "name": "Ghirardelli Chocolate Factory",
-    "address": "900 North Point Street, San Francisco, CA 94109",
-    "type": "Ice Cream Shop",
-    "dietaryOptions": {
-      "glutenFree": true,
-      "vegan": true,
-      "vegetarian": false,
-      "dairyFree": true,
       "nutFree": false
     },
     "price": "$$$",
     "cuisine": "American",
     "rating": 4,
-    "comment": "Famous chocolate and ice cream. Perfect for a sweet treat after coding!",
+    "comment": "Iconic SF restaurant known for their roast chicken and Caesar salad. Great atmosphere and consistently excellent food.",
+    "createdAt": "2024-01-15T12:00:00Z",
+    "createdBy": "alex.chen@example.com",
+    "userId": 1,
+    "images": []
+  },
+  {
+    "id": 2,
+    "name": "Tartine Bakery",
+    "address": "600 Guerrero Street, San Francisco, CA 94110",
+    "type": "Bakery",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "French",
+    "rating": 5,
+    "comment": "World-famous bakery with incredible pastries, bread, and morning buns. Worth the wait!",
+    "createdAt": "2024-01-16T12:00:00Z",
+    "createdBy": "maria.rodriguez@example.com",
+    "userId": 2,
+    "images": []
+  },
+  {
+    "id": 3,
+    "name": "State Bird Provisions",
+    "address": "1529 Fillmore Street, San Francisco, CA 94115",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "New American",
+    "rating": 5,
+    "comment": "Michelin-starred dim sum style restaurant. Creative small plates that change daily. Reservations essential.",
+    "createdAt": "2024-01-17T18:00:00Z",
+    "createdBy": "david.kim@example.com",
+    "userId": 3,
+    "images": []
+  },
+  {
+    "id": 4,
+    "name": "Bi-Rite Creamery",
+    "address": "3692 18th Street, San Francisco, CA 94110",
+    "type": "Ice Cream Shop",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 4,
+    "comment": "Artisanal ice cream with seasonal flavors. Salted caramel is a must-try!",
     "createdAt": "2025-08-19T23:44:54.972Z",
-    "createdBy": "vishnus",
-    "userId": 4
+    "createdBy": "sarah.johnson@example.com",
+    "userId": 4,
+    "images": []
   },
   {
     "id": 5,
@@ -66,68 +90,90 @@
     "type": "Brewery",
     "dietaryOptions": {
       "glutenFree": false,
-      "vegan": false,
-      "vegetarian": false,
-      "dairyFree": false,
-      "nutFree": false
+      "vegan": true,
+      "vegetarian": true,
+      "dairyFree": true,
+      "nutFree": true
     },
     "price": "$$",
     "cuisine": "American",
     "rating": 4,
-    "comment": "Historic brewery with great craft beer and pub food",
+    "comment": "Historic brewery with great craft beer and pub food. Perfect for a casual evening out.",
     "createdAt": "2025-08-20T15:58:10.439Z",
-    "createdBy": "arielle",
-    "userId": 5
+    "createdBy": "marcus.thompson@example.com",
+    "userId": 5,
+    "images": []
   },
   {
     "id": 6,
-    "name": "Tartine Bakery",
-    "address": "600 Guerrero Street, San Francisco, CA 94110",
-    "type": "Bakery",
-    "dietaryOptions": {
-      "glutenFree": false,
-      "vegan": false,
-      "vegetarian": false,
-      "dairyFree": false,
-      "nutFree": false
-    },
-    "price": "$$",
-    "cuisine": "French",
-    "rating": 5,
-    "comment": "Amazing pastries and bread. Worth the wait in line!",
-    "images": [],
-    "createdAt": "2025-08-20T21:29:29.454Z",
-    "createdBy": "test",
-    "userId": 1
-  },
-  {
-    "id": 7,
     "name": "Mission Chinese Food",
     "address": "2234 Mission Street, San Francisco, CA 94110",
     "type": "Restaurant",
     "dietaryOptions": {
       "glutenFree": false,
       "vegan": true,
-      "vegetarian": false,
+      "vegetarian": true,
       "dairyFree": false,
       "nutFree": false
     },
     "price": "$$",
     "cuisine": "Chinese",
     "rating": 4,
-    "comment": "Modern Chinese cuisine with a creative twist",
-    "images": [],
+    "comment": "Modern Chinese cuisine with a creative twist. Spicy and flavorful dishes in a hip atmosphere.",
+    "createdAt": "2025-08-20T21:29:29.454Z",
+    "createdBy": "priya.patel@example.com",
+    "userId": 6,
+    "images": []
+  },
+  {
+    "id": 7,
+    "name": "Swan Oyster Depot",
+    "address": "1517 Polk Street, San Francisco, CA 94109",
+    "type": "Seafood",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": true
+    },
+    "price": "$$",
+    "cuisine": "Seafood",
+    "rating": 5,
+    "comment": "Classic SF seafood counter since 1912. Fresh oysters, crab, and clam chowder. Cash only!",
     "createdAt": "2025-08-20T21:46:46.144Z",
-    "createdBy": "vishnus",
-    "userId": 4
+    "createdBy": "james.wilson@example.com",
+    "userId": 7,
+    "images": []
   },
   {
     "id": 8,
-    "name": "primer",
-    "address": "3130 20th st san francisco",
-    "type": "Restaurant",
+    "name": "La Taqueria",
+    "address": "2889 Mission Street, San Francisco, CA 94110",
+    "type": "Mexican",
     "dietaryOptions": {
       "glutenFree": true,
+      "vegan": true,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": true
+    },
+    "price": "$",
+    "cuisine": "Mexican",
+    "rating": 5,
+    "comment": "Best burritos in the Mission! Their carne asada is legendary. Simple, authentic, and delicious.",
+    "createdAt": "2025-08-20T22:25:31.555Z",
+    "createdBy": "aisha.hassan@example.com",
+    "userId": 8,
+    "images": []
+  },
+  {
+    "id": 9,
+    "name": "House of Prime Rib",
+    "address": "1906 Van Ness Avenue, San Francisco, CA 94109",
+    "type": "Steakhouse",
+    "dietaryOptions": {
+      "glutenFree": false,
       "vegan": false,
       "vegetarian": false,
       "dairyFree": false,
@@ -136,31 +182,73 @@
     "price": "$$$",
     "cuisine": "American",
     "rating": 4,
-    "comment": "testign",
-    "images": [],
-    "createdAt": "2025-08-20T22:25:31.555Z",
-    "createdBy": "vishnus",
-    "userId": 4
+    "comment": "Classic SF steakhouse specializing in prime rib. Old-school atmosphere with excellent service.",
+    "createdAt": "2025-08-20T22:26:26.667Z",
+    "createdBy": "alex.chen@example.com",
+    "userId": 1,
+    "images": []
   },
   {
-    "id": 9,
-    "name": "primer v2",
-    "address": "3130 20th st san francisco",
+    "id": 10,
+    "name": "Delfina",
+    "address": "3621 18th Street, San Francisco, CA 94110",
     "type": "Restaurant",
     "dietaryOptions": {
       "glutenFree": true,
-      "vegan": false,
-      "vegetarian": false,
+      "vegan": true,
+      "vegetarian": true,
       "dairyFree": false,
       "nutFree": false
     },
-    "price": "$$",
+    "price": "$$$",
     "cuisine": "Italian",
-    "rating": 2,
-    "comment": "testing123",
-    "images": [],
-    "createdAt": "2025-08-20T22:26:26.667Z",
-    "createdBy": "vishnus",
-    "userId": 4
+    "rating": 5,
+    "comment": "Neighborhood Italian restaurant with seasonal menu. Their pasta dishes are exceptional.",
+    "createdAt": "2025-08-21T10:15:30.000Z",
+    "createdBy": "maria.rodriguez@example.com",
+    "userId": 2,
+    "images": []
+  },
+  {
+    "id": 11,
+    "name": "Boba Guys",
+    "address": "3491 19th Street, San Francisco, CA 94110",
+    "type": "Bubble Tea",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": true,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$",
+    "cuisine": "Taiwanese",
+    "rating": 4,
+    "comment": "Premium bubble tea with organic ingredients. Their strawberry matcha latte is amazing!",
+    "createdAt": "2025-08-21T14:30:45.000Z",
+    "createdBy": "david.kim@example.com",
+    "userId": 3,
+    "images": []
+  },
+  {
+    "id": 12,
+    "name": "Nopa",
+    "address": "560 Divisadero Street, San Francisco, CA 94117",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "New American",
+    "rating": 4,
+    "comment": "Farm-to-table restaurant with wood-fired cooking. Great for special occasions.",
+    "createdAt": "2025-08-21T16:45:12.000Z",
+    "createdBy": "sarah.johnson@example.com",
+    "userId": 4,
+    "images": []
   }
 ]

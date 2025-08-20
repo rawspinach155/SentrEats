@@ -62,7 +62,7 @@ const Map = ({ eateries = [] }) => {
       const allUsers = await response.json()
       
       // Find the user by email
-      const user = allUsers.users.find(u => u.name === userEmail)
+      const user = allUsers.users.find(u => u.email === userEmail)
 
       if (user) {
         // Cache the user data

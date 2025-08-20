@@ -155,6 +155,8 @@ function App() {
         setEateries(prev => [...prev, data.eatery])
         setShowForm(false)
         console.log('Eatery added successfully')
+        // Scroll to top after successfully adding eatery
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
         alert('Failed to add eatery: ' + (data.error || 'Unknown error'))
       }

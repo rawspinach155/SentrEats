@@ -4,9 +4,9 @@
     "name": "test",
     "email": "test@sentry.io",
     "password": "password123",
-    "avatarColor": "#7553ff",
+    "avatarColor": "#92dd00",
     "createdAt": "2024-01-15T10:00:00Z",
-    "updatedAt": "2025-08-20T16:56:45.214Z"
+    "updatedAt": "2025-08-20T21:22:31.184Z"
   },
   {
     "id": 2,
@@ -39,13 +39,5 @@
     "password": "123456",
     "avatarColor": "#92dd00",
     "createdAt": "2025-08-20T15:55:52.803Z"
-  },
-  {
-    "id": 6,
-    "name": "test",
-    "email": "test@sentry.io",
-    "password": "123456",
-    "avatarColor": "#ff45a8",
-    "createdAt": "2025-08-20T16:56:38.711Z"
   }
 ]

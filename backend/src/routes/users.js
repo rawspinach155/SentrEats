@@ -119,11 +119,36 @@ router.put('/profile', [
     const usersData = fs.readFileSync(usersPath, 'utf8');
     const users = JSON.parse(usersData);
     
-    // For now, we'll update the first user (in a real app, you'd get this from auth)
-    // You can modify this to find by email or other identifier
-    const userIndex = 0; // Update first user for demo purposes
+    // Get user ID from request headers (sent by frontend)
+    const userId = req.headers['user-id'];
+    
+    console.log('Profile update request received:', {
+      headers: req.headers,
+      body: req.body,
+      userId: userId
+    });
+    
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+    
+    // Find user by ID
+    const userIndex = users.findIndex(user => user.id === parseInt(userId));
+    
+    console.log('User lookup result:', {
+      userId: userId,
+      userIndex: userIndex,
+      totalUsers: users.length,
+      foundUser: userIndex >= 0 ? users[userIndex] : null
+    });
     
     if (userIndex >= 0) {
+      console.log('Before update - user data:', {
+        name: users[userIndex].name,
+        email: users[userIndex].email,
+        avatarColor: users[userIndex].avatarColor
+      });
+      
       // Update user fields
       if (name !== undefined) users[userIndex].name = name;
       if (email !== undefined) users[userIndex].email = email;
@@ -132,8 +157,36 @@ router.put('/profile', [
       // Add updated timestamp
       users[userIndex].updatedAt = new Date().toISOString();
       
+      console.log('After update - user data:', {
+        name: users[userIndex].name,
+        email: users[userIndex].email,
+        avatarColor: users[userIndex].avatarColor
+      });
+      
       // Write back to file
-      fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), 'utf8');
+      try {
+        fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), 'utf8');
+        console.log('File written successfully to:', usersPath);
+        
+        // Verify the file was written correctly
+        const verifyData = fs.readFileSync(usersPath, 'utf8');
+        const verifyUsers = JSON.parse(verifyData);
+        console.log('File verification - updated user:', {
+          id: verifyUsers[userIndex].id,
+          name: verifyUsers[userIndex].name,
+          email: verifyUsers[userIndex].email,
+          avatarColor: verifyUsers[userIndex].avatarColor
+        });
+      } catch (writeError) {
+        console.error('Error writing to file:', writeError);
+        return res.status(500).json({ error: 'Failed to write to file' });
+      }
+      
+      console.log(`Profile updated for user ${userId}:`, {
+        name: users[userIndex].name,
+        email: users[userIndex].email,
+        avatarColor: users[userIndex].avatarColor
+      });
       
       // Return updated user (excluding password)
       const { password: _, ...updatedUser } = users[userIndex];
@@ -226,86 +279,7 @@ router.post('/signup', [
 
 
 
-// Update user profile
-router.put('/profile', authenticateToken, [
-  body('username').optional().isLength({ min: 3 }).trim().escape(),
-  body('email').optional().isEmail().normalizeEmail(),
-  body('bio').optional().trim().escape(),
-  body('avatar').optional().trim()
-], (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { username, email, bio, avatar } = req.body;
-    const userId = req.user.userId;
-
-    // Check if username or email already exists (if being updated)
-    if (username || email) {
-      const checkQuery = 'SELECT id FROM users WHERE (username = ? OR email = ?) AND id != ?';
-      const checkParams = [username || '', email || '', userId];
-      
-      db.get(checkQuery, checkParams, (err, row) => {
-        if (err) {
-          return res.status(500).json({ error: 'Database error' });
-        }
-        
-        if (row) {
-          return res.status(400).json({ error: 'Username or email already exists' });
-        }
-
-        // Update profile
-        updateProfile();
-      });
-    } else {
-      updateProfile();
-    }
-
-    function updateProfile() {
-      const updateFields = [];
-      const updateParams = [];
-      
-      if (username) {
-        updateFields.push('username = ?');
-        updateParams.push(username);
-      }
-      if (email) {
-        updateFields.push('email = ?');
-        updateParams.push(email);
-      }
-      if (bio !== undefined) {
-        updateFields.push('bio = ?');
-        updateParams.push(bio);
-      }
-      if (avatar !== undefined) {
-        updateFields.push('avatar = ?');
-        updateParams.push(avatar);
-      }
-      
-      updateFields.push('updated_at = CURRENT_TIMESTAMP');
-      updateParams.push(userId);
-
-      const updateQuery = `UPDATE users SET ${updateFields.join(', ')} WHERE id = ?`;
-      
-      db.run(updateQuery, updateParams, function(err) {
-        if (err) {
-          return res.status(500).json({ error: 'Failed to update profile' });
-        }
-
-        if (this.changes === 0) {
-          return res.status(404).json({ error: 'User not found' });
-        }
-
-        res.json({ message: 'Profile updated successfully' });
-      });
-    }
-  } catch (error) {
-    console.error('Profile update error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// Removed duplicate profile route that was using SQLite database
 
 // Change password
 router.put('/password', authenticateToken, [

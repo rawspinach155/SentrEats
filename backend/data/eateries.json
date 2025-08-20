@@ -80,43 +80,24 @@
     "userId": 5
   },
   {
-    "id": 9,
-    "name": "emma",
-    "address": "emma",
-    "type": "Boba Shop",
+    "id": 6,
+    "name": "testing",
+    "address": "testing",
+    "type": "Ice Cream Shop",
     "dietaryOptions": {
       "glutenFree": false,
       "vegan": false,
-      "vegetarian": true,
-      "dairyFree": false,
-      "nutFree": false
-    },
-    "price": "$",
-    "cuisine": "Mexican",
-    "rating": 3,
-    "comment": "emma",
-    "createdAt": "2025-08-20T18:30:36.009Z",
-    "createdBy": "emma",
-    "userId": 1
-  },
-  {
-    "id": 10,
-    "name": "image test",
-    "address": "image test",
-    "type": "Food Court",
-    "dietaryOptions": {
-      "glutenFree": false,
-      "vegan": false,
-      "vegetarian": true,
+      "vegetarian": false,
       "dairyFree": true,
       "nutFree": false
     },
-    "price": "$$$$",
+    "price": "$$$",
     "cuisine": "Mexican",
     "rating": 4,
-    "comment": "weiufgweif",
-    "createdAt": "2025-08-20T18:31:40.071Z",
-    "createdBy": "emma",
+    "comment": "testing yay yum",
+    "images": [],
+    "createdAt": "2025-08-20T21:29:29.454Z",
+    "createdBy": "test",
     "userId": 1
   }
 ]

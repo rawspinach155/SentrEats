@@ -120,5 +120,55 @@
     "createdAt": "2025-08-20T21:52:07.003Z",
     "createdBy": "test",
     "userId": 1
+  },
+  {
+    "id": 8,
+    "name": "andy 2",
+    "address": "Andytown, 800, Great Highway, San Francisco, California, 94121, United States",
+    "type": "Ice Cream Shop",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 4,
+    "comment": "",
+    "images": [],
+    "coordinates": {
+      "lat": 37.77288,
+      "lng": -122.5107658
+    },
+    "createdAt": "2025-08-20T22:14:59.243Z",
+    "createdBy": "test",
+    "userId": 1
+  },
+  {
+    "id": 9,
+    "name": "Andy 3",
+    "address": "Oakland International Airport, Ron Cowan Parkway, Oakland, Alameda County, California, 94614, United States",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "Mexican",
+    "rating": 4,
+    "comment": "",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7222591,
+      "lng": -122.2170166
+    },
+    "createdAt": "2025-08-20T22:16:53.070Z",
+    "createdBy": "test",
+    "userId": 1
   }
 ]

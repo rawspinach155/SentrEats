@@ -88,7 +88,8 @@ router.post('/', [
   body('comment').optional().trim().escape(),
   body('dietaryOptions').isObject().withMessage('Dietary options must be an object'),
   body('images').optional().isArray(),
-  body('userId').notEmpty().isInt().withMessage('User ID must be a valid number')
+  body('userId').notEmpty().isInt().withMessage('User ID must be a valid number'),
+  body('coordinates').optional().isObject().withMessage('Coordinates must be an object')
 ], (req, res) => {
   try {
     console.log('Received eatery creation request:', req.body);
@@ -105,10 +106,10 @@ router.post('/', [
     }
 
     const {
-      name, address, type, cuisine, rating, price, comment = '', dietaryOptions, images = [], userId
+      name, address, type, cuisine, rating, price, comment = '', dietaryOptions, images = [], userId, coordinates
     } = req.body;
     
-    console.log('Parsed request body:', { name, address, type, cuisine, rating, price, comment, dietaryOptions, images, userId })
+    console.log('Parsed request body:', { name, address, type, cuisine, rating, price, comment, dietaryOptions, images, userId, coordinates })
     
     const eateriesPath = path.join(__dirname, '../../data/eateries.json');
     const usersPath = path.join(__dirname, '../../data/users.json');
@@ -156,6 +157,7 @@ router.post('/', [
       rating,
       comment,
       images,
+      coordinates: coordinates || null, // Add coordinates (hidden attribute)
       createdAt: new Date().toISOString(),
       createdBy: user.name,
       userId: parseInt(userId)

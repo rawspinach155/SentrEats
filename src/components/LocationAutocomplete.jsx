@@ -13,6 +13,7 @@ const LocationAutocomplete = ({
   const [isLoading, setIsLoading] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [hasSelectedLocation, setHasSelectedLocation] = useState(false)
   const inputRef = useRef(null)
   const dropdownRef = useRef(null)
 
@@ -85,6 +86,7 @@ const LocationAutocomplete = ({
     const newValue = e.target.value
     onChange(newValue)
     setSelectedIndex(-1)
+    setHasSelectedLocation(false) // Reset selection when user starts typing
     
     if (!newValue.trim()) {
       setPredictions([])
@@ -127,6 +129,8 @@ const LocationAutocomplete = ({
     setIsLoading(true)
     setShowDropdown(false)
     setSelectedIndex(-1)
+    setPredictions([]) // Clear predictions immediately
+    setHasSelectedLocation(true) // Mark that a location has been selected
 
     try {
       // Create location object
@@ -144,8 +148,6 @@ const LocationAutocomplete = ({
       
       // Call parent callback
       onLocationSelected(locationData)
-      
-      setPredictions([])
     } catch (error) {
       console.error('Error selecting location:', error)
     } finally {
@@ -194,6 +196,7 @@ const LocationAutocomplete = ({
     setPredictions([])
     setShowDropdown(false)
     setSelectedIndex(-1)
+    setHasSelectedLocation(false)
     onLocationSelected(null)
   }
 
@@ -287,7 +290,7 @@ const LocationAutocomplete = ({
       )}
 
       {/* No results message */}
-      {showDropdown && predictions.length === 0 && value && value.trim() && !isLoading && (
+      {showDropdown && predictions.length === 0 && value && value.trim() && !isLoading && !hasSelectedLocation && (
         <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4 text-center text-gray-500">
           No locations found
         </div>

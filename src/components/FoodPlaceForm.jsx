@@ -57,15 +57,20 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
     console.log('Current user in form:', currentUser)
     console.log('Form data before adding userId:', formData)
     
-    // Add userId to formData
+    // Add userId and coordinates to formData
     const formDataWithUser = {
       ...formData,
-      userId: currentUser.id
+      userId: currentUser.id,
+      coordinates: selectedLocation ? {
+        lat: selectedLocation.lat,
+        lng: selectedLocation.lng
+      } : null
     }
     
-    console.log('Form data with userId:', formDataWithUser)
+    console.log('Form data with userId and coordinates:', formDataWithUser)
     console.log('Current user ID type:', typeof currentUser.id, 'Value:', currentUser.id)
     console.log('Rating type:', typeof formData.rating, 'Value:', formData.rating)
+    console.log('Coordinates:', formDataWithUser.coordinates)
     
     // Validate the data before sending
     if (!currentUser.id || typeof currentUser.id !== 'number') {

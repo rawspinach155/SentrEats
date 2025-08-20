@@ -129,7 +129,7 @@
     "id": 7,
     "name": "Swan Oyster Depot",
     "address": "1517 Polk Street, San Francisco, CA 94109",
-    "type": "Seafood",
+    "type": "Restaurant",
     "dietaryOptions": {
       "glutenFree": true,
       "vegan": false,
@@ -150,7 +150,7 @@
     "id": 8,
     "name": "La Taqueria",
     "address": "2889 Mission Street, San Francisco, CA 94110",
-    "type": "Mexican",
+    "type": "Cafe",
     "dietaryOptions": {
       "glutenFree": true,
       "vegan": true,
@@ -313,5 +313,26 @@
     "createdAt": "2025-08-20T23:13:16.727Z",
     "createdBy": "sarah.johnson@example.com",
     "userId": 4
+  },
+  {
+    "id": 16,
+    "name": "vishnu p",
+    "address": "45 fremont st sf ca",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 2,
+    "comment": "ewfewfewf",
+    "images": [],
+    "createdAt": "2025-08-20T23:30:12.066Z",
+    "createdBy": "vishnup@sentry.io",
+    "userId": 10
   }
 ]

@@ -111,7 +111,7 @@ function App() {
     console.log('App.jsx: User not authenticated, showing AuthLanding')
     return (
       <AuthLanding
-        onSignupSuccess={(user) => signup({ email: user.email, name: user.name })}
+        onSignupSuccess={(user) => signup(user)}
         onLoginSuccess={(user) => login(user)}
       />
     )

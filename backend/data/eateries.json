@@ -1,25 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "Code & Coffee",
-    "address": "123 Tech Street, San Francisco, CA 94105",
-    "type": "Cafe",
-    "dietaryOptions": {
-      "glutenFree": true,
-      "vegan": true,
-      "vegetarian": true,
-      "dairyFree": true,
-      "nutFree": false
-    },
-    "price": "$$",
-    "cuisine": "Coffee & Pastries",
-    "rating": 5,
-    "comment": "Amazing oat milk lattes and gluten-free pastries. Great WiFi for coding sessions!",
-    "images": [],
-    "createdAt": "2024-01-15T10:00:00Z",
-    "createdBy": "dev_user"
-  },
-  {
     "id": 2,
     "name": "Bug Buster Bistro",
     "address": "456 Debug Avenue, San Francisco, CA 94105",
@@ -35,9 +15,9 @@
     "cuisine": "American",
     "rating": 4,
     "comment": "Great burgers and fries. Perfect for celebrating after fixing a tough bug!",
-    "images": [],
     "createdAt": "2024-01-16T12:00:00Z",
-    "createdBy": "hackathon_hacker"
+    "createdBy": "Jane Smith",
+    "userId": 2
   },
   {
     "id": 3,
@@ -55,9 +35,9 @@
     "cuisine": "Japanese",
     "rating": 5,
     "comment": "Fresh sushi and amazing ramen. Named after the famous programming Q&A site!",
-    "images": [],
     "createdAt": "2024-01-17T18:00:00Z",
-    "createdBy": "foodie_coder"
+    "createdBy": "vishnu satish",
+    "userId": 3
   },
   {
     "id": 4,
@@ -75,9 +55,9 @@
     "cuisine": "Mexican",
     "rating": 4,
     "comment": "good great place",
-    "images": [],
     "createdAt": "2025-08-19T23:44:54.972Z",
-    "createdBy": "current_user"
+    "createdBy": "vishnus",
+    "userId": 4
   },
   {
     "id": 5,
@@ -95,8 +75,48 @@
     "cuisine": "American",
     "rating": 2,
     "comment": "bad beer",
-    "images": [],
     "createdAt": "2025-08-20T15:58:10.439Z",
-    "createdBy": "current_user"
+    "createdBy": "arielle",
+    "userId": 5
+  },
+  {
+    "id": 9,
+    "name": "emma",
+    "address": "emma",
+    "type": "Boba Shop",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$",
+    "cuisine": "Mexican",
+    "rating": 3,
+    "comment": "emma",
+    "createdAt": "2025-08-20T18:30:36.009Z",
+    "createdBy": "emma",
+    "userId": 1
+  },
+  {
+    "id": 10,
+    "name": "image test",
+    "address": "image test",
+    "type": "Food Court",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$$$",
+    "cuisine": "Mexican",
+    "rating": 4,
+    "comment": "weiufgweif",
+    "createdAt": "2025-08-20T18:31:40.071Z",
+    "createdBy": "emma",
+    "userId": 1
   }
 ]

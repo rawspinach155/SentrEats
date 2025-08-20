@@ -1,0 +1,260 @@
+[
+  {
+    "id": 2,
+    "eateryId": 1,
+    "name": "Bug Buster Bistro",
+    "address": "456 Debug Avenue, San Francisco, CA 94105",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": true
+    },
+    "price": "$$$",
+    "cuisine": "American",
+    "rating": 4,
+    "comment": "Great burgers and fries. Perfect for celebrating after fixing a tough bug!",
+    "createdAt": "2024-01-16T12:00:00Z",
+    "createdBy": "Jane Smith",
+    "userId": 2
+  },
+  {
+    "id": 3,
+    "eateryId": 2,
+    "name": "Stack Overflow Sushi",
+    "address": "789 Algorithm Way, San Francisco, CA 94105",
+    "type": "Sushi Bar",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": true,
+      "dairyFree": true,
+      "nutFree": true
+    },
+    "price": "$$",
+    "cuisine": "Japanese",
+    "rating": 5,
+    "comment": "Fresh sushi and amazing ramen. Named after the famous programming Q&A site!",
+    "createdAt": "2024-01-17T18:00:00Z",
+    "createdBy": "vishnu satish",
+    "userId": 3
+  },
+  {
+    "id": 4,
+    "eateryId": 3,
+    "name": "test eatery",
+    "address": "hello",
+    "type": "Ice Cream Shop",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$$$",
+    "cuisine": "Mexican",
+    "rating": 4,
+    "comment": "good great place",
+    "createdAt": "2025-08-19T23:44:54.972Z",
+    "createdBy": "vishnus",
+    "userId": 4
+  },
+  {
+    "id": 5,
+    "eateryId": 4,
+    "name": "hi",
+    "address": "hi",
+    "type": "Bar",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 2,
+    "comment": "bad beer",
+    "createdAt": "2025-08-20T15:58:10.439Z",
+    "createdBy": "arielle",
+    "userId": 5
+  },
+  {
+    "id": 6,
+    "eateryId": 5,
+    "name": "testing",
+    "address": "testing",
+    "type": "Ice Cream Shop",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "Mexican",
+    "rating": 4,
+    "comment": "testing yay yum",
+    "images": [],
+    "createdAt": "2025-08-20T21:29:29.454Z",
+    "createdBy": "test",
+    "userId": 1
+  },
+  {
+    "id": 7,
+    "eateryId": 6,
+    "name": "andy",
+    "address": "Andytown, 800, Great Highway, San Francisco, California, 94121, United States",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 3,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:52:07.003Z",
+    "createdBy": "test",
+    "userId": 1
+  },
+  {
+    "id": 8,
+    "eateryId": 6,
+    "name": "andy 2",
+    "address": "Andytown, 800, Great Highway, San Francisco, California, 94121, United States",
+    "type": "Ice Cream Shop",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 4,
+    "comment": "",
+    "images": [],
+    "coordinates": {
+      "lat": 37.77288,
+      "lng": -122.5107658
+    },
+    "createdAt": "2025-08-20T22:14:59.243Z",
+    "createdBy": "test",
+    "userId": 1
+  },
+  {
+    "id": 9,
+    "eateryId": 7,
+    "name": "Andy 3",
+    "address": "Oakland International Airport, Ron Cowan Parkway, Oakland, Alameda County, California, 94614, United States",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "Mexican",
+    "rating": 4,
+    "comment": "",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7222591,
+      "lng": -122.2170166
+    },
+    "createdAt": "2025-08-20T22:16:53.070Z",
+    "createdBy": "test",
+    "userId": 1
+  },
+  {
+    "id": 10,
+    "eateryId": 8,
+    "name": "kaiser",
+    "address": "2425 Geary Blvd, San Francisco, CA 94115, USA",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": true,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "American",
+    "rating": 3,
+    "comment": "",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7826471,
+      "lng": -122.4432378
+    },
+    "createdAt": "2025-08-20T22:31:12.851Z",
+    "createdBy": "test",
+    "userId": 1
+  },
+  {
+    "id": 11,
+    "eateryId": 9,
+    "name": "Andy 5",
+    "address": "747 Front St, San Francisco, CA 94111, USA",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 2,
+    "comment": "",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7983111,
+      "lng": -122.3999535
+    },
+    "createdAt": "2025-08-20T22:50:44.664Z",
+    "createdBy": "test",
+    "userId": 1
+  },
+  {
+    "id": 12,
+    "eateryId": 9,
+    "name": "Andy 6",
+    "address": "747 Front St, San Francisco, CA 94111, USA",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 2,
+    "comment": "",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7983111,
+      "lng": -122.3999535
+    },
+    "createdAt": "2025-08-20T22:50:59.411Z",
+    "createdBy": "test",
+    "userId": 1
+  }
+]

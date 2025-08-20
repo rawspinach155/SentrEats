@@ -5,22 +5,41 @@ const fs = require('fs');
 
 const router = express.Router();
 
-// Get all eateries from JSON file
+// Get all eateries with their reviews from JSON files
 router.get('/', (req, res) => {
   try {
+    const reviewsPath = path.join(__dirname, '../../data/reviews.json');
     const eateriesPath = path.join(__dirname, '../../data/eateries.json');
     
-    // Check if file exists
+    // Check if files exist
+    if (!fs.existsSync(reviewsPath)) {
+      return res.status(404).json({ error: 'Reviews data file not found' });
+    }
+    
     if (!fs.existsSync(eateriesPath)) {
       return res.status(404).json({ error: 'Eateries data file not found' });
     }
     
-    // Read and parse the JSON file
+    // Read and parse the JSON files
+    const reviewsData = fs.readFileSync(reviewsPath, 'utf8');
     const eateriesData = fs.readFileSync(eateriesPath, 'utf8');
+    const reviews = JSON.parse(reviewsData);
     const eateries = JSON.parse(eateriesData);
     
+    // Attach reviews to each eatery
+    const eateriesWithReviews = eateries.map(eatery => {
+      const eateryReviews = reviews.filter(review => 
+        eatery.reviewIds.includes(review.id)
+      );
+      
+      return {
+        ...eatery,
+        reviews: eateryReviews
+      };
+    });
+    
     // Sort eateries by creation date (newest first)
-    const sortedEateries = eateries.sort((a, b) => {
+    const sortedEateries = eateriesWithReviews.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt)
     });
     
@@ -39,26 +58,52 @@ router.get('/', (req, res) => {
   }
 });
 
-// Get eateries by user ID
+// Get eateries with reviews by user ID
 router.get('/user/:userId', (req, res) => {
   try {
     const { userId } = req.params;
+    const reviewsPath = path.join(__dirname, '../../data/reviews.json');
     const eateriesPath = path.join(__dirname, '../../data/eateries.json');
     
-    // Check if file exists
+    // Check if files exist
+    if (!fs.existsSync(reviewsPath)) {
+      return res.status(404).json({ error: 'Reviews data file not found' });
+    }
+    
     if (!fs.existsSync(eateriesPath)) {
       return res.status(404).json({ error: 'Eateries data file not found' });
     }
     
-    // Read and parse the JSON file
+    // Read and parse the JSON files
+    const reviewsData = fs.readFileSync(reviewsPath, 'utf8');
     const eateriesData = fs.readFileSync(eateriesPath, 'utf8');
+    const reviews = JSON.parse(reviewsData);
     const eateries = JSON.parse(eateriesData);
     
-    // Filter eateries by user ID
-    const userEateries = eateries.filter(eatery => eatery.userId === parseInt(userId));
+    // Get user's reviews
+    const userReviews = reviews.filter(review => review.userId === parseInt(userId));
+    
+    // Get eateries that have reviews from this user
+    const userEateries = eateries.filter(eatery => 
+      eatery.reviewIds.some(reviewId => 
+        userReviews.some(review => review.id === reviewId)
+      )
+    );
+    
+    // Attach reviews to each eatery
+    const eateriesWithReviews = userEateries.map(eatery => {
+      const eateryReviews = reviews.filter(review => 
+        eatery.reviewIds.includes(review.id)
+      );
+      
+      return {
+        ...eatery,
+        reviews: eateryReviews
+      };
+    });
     
     // Sort eateries by creation date (newest first)
-    const sortedEateries = userEateries.sort((a, b) => {
+    const sortedEateries = eateriesWithReviews.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt)
     });
     
@@ -77,7 +122,7 @@ router.get('/user/:userId', (req, res) => {
   }
 });
 
-// Create a new eatery and add to JSON file
+// Create a new review and handle eatery creation/update
 router.post('/', [
   body('name').notEmpty().trim().escape(),
   body('address').notEmpty().trim().escape(),
@@ -111,13 +156,20 @@ router.post('/', [
     
     console.log('Parsed request body:', { name, address, type, cuisine, rating, price, comment, dietaryOptions, images, userId, coordinates })
     
+    const reviewsPath = path.join(__dirname, '../../data/reviews.json');
     const eateriesPath = path.join(__dirname, '../../data/eateries.json');
     const usersPath = path.join(__dirname, '../../data/users.json');
     
+    console.log('Reviews file path:', reviewsPath);
     console.log('Eateries file path:', eateriesPath);
     console.log('Users file path:', usersPath);
     
     // Check if files exist
+    if (!fs.existsSync(reviewsPath)) {
+      console.error('Reviews file not found at:', reviewsPath);
+      return res.status(500).json({ error: 'Reviews data file not found' });
+    }
+    
     if (!fs.existsSync(eateriesPath)) {
       console.error('Eateries file not found at:', eateriesPath);
       return res.status(500).json({ error: 'Eateries data file not found' });
@@ -128,9 +180,11 @@ router.post('/', [
       return res.status(500).json({ error: 'Users data file not found' });
     }
     
-    // Read existing eateries and users
+    // Read existing reviews, eateries, and users
+    const reviewsData = fs.readFileSync(reviewsPath, 'utf8');
     const eateriesData = fs.readFileSync(eateriesPath, 'utf8');
     const usersData = fs.readFileSync(usersPath, 'utf8');
+    const reviews = JSON.parse(reviewsData);
     const eateries = JSON.parse(eateriesData);
     const users = JSON.parse(usersData);
     
@@ -145,9 +199,64 @@ router.post('/', [
       });
     }
     
-    // Create new eatery
-    const newEatery = {
-      id: eateries.length > 0 ? Math.max(...eateries.map(e => e.id)) + 1 : 1,
+    // Check if eatery with this address already exists
+    const existingEatery = eateries.find(eatery => 
+      eatery.address.toLowerCase().trim() === address.toLowerCase().trim()
+    );
+    
+    let eateryToReturn;
+    let eateryId;
+    
+    if (existingEatery) {
+      // Update existing eatery
+      existingEatery.reviewIds.push(newReview.id);
+      existingEatery.updatedAt = new Date().toISOString();
+      
+      // Update eatery details if they're different (use the first review's data)
+      if (!existingEatery.name || existingEatery.name === '') {
+        existingEatery.name = name;
+      }
+      if (!existingEatery.type || existingEatery.type === '') {
+        existingEatery.type = type;
+      }
+      if (!existingEatery.cuisine || existingEatery.cuisine === '') {
+        existingEatery.cuisine = cuisine;
+      }
+      if (!existingEatery.price || existingEatery.price === '') {
+        existingEatery.price = price;
+      }
+      if (!existingEatery.coordinates && coordinates) {
+        existingEatery.coordinates = coordinates;
+      }
+      
+      eateryToReturn = existingEatery;
+      eateryId = existingEatery.id;
+      console.log('Updated existing eatery:', existingEatery.name, 'with review ID:', newReview.id);
+    } else {
+      // Create new eatery
+      const newEatery = {
+        id: eateries.length > 0 ? Math.max(...eateries.map(e => e.id)) + 1 : 1,
+        name,
+        address,
+        coordinates: coordinates || null,
+        type,
+        cuisine,
+        price,
+        reviewIds: [newReview.id],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      
+      eateries.push(newEatery);
+      eateryToReturn = newEatery;
+      eateryId = newEatery.id;
+      console.log('Created new eatery:', newEatery.name, 'with review ID:', newReview.id);
+    }
+    
+    // Create new review with eatery ID
+    const newReview = {
+      id: reviews.length > 0 ? Math.max(...reviews.map(r => r.id)) + 1 : 1,
+      eateryId: eateryId, // Add the eatery ID to the review
       name,
       address,
       type,
@@ -157,83 +266,85 @@ router.post('/', [
       rating,
       comment,
       images,
-      coordinates: coordinates || null, // Add coordinates (hidden attribute)
+      coordinates: coordinates || null,
       createdAt: new Date().toISOString(),
       createdBy: user.name,
       userId: parseInt(userId)
     };
     
-    // Add new eatery to array
-    eateries.push(newEatery);
+    // Add new review to array
+    reviews.push(newReview);
     
-    console.log('New eatery created:', newEatery);
+    console.log('New review created:', newReview);
+    console.log('Total reviews after creation:', reviews.length);
     console.log('Total eateries after creation:', eateries.length);
     
-    // Write back to file
+    // Write back to files
     try {
+      fs.writeFileSync(reviewsPath, JSON.stringify(reviews, null, 2), 'utf8');
       fs.writeFileSync(eateriesPath, JSON.stringify(eateries, null, 2), 'utf8');
-      console.log('Eateries file updated successfully');
+      console.log('Reviews and eateries files updated successfully');
       
       res.status(201).json({
         success: true,
-        message: 'Eatery created successfully',
-        eatery: newEatery
+        message: 'Review created successfully',
+        eatery: eateryToReturn
       });
     } catch (writeError) {
-      console.error('Error writing to file:', writeError);
+      console.error('Error writing to reviews or eateries file:', writeError);
       res.status(500).json({ 
-        error: 'Failed to save eatery to file',
+        error: 'Failed to save review or eatery to file',
         details: writeError.message
       });
     }
     
   } catch (error) {
-    console.error('Create eatery error:', error);
+    console.error('Create review error:', error);
     res.status(500).json({ 
-      error: 'Failed to create eatery',
+      error: 'Failed to create review',
       message: error.message 
     });
   }
 });
 
-// Delete an eatery
+// Delete a review
 router.delete('/:id', (req, res) => {
   try {
     const { id } = req.params;
-    const eateriesPath = path.join(__dirname, '../../data/eateries.json');
+    const reviewsPath = path.join(__dirname, '../../data/reviews.json');
     
     // Check if file exists
-    if (!fs.existsSync(eateriesPath)) {
-      return res.status(404).json({ error: 'Eateries data file not found' });
+    if (!fs.existsSync(reviewsPath)) {
+      return res.status(404).json({ error: 'Reviews data file not found' });
     }
     
-    // Read existing eateries
-    const eateriesData = fs.readFileSync(eateriesPath, 'utf8');
-    const eateries = JSON.parse(eateriesData);
+    // Read existing reviews
+    const reviewsData = fs.readFileSync(reviewsPath, 'utf8');
+    const reviews = JSON.parse(reviewsData);
     
-    // Find the eatery to delete
-    const eateryIndex = eateries.findIndex(e => e.id === parseInt(id));
+    // Find the review to delete
+    const reviewIndex = reviews.findIndex(r => r.id === parseInt(id));
     
-    if (eateryIndex === -1) {
-      return res.status(404).json({ error: 'Eatery not found' });
+    if (reviewIndex === -1) {
+      return res.status(404).json({ error: 'Review not found' });
     }
     
-    // Remove the eatery from the array
-    const deletedEatery = eateries.splice(eateryIndex, 1)[0];
+    // Remove the review from the array
+    const deletedReview = reviews.splice(reviewIndex, 1)[0];
     
     // Write back to file
-    fs.writeFileSync(eateriesPath, JSON.stringify(eateries, null, 2), 'utf8');
+    fs.writeFileSync(reviewsPath, JSON.stringify(reviews, null, 2), 'utf8');
     
     res.json({
       success: true,
-      message: 'Eatery deleted successfully',
-      deletedEatery
+      message: 'Review deleted successfully',
+      deletedEatery: deletedReview
     });
     
   } catch (error) {
-    console.error('Delete eatery error:', error);
+    console.error('Delete review error:', error);
     res.status(500).json({ 
-      error: 'Failed to delete eatery',
+      error: 'Failed to delete review',
       message: error.message 
     });
   }

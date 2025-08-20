@@ -1,5 +1,5 @@
-import React from 'react'
-import { MapPin, Trash2, Star } from 'lucide-react'
+import React, { useState } from 'react'
+import { MapPin, Trash2, Star, ChevronDown, ChevronUp, MessageCircle } from 'lucide-react'
 
 const FoodPlaceList = ({ eateries, onDelete, totalEateries, hasActiveFilters, currentUser }) => {
   if (eateries.length === 0) {
@@ -23,18 +23,28 @@ const FoodPlaceList = ({ eateries, onDelete, totalEateries, hasActiveFilters, cu
 
   return (
     <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-[#181225] font-rubik">All Eateries</h2>
+      <h2 className="text-3xl font-bold text-[#181225] font-rubik">All Eateries</h2>
       
       <div className="grid gap-6">
-        {eateries.map((place) => (
-          <FoodPlaceCard key={place.id} place={place} onDelete={onDelete} currentUser={currentUser} />
+        {eateries.map((eatery) => (
+          <EateryCard key={eatery.id} eatery={eatery} onDelete={onDelete} currentUser={currentUser} />
         ))}
       </div>
     </div>
   )
 }
 
-const FoodPlaceCard = ({ place, onDelete, currentUser }) => {
+const EateryCard = ({ eatery, onDelete, currentUser }) => {
+  const [showAllReviews, setShowAllReviews] = useState(false)
+  
+  // Sort reviews by date (most recent first)
+  const sortedReviews = eatery.reviews ? [...eatery.reviews].sort((a, b) => 
+    new Date(b.createdAt) - new Date(a.createdAt)
+  ) : []
+  
+  const mostRecentReview = sortedReviews[0]
+  const otherReviews = sortedReviews.slice(1)
+  
   const getDietaryBadges = (dietaryOptions) => {
     const activeOptions = Object.entries(dietaryOptions)
       .filter(([_, isActive]) => isActive)
@@ -126,68 +136,138 @@ const FoodPlaceCard = ({ place, onDelete, currentUser }) => {
     return typeColors[type] || 'bg-[#382c5c]'
   }
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    })
+  }
+
   return (
     <div className="card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-gradient-to-br from-white to-[#f6f6f8] border-[#e8e8ea]">
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
+          {/* Eatery Header */}
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-2xl font-bold text-[#181225] font-rubik">{place.name}</h3>
-            {place.createdBy && (
-              <span className="text-sm text-[#382c5c] bg-[#f6f6f8] px-3 py-1 rounded-full font-medium font-rubik">
-                Added by {place.createdBy}
-              </span>
-            )}
+            <h3 className="text-2xl font-bold text-[#181225] font-rubik">{eatery.name}</h3>
+            <div className="flex items-center space-x-2">
+              {sortedReviews.length > 1 && (
+                <span className="text-sm text-[#382c5c] bg-[#f6f6f8] px-3 py-1 rounded-full font-medium font-rubik flex items-center">
+                  <MessageCircle className="w-4 h-4 mr-1" />
+                  {sortedReviews.length} reviews
+                </span>
+              )}
+            </div>
           </div>
           
           <div className="flex items-center text-[#382c5c] mb-4">
             <MapPin className="w-5 h-5 mr-2 flex-shrink-0 text-[#382c5c]" />
-            <span className="text-sm font-rubik">{place.address}</span>
+            <span className="text-sm font-rubik">{eatery.address}</span>
           </div>
           
           <div className="flex items-center space-x-4 mb-4">
-            <span className={`text-xl font-bold ${getPriceColor(place.price)} font-rubik`}>
-              {place.price}
+            <span className={`text-xl font-bold ${getPriceColor(eatery.price)} font-rubik`}>
+              {eatery.price}
             </span>
-            <span className={`px-4 py-2 ${getTypeColor(place.type)} text-white text-sm rounded-full font-semibold shadow-md font-rubik`}>
-              {place.type}
+            <span className={`px-4 py-2 ${getTypeColor(eatery.type)} text-white text-sm rounded-full font-semibold shadow-md font-rubik`}>
+              {eatery.type}
             </span>
             <span className={`px-4 py-2 ${getCuisineColor()} text-white text-sm rounded-full font-semibold shadow-md font-rubik`}>
-              {place.cuisine}
+              {eatery.cuisine}
             </span>
           </div>
-          
-          {getDietaryBadges(place.dietaryOptions)}
-          
-          <div className="mb-4">
-            {renderRating(place.rating, place.type)}
-          </div>
-          
-          {/* Comment Section */}
-          {place.comment && (
-            <div className="mb-4 p-4 bg-gradient-to-r from-[#f6f6f8] to-white rounded-lg border-l-4 border-[#382c5c]">
-              <h4 className="text-sm font-semibold text-[#181225] mb-2 font-rubik flex items-center">
-                <span className="text-[#382c5c] mr-2">💬</span>
-                Food Recommendations & Notes
-              </h4>
-              <p className="text-sm text-[#382c5c] font-rubik leading-relaxed">
-                {place.comment}
-              </p>
-            </div>
-          )}
         </div>
         
-        {currentUser && place.userId === currentUser.id && (
+        {currentUser && mostRecentReview && mostRecentReview.userId === currentUser.id && (
           <button
-            onClick={() => onDelete(place.id)}
+            onClick={() => onDelete(mostRecentReview.id)}
             className="text-[#ff45a8] hover:text-[#ff70bc] transition-all duration-200 p-3 hover:bg-[#ff45a8] hover:bg-opacity-10 rounded-xl hover:scale-110"
-            title="Delete place"
+            title="Delete review"
           >
             <Trash2 className="w-6 h-6" />
           </button>
         )}
       </div>
-      
 
+      {/* Most Recent Review - Prominently Displayed */}
+      {mostRecentReview && (
+        <div className="mb-4 p-4 bg-gradient-to-r from-[#f6f6f8] to-white rounded-lg border-l-4 border-[#382c5c]">
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="text-sm font-semibold text-[#181225] font-rubik flex items-center">
+              <span className="text-[#382c5c] mr-2">⭐</span>
+              Latest Review
+            </h4>
+            <span className="text-xs text-gray-500 font-rubik">
+              {formatDate(mostRecentReview.createdAt)}
+            </span>
+          </div>
+          
+          <div className="mb-3">
+            {renderRating(mostRecentReview.rating, eatery.type)}
+          </div>
+          
+          {getDietaryBadges(mostRecentReview.dietaryOptions)}
+          
+          {mostRecentReview.comment && (
+            <p className="text-sm text-[#382c5c] font-rubik leading-relaxed mb-2">
+              {mostRecentReview.comment}
+            </p>
+          )}
+          
+          <div className="text-xs text-gray-500 font-rubik">
+            Reviewed by {mostRecentReview.createdBy}
+          </div>
+        </div>
+      )}
+
+      {/* Other Reviews - Collapsible */}
+      {otherReviews.length > 0 && (
+        <div className="border-t border-gray-200 pt-4">
+          <button
+            onClick={() => setShowAllReviews(!showAllReviews)}
+            className="flex items-center justify-between w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <span className="font-medium text-[#382c5c] font-rubik">
+              {otherReviews.length} more review{otherReviews.length !== 1 ? 's' : ''}
+            </span>
+            {showAllReviews ? (
+              <ChevronUp className="w-5 h-5 text-[#382c5c]" />
+            ) : (
+              <ChevronDown className="w-5 h-5 text-[#382c5c]" />
+            )}
+          </button>
+          
+          {showAllReviews && (
+            <div className="mt-3 max-h-64 overflow-y-auto space-y-3">
+              {otherReviews.map((review) => (
+                <div key={review.id} className="p-3 bg-white rounded-lg border border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-2">
+                      {renderRating(review.rating, eatery.type)}
+                    </div>
+                    <span className="text-xs text-gray-500 font-rubik">
+                      {formatDate(review.createdAt)}
+                    </span>
+                  </div>
+                  
+                  {getDietaryBadges(review.dietaryOptions)}
+                  
+                  {review.comment && (
+                    <p className="text-sm text-[#382c5c] font-rubik leading-relaxed mb-2">
+                      {review.comment}
+                    </p>
+                  )}
+                  
+                  <div className="text-xs text-gray-500 font-rubik">
+                    Reviewed by {review.createdBy}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

@@ -191,7 +191,7 @@ function App() {
 
   const renderMainContent = () => {
     if (activeTab === 'map') {
-      return <Map />
+      return <Map eateries={filteredEateries} />
     }
     
     if (activeTab === 'profile') {

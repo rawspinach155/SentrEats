@@ -29,9 +29,9 @@
     "name": "Arielle Johnson",
     "email": "sarah.johnson@example.com",
     "password": "password101",
-    "avatarColor": "#4CAF50",
+    "avatarColor": "#7553ff",
     "createdAt": "2025-08-19T23:36:20.937Z",
-    "updatedAt": "2025-08-20T23:05:11.392Z"
+    "updatedAt": "2025-08-20T23:17:50.950Z"
   },
   {
     "id": 5,
@@ -65,5 +65,22 @@
     "password": "password505",
     "avatarColor": "#E91E63",
     "createdAt": "2025-08-21T16:40:12.000Z"
+  },
+  {
+    "id": 9,
+    "name": "vishnu satish",
+    "email": "vishnu@sentry.io",
+    "password": "vishnu1",
+    "avatarColor": "#ff45a8",
+    "createdAt": "2025-08-20T23:18:56.138Z"
+  },
+  {
+    "id": 10,
+    "name": "vishnu p",
+    "email": "vishnup@sentry.io",
+    "password": "vishnups",
+    "avatarColor": "#ff45a8",
+    "createdAt": "2025-08-20T23:29:41.355Z",
+    "updatedAt": "2025-08-20T23:29:51.180Z"
   }
 ]

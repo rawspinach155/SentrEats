@@ -72,6 +72,8 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
 
       const data = await response.json()
 
+      console.log(response)
+
       if (response.ok) {
         setSuccess('Profile updated successfully!')
         setIsEditing(false)

@@ -250,5 +250,68 @@
     "createdBy": "sarah.johnson@example.com",
     "userId": 4,
     "images": []
+  },
+  {
+    "id": 13,
+    "name": "vishnu s",
+    "address": "45 fremont st, sf ca",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 2,
+    "comment": "fdfdsfsdfdsfds",
+    "images": [],
+    "createdAt": "2025-08-20T23:11:18.532Z",
+    "createdBy": "sarah.johnson@example.com",
+    "userId": 4
+  },
+  {
+    "id": 14,
+    "name": "fdskjhbfdksfhdjksf",
+    "address": "45 fremont st, san francisco, california",
+    "type": "Pizzeria",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 4,
+    "comment": "dfghfdghfdkgjfdgd",
+    "images": [],
+    "createdAt": "2025-08-20T23:12:19.312Z",
+    "createdBy": "sarah.johnson@example.com",
+    "userId": 4
+  },
+  {
+    "id": 15,
+    "name": "ewfvewwfew",
+    "address": "45 fremont st, sf ca",
+    "type": "Cafe",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 3,
+    "comment": "cdfasddaawdwas",
+    "images": [],
+    "createdAt": "2025-08-20T23:13:16.727Z",
+    "createdBy": "sarah.johnson@example.com",
+    "userId": 4
   }
 ]

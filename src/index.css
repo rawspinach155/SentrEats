@@ -41,7 +41,7 @@
   }
   
   .animate-swing-down {
-    animation: swingDown 2.5s infinite;
+    animation: swingDown 2.5s infinite ease-in-out;
   }
 
   .animate-slide-down {
@@ -60,35 +60,32 @@
     0% {
       transform: rotate(0deg);
     }
-    50% {
+    35% {
       transform: rotate(0deg);
     }
-    60% {
+    45% {
       transform: rotate(-8deg);
     }
-    65% {
+    55% {
       transform: rotate(-7deg);
     }
-    70% {
-      transform: rotate(-7.8deg);
+    61% {
+      transform: rotate(-7.1deg);
     }
-    75% {
-      transform: rotate(-7.2deg);
+    62% {
+      transform: rotate(-7deg);
     }
-    80% {
-      transform: rotate(-7.5deg);
+    63% {
+      transform: rotate(-7.1deg);
     }
-    85% {
-      transform: rotate(-7.4deg);
+    64% {
+      transform: rotate(-7deg);
     }
-    85% {
-      transform: rotate(-7.5deg);
+    65% {
+      transform: rotate(-7.1deg);
     }
-    90% {
-      transform: rotate(-6deg);
-    }
-    95% {
-      transform: rotate(-3deg);
+    88% {
+      transform: rotate(-7deg);
     }
     100% {
       transform: rotate(0deg);

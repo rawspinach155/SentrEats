@@ -35,9 +35,13 @@ const SignupModal = ({ isOpen, onClose, onSignupSuccess }) => {
       const data = await response.json()
 
       if (response.ok) {
-        // Store email in localStorage for "authentication"
-        localStorage.setItem('userEmail', formData.email)
-        localStorage.setItem('userName', formData.name)
+        // Store user data in localStorage for authentication
+        localStorage.setItem('userEmail', data.user.email)
+        localStorage.setItem('userName', data.user.name)
+        localStorage.setItem('userId', data.user.id)
+        if (data.user.avatarColor) {
+          localStorage.setItem('userAvatarColor', data.user.avatarColor)
+        }
         
         // Call success callback
         onSignupSuccess(data.user)

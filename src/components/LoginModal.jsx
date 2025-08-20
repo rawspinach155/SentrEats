@@ -36,10 +36,13 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
       if (response.ok) {
         // Login successful
         const userData = {
+          id: data.user.id,
           email: data.user.email,
-          name: data.user.name
+          name: data.user.name,
+          avatarColor: data.user.avatarColor
         }
         
+        console.log('LoginModal: Login successful, calling onLoginSuccess with:', userData)
         onLoginSuccess(userData)
         onClose()
         setFormData({ email: '', password: '' })

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { X, Upload, Star, Plus } from 'lucide-react'
+import { X, Star, Plus } from 'lucide-react'
 
-const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
+const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -16,11 +16,8 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
     price: '',
     cuisine: '',
     rating: 0,
-    images: [],
     comment: ''
   })
-
-  const [imagePreview, setImagePreview] = useState([])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -47,34 +44,40 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
     }))
   }
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files)
-    const newImages = [...formData.images, ...files]
-    
-    setFormData(prev => ({
-      ...prev,
-      images: newImages
-    }))
-
-    // Create preview URLs
-    const newPreviews = files.map(file => URL.createObjectURL(file))
-    setImagePreview(prev => [...prev, ...newPreviews])
-  }
-
-  const removeImage = (index) => {
-    const newImages = formData.images.filter((_, i) => i !== index)
-    const newPreviews = imagePreview.filter((_, i) => i !== index)
-    
-    setFormData(prev => ({
-      ...prev,
-      images: newImages
-    }))
-    setImagePreview(newPreviews)
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit(formData)
+    
+    if (!currentUser) {
+      alert('Please log in to add eateries')
+      return
+    }
+    
+    console.log('Current user in form:', currentUser)
+    console.log('Form data before adding userId:', formData)
+    
+    // Add userId to formData
+    const formDataWithUser = {
+      ...formData,
+      userId: currentUser.id
+    }
+    
+    console.log('Form data with userId:', formDataWithUser)
+    console.log('Current user ID type:', typeof currentUser.id, 'Value:', currentUser.id)
+    console.log('Rating type:', typeof formData.rating, 'Value:', formData.rating)
+    
+    // Validate the data before sending
+    if (!currentUser.id || typeof currentUser.id !== 'number') {
+      alert('Invalid user ID. Please log in again.')
+      return
+    }
+    
+    if (typeof formData.rating !== 'number' || formData.rating < 0 || formData.rating > 5) {
+      alert('Invalid rating. Please select a rating between 0 and 5.')
+      return
+    }
+    
+    onSubmit(formDataWithUser)
+    
     // Reset form
     setFormData({
       name: '',
@@ -132,6 +135,20 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
   }
 
   if (!isOpen) {
+    if (!currentUser) {
+      return (
+        <div className="card text-center">
+          <div className="text-[#382c5c] mb-4">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#382c5c] to-[#2a1f45] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <img src="/sentry-glyph.png" alt="SentrEats Logo" className="w-12 h-12" />
+            </div>
+            <h3 className="text-xl font-semibold text-[#181225] mb-2 font-rubik">Login Required</h3>
+            <p className="text-sm text-[#382c5c] mb-6">Please log in to add new eateries to your profile!</p>
+          </div>
+        </div>
+      )
+    }
+    
     return (
       <div className="card text-center">
         <div className="text-[#382c5c] mb-4">
@@ -369,53 +386,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
           />
         </div>
 
-        {/* Image Upload */}
-        <div>
-          <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
-            Images
-          </label>
-          <div className="border-2 border-dashed border-[#382c5c] rounded-lg p-6 text-center bg-gradient-to-br from-[#f6f6f8] to-white">
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-              id="image-upload"
-            />
-            <label htmlFor="image-upload" className="cursor-pointer">
-              <Upload className="w-10 h-10 text-[#382c5c] mx-auto mb-3" />
-              <p className="text-sm text-[#181225] font-rubik">
-                Click to upload images or drag and drop
-              </p>
-              <p className="text-xs text-[#382c5c] mt-1 font-rubik">
-                PNG, JPG, GIF up to 10MB
-              </p>
-            </label>
-          </div>
-          
-          {/* Image Previews */}
-          {imagePreview.length > 0 && (
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {imagePreview.map((preview, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={preview}
-                    alt={`Preview ${index + 1}`}
-                    className="w-full h-24 object-cover rounded-lg shadow-md"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute -top-2 -right-2 w-6 h-6 bg-[#ff45a8] text-white rounded-full flex items-center justify-center text-xs hover:bg-[#ff70bc] transition-colors shadow-lg"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+
 
         {/* Submit Button */}
         <div className="pt-4">

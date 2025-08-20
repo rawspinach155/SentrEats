@@ -1,7 +1,7 @@
 import React from 'react'
 import { MapPin, Trash2, Star } from 'lucide-react'
 
-const FoodPlaceList = ({ eateries, onDelete, totalEateries, hasActiveFilters }) => {
+const FoodPlaceList = ({ eateries, onDelete, totalEateries, hasActiveFilters, currentUser }) => {
   if (eateries.length === 0) {
     return (
       <div className="text-center py-12">
@@ -23,18 +23,18 @@ const FoodPlaceList = ({ eateries, onDelete, totalEateries, hasActiveFilters }) 
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-[#181225] font-rubik">Your Eateries</h2>
+              <h2 className="text-3xl font-bold text-[#181225] font-rubik">All Eateries</h2>
       
       <div className="grid gap-6">
         {eateries.map((place) => (
-          <FoodPlaceCard key={place.id} place={place} onDelete={onDelete} />
+          <FoodPlaceCard key={place.id} place={place} onDelete={onDelete} currentUser={currentUser} />
         ))}
       </div>
     </div>
   )
 }
 
-const FoodPlaceCard = ({ place, onDelete }) => {
+const FoodPlaceCard = ({ place, onDelete, currentUser }) => {
   const getDietaryBadges = (dietaryOptions) => {
     const activeOptions = Object.entries(dietaryOptions)
       .filter(([_, isActive]) => isActive)
@@ -130,7 +130,14 @@ const FoodPlaceCard = ({ place, onDelete }) => {
     <div className="card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-gradient-to-br from-white to-[#f6f6f8] border-[#e8e8ea]">
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
-          <h3 className="text-2xl font-bold text-[#181225] mb-3 font-rubik">{place.name}</h3>
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-2xl font-bold text-[#181225] font-rubik">{place.name}</h3>
+            {place.createdBy && (
+              <span className="text-sm text-[#382c5c] bg-[#f6f6f8] px-3 py-1 rounded-full font-medium font-rubik">
+                Added by {place.createdBy}
+              </span>
+            )}
+          </div>
           
           <div className="flex items-center text-[#382c5c] mb-4">
             <MapPin className="w-5 h-5 mr-2 flex-shrink-0 text-[#382c5c]" />
@@ -169,32 +176,18 @@ const FoodPlaceCard = ({ place, onDelete }) => {
           )}
         </div>
         
-        <button
-          onClick={() => onDelete(place.id)}
-          className="text-[#ff45a8] hover:text-[#ff70bc] transition-all duration-200 p-3 hover:bg-[#ff45a8] hover:bg-opacity-10 rounded-xl hover:scale-110"
-          title="Delete place"
-        >
-          <Trash2 className="w-6 h-6" />
-        </button>
+        {currentUser && place.userId === currentUser.id && (
+          <button
+            onClick={() => onDelete(place.id)}
+            className="text-[#ff45a8] hover:text-[#ff70bc] transition-all duration-200 p-3 hover:bg-[#ff45a8] hover:bg-opacity-10 rounded-xl hover:scale-110"
+            title="Delete place"
+          >
+            <Trash2 className="w-6 h-6" />
+          </button>
+        )}
       </div>
       
-      {/* Images */}
-      {place.images && place.images.length > 0 && (
-        <div className="border-t border-[#e8e8ea] pt-4">
-          <h4 className="text-sm font-semibold text-[#181225] mb-3 font-rubik">Photos</h4>
-          <div className="grid grid-cols-3 gap-3">
-            {place.images.map((image, index) => (
-              <div key={index} className="aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200">
-                <img
-                  src={typeof image === 'string' ? image : URL.createObjectURL(image)}
-                  alt={`${place.name} photo ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+
     </div>
   )
 }

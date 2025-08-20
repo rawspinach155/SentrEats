@@ -1,8 +1,8 @@
 import React from 'react'
-import { Plus, User, MapPin, Home, LogIn, LogOut, Search } from 'lucide-react'
+import { User, MapPin, Home, LogOut, Search } from 'lucide-react'
 import SearchAndFilter from './SearchAndFilter'
 
-const Header = ({ activeTab, onTabChange, onSignupClick, onLoginClick, onLogoutClick, isAuthenticated, currentUser, onSearch, onFilter }) => {
+const Header = ({ activeTab, onTabChange, onLogoutClick, isAuthenticated, currentUser, onSearch, onFilter }) => {
   const [showSearch, setShowSearch] = React.useState(false)
 
   const toggleSearch = () => {
@@ -75,41 +75,20 @@ const Header = ({ activeTab, onTabChange, onSignupClick, onLoginClick, onLogoutC
                 <span>Search</span>
               </button>
               
-              {isAuthenticated ? (
-                // User is logged in - show user info and logout
-                <div className="flex items-center space-x-3">
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-[#382c5c]">{currentUser?.name}</p>
-                    <p className="text-xs text-gray-500">{currentUser?.email}</p>
-                  </div>
-                  <button
-                    onClick={onLogoutClick}
-                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
-                  >
-                    <LogOut className="w-5 h-5" />
-                    <span>Logout</span>
-                  </button>
+              {/* User is logged in - show user info and logout */}
+              <div className="flex items-center space-x-3">
+                <div className="text-right">
+                  <p className="text-sm font-medium text-[#382c5c]">{currentUser?.name}</p>
+                  <p className="text-xs text-gray-500">{currentUser?.email}</p>
                 </div>
-              ) : (
-                // User is not logged in - show login and signup
-                <>
-                  <button
-                    onClick={onLoginClick}
-                    className="bg-white border-2 border-[#382c5c] text-[#382c5c] hover:bg-[#382c5c] hover:text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
-                  >
-                    <LogIn className="w-5 h-5" />
-                    <span>Log In</span>
-                  </button>
-                  
-                  <button
-                    onClick={onSignupClick}
-                    className="bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
-                  >
-                    <User className="w-5 h-5" />
-                    <span>Sign Up</span>
-                  </button>
-                </>
-              )}
+                <button
+                  onClick={onLogoutClick}
+                  className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center space-x-2"
+                >
+                  <LogOut className="w-5 h-5" />
+                  <span>Logout</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -50,11 +50,18 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
     setError('')
     setSuccess('')
 
+    console.log('Saving profile with data:', {
+      currentUser: currentUser,
+      profileData: profileData,
+      userId: currentUser?.id
+    });
+
     try {
       const response = await fetch(buildApiUrl(`${API_ENDPOINTS.USERS}/profile`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'user-id': currentUser.id.toString()
         },
         body: JSON.stringify({
           name: profileData.name,
@@ -79,8 +86,16 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
         
         // Call the callback to update parent component
         if (onProfileUpdate) {
+          console.log('Profile: Calling onProfileUpdate with:', updatedUser)
           onProfileUpdate(updatedUser)
         }
+        
+        // Also update the local state immediately for instant UI feedback
+        setProfileData({
+          name: profileData.name,
+          email: profileData.email,
+          avatarColor: profileData.avatarColor
+        })
         
         setTimeout(() => setSuccess(''), 3000)
       } else {
@@ -286,6 +301,8 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
                         })}
                       </div>
                     )}
+                    
+
                   </div>
                   <button
                     onClick={() => onDelete(place.id)}

@@ -1,66 +1,47 @@
 import React, { useState, useEffect } from 'react'
-import FoodPlaceForm from './components/FoodPlaceForm'
-import FoodPlaceList from './components/FoodPlaceList'
+import { useAuth } from './hooks/useAuth'
+import AuthLanding from './components/AuthLanding'
 import Header from './components/Header'
 import Map from './components/Map'
+import FoodPlaceForm from './components/FoodPlaceForm'
+import FoodPlaceList from './components/FoodPlaceList'
 import Profile from './components/Profile'
-import SignupModal from './components/SignupModal'
-import LoginModal from './components/LoginModal'
-import { useAuth } from './hooks/useAuth'
 import { buildApiUrl, API_ENDPOINTS } from './config/api'
 
 function App() {
-  const [eateries, setEateries] = useState([])
-  const [filteredEateries, setFilteredEateries] = useState([])
-  const [showForm, setShowForm] = useState(false)
+  // All hooks must be called at the top, before any conditional logic
+  const { isAuthenticated, currentUser, login, logout, signup, updateProfile } = useAuth()
   const [activeTab, setActiveTab] = useState('home')
-  const [showSignupModal, setShowSignupModal] = useState(false)
-  const [showLoginModal, setShowLoginModal] = useState(false)
+  const [showForm, setShowForm] = useState(false)
+  const [eateries, setEateries] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilters, setActiveFilters] = useState({})
+  const [filteredEateries, setFilteredEateries] = useState([])
   
-  // Use the auth hook
-  const { isAuthenticated, currentUser, login, logout, signup, updateProfile } = useAuth()
-
-  // API call to health endpoint
+  // Fetch eateries when component mounts - this hook is always called
   useEffect(() => {
-    const checkHealth = async () => {
-      try {
-        const response = await fetch(buildApiUrl(API_ENDPOINTS.HEALTH))
-        const data = await response.json()
-        console.log('Health API response:', data)
-      } catch (error) {
-        console.error('Health API error:', error)
-      }
+    if (isAuthenticated) {
+      fetchEateries()
     }
-    
-    checkHealth()
-  }, [])
-
-  // API call to get all users
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await fetch(buildApiUrl(`${API_ENDPOINTS.USERS}/get-all-users`))
-        const data = await response.json()
-        console.log('Users API response:', data)
-      } catch (error) {
-        console.error('Users API error:', error)
-      }
-    }
-    
-    getUsers()
-  }, [])
-
-  // Automatically fetch eateries when component mounts
-  useEffect(() => {
-    fetchEateries()
-  }, [])
+  }, [isAuthenticated])
 
   // Apply search and filters whenever they change
   useEffect(() => {
     applySearchAndFilters()
   }, [searchTerm, activeFilters, eateries])
+
+  const fetchEateries = async () => {
+    try {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.EATERIES))
+      const data = await response.json()
+      if (response.ok) {
+        setEateries(data.eateries || [])
+        console.log('Eateries fetched:', data.eateries)
+      }
+    } catch (error) {
+      console.error('Error fetching eateries:', error)
+    }
+  }
 
   const applySearchAndFilters = () => {
     let filtered = [...eateries]
@@ -113,7 +94,38 @@ function App() {
       )
     }
 
+    // Sort by most recently added (newest first)
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.createdAt || 0)
+      const dateB = new Date(b.createdAt || 0)
+      return dateB - dateA // Newest first
+    })
+
     setFilteredEateries(filtered)
+  }
+  
+  console.log('App.jsx: Test - isAuthenticated:', isAuthenticated, 'currentUser:', currentUser)
+  
+  // If user is not authenticated, show the auth landing page
+  if (!isAuthenticated) {
+    console.log('App.jsx: User not authenticated, showing AuthLanding')
+    return (
+      <AuthLanding
+        onSignupSuccess={(user) => signup({ email: user.email, name: user.name })}
+        onLoginSuccess={(user) => login(user)}
+      />
+    )
+  }
+  
+  console.log('App.jsx: User authenticated, showing app')
+  
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+  }
+
+  const handleLogoutClick = () => {
+    logout()
+    setActiveTab('home')
   }
 
   const handleSearch = (term) => {
@@ -126,6 +138,8 @@ function App() {
 
   const addEatery = async (newPlace) => {
     try {
+      console.log('Adding eatery:', newPlace)
+      
       const response = await fetch(buildApiUrl(API_ENDPOINTS.EATERIES), {
         method: 'POST',
         headers: {
@@ -135,64 +149,43 @@ function App() {
       })
 
       const data = await response.json()
+      console.log('Backend response:', data)
 
       if (response.ok) {
-        // Add the new eatery to local state
         setEateries(prev => [...prev, data.eatery])
         setShowForm(false)
-        console.log('Eatery added successfully:', data.eatery)
+        console.log('Eatery added successfully')
       } else {
-        console.error('Failed to add eatery:', data.error)
+        alert('Failed to add eatery: ' + (data.error || 'Unknown error'))
       }
     } catch (error) {
-        console.error('Error adding eatery:', error)
+      console.error('Error adding eatery:', error)
+      alert('Error adding eatery. Please try again.')
     }
   }
 
-  const deleteEatery = (id) => {
-    setEateries(eateries.filter(place => place.id !== id))
-  }
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab)
-  }
-
-  const handleSignupClick = () => {
-    setShowSignupModal(true)
-  }
-
-  const handleSignupSuccess = (user) => {
-    signup({ email: user.email, name: user.name })
-    console.log('User signed up successfully:', user)
-  }
-
-  const handleLoginClick = () => {
-    setShowLoginModal(true)
-  }
-
-  const handleLoginSuccess = (user) => {
-    login(user)
-    console.log('User logged in successfully:', user)
-  }
-
-  const handleLogoutClick = () => {
-    logout()
-    console.log('User logged out successfully')
-  }
-
-  const fetchEateries = async () => {
+  const deleteEatery = async (id) => {
+    const eatery = eateries.find(place => place.id === id)
+    
+    if (!eatery || eatery.userId !== currentUser?.id) {
+      alert('You can only delete your own eateries')
+      return
+    }
+    
     try {
-      const response = await fetch(buildApiUrl(API_ENDPOINTS.EATERIES))
-      const data = await response.json()
+      const response = await fetch(buildApiUrl(`${API_ENDPOINTS.EATERIES}/${id}`), {
+        method: 'DELETE'
+      })
 
       if (response.ok) {
-        setEateries(data.eateries)
-        console.log('Eateries fetched successfully:', data.eateries)
+        setEateries(eateries.filter(place => place.id !== id))
+        console.log('Eatery deleted successfully')
       } else {
-        console.error('Failed to fetch eateries:', data.error)
+        alert('Failed to delete eatery')
       }
     } catch (error) {
-      console.error('Error fetching eateries:', error)
+      console.error('Error deleting eatery:', error)
+      alert('Error deleting eatery. Please try again.')
     }
   }
 
@@ -202,49 +195,86 @@ function App() {
     }
     
     if (activeTab === 'profile') {
-      return <Profile 
-        eateries={eateries}
-        onDelete={deleteEatery}
-        onAddNew={() => setShowForm(true)}
-        currentUser={currentUser}
-        onLogout={handleLogoutClick}
-        onProfileUpdate={(updatedUser) => {
-          // Update the currentUser state with the new data
-          if (updatedUser) {
-            updateProfile(updatedUser);
-          }
-        }}
-      />
-    }
-    
-    return (
-      <FoodPlaceList 
-        eateries={filteredEateries} 
-        onDelete={deleteEatery}
-        totalEateries={eateries.length}
-        hasActiveFilters={searchTerm.trim() !== '' || Object.keys(activeFilters).some(key => {
-          if (key === 'dietaryOptions') {
-            return Object.values(activeFilters.dietaryOptions).some(Boolean)
-          }
-          return Array.isArray(activeFilters[key]) ? activeFilters[key].length > 0 : activeFilters[key] > 0
-        })}
-      />
-    )
-  }
-
-  const renderSideContent = () => {
-    if (activeTab === 'home') {
       return (
-        <FoodPlaceForm 
-          onSubmit={addEatery}
-          isOpen={showForm}
-          onClose={() => setShowForm(false)}
-          onOpen={() => setShowForm(true)}
+        <Profile 
+          eateries={eateries.filter(eatery => eatery.userId === currentUser?.id)}
+          onDelete={deleteEatery}
+          onAddNew={() => setShowForm(true)}
+          currentUser={currentUser}
+          onLogout={handleLogoutClick}
+          onProfileUpdate={(updatedUser) => {
+            // Update the auth context with the new user data
+            console.log('Profile update received in App:', updatedUser)
+            // Call updateProfile to update localStorage and currentUser state
+            updateProfile(updatedUser)
+          }}
         />
       )
     }
     
-    return null
+    return (
+      <div className="container mx-auto px-4 py-8">
+        {/* Slogan Section */}
+        <div className="text-center mb-12 pt-8">
+          <h1 className="text-6xl font-bold text-[#382c5c] mb-2 font-rubik">
+            Code <span className="inline-block origin-right animate-swing-down">breaks</span>, fix it faster
+          </h1>
+          <p className="text-xl text-[#FDB81B] font-medium font-rubik">
+            (after lunch)
+          </p>
+        </div>
+
+        {/* Search Summary */}
+        {(searchTerm.trim() !== '' || Object.keys(activeFilters).some(key => {
+          if (key === 'dietaryOptions') {
+            return Object.values(activeFilters[key]).some(Boolean)
+          }
+          return Array.isArray(activeFilters[key]) ? activeFilters[key].length > 0 : activeFilters[key] > 0
+        })) && (
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 mb-8">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-[#181225] font-rubik">
+                Search & Filter Results
+              </h3>
+              <p className="text-sm text-gray-600 font-rubik">
+                Found {filteredEateries.length} eateries matching your criteria
+              </p>
+            </div>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            <FoodPlaceList 
+              eateries={filteredEateries} 
+              onDelete={deleteEatery}
+              totalEateries={eateries.length}
+              currentUser={currentUser}
+              hasActiveFilters={searchTerm.trim() !== '' || Object.keys(activeFilters).some(key => {
+                if (key === 'dietaryOptions') {
+                  return Object.values(activeFilters[key]).some(Boolean)
+                }
+                return Array.isArray(activeFilters[key]) ? activeFilters[key].length > 0 : activeFilters[key] > 0
+              })}
+            />
+          </div>
+          
+          {/* Side Content */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-8">
+              <FoodPlaceForm 
+                onSubmit={addEatery}
+                isOpen={showForm}
+                onClose={() => setShowForm(false)}
+                onOpen={() => setShowForm(true)}
+                currentUser={currentUser}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -252,8 +282,6 @@ function App() {
       <Header 
         activeTab={activeTab}
         onTabChange={handleTabChange}
-        onSignupClick={handleSignupClick}
-        onLoginClick={handleLoginClick}
         onLogoutClick={handleLogoutClick}
         isAuthenticated={isAuthenticated}
         currentUser={currentUser}
@@ -267,74 +295,11 @@ function App() {
         <div className="w-full">
           {renderMainContent()}
         </div>
-      ) : activeTab === 'profile' ? (
-        <div className="container mx-auto px-4 py-8">
-          <div className="lg:col-span-3">
-            {renderMainContent()}
-          </div>
-        </div>
       ) : (
         <div className="container mx-auto px-4 py-8">
-          {/* Slogan Section */}
-          <div className="text-center mb-12 pt-8">
-            <h1 className="text-6xl font-bold text-[#382c5c] mb-2 font-rubik">
-              Code <span className="inline-block origin-right animate-swing-down">breaks</span>, fix it faster
-            </h1>
-            <p className="text-xl text-[#FDB81B] font-medium font-rubik">
-              (after lunch)
-            </p>
-            
-
-          </div>
-
-          {/* Search Summary */}
-          {(searchTerm.trim() !== '' || Object.keys(activeFilters).some(key => {
-            if (key === 'dietaryOptions') {
-              return Object.values(activeFilters.dietaryOptions).some(Boolean)
-            }
-            return Array.isArray(activeFilters[key]) ? activeFilters[key].length > 0 : activeFilters[key] > 0
-          })) && (
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 mb-8">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-[#181225] font-rubik">
-                  Search & Filter Results
-                </h3>
-                <p className="text-sm text-gray-600 font-rubik">
-                  Found {filteredEateries.length} eateries matching your criteria
-                </p>
-              </div>
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              {renderMainContent()}
-            </div>
-            
-            {/* Side Content */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-8">
-                {renderSideContent()}
-              </div>
-            </div>
-          </div>
+          {renderMainContent()}
         </div>
       )}
-      
-      {/* Signup Modal */}
-      <SignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSignupSuccess={handleSignupSuccess}
-      />
-      
-      {/* Login Modal */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onLoginSuccess={handleLoginSuccess}
-      />
     </div>
   )
 }

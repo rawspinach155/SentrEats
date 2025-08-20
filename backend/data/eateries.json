@@ -98,5 +98,225 @@
     "images": [],
     "createdAt": "2025-08-20T15:58:10.439Z",
     "createdBy": "current_user"
+  },
+  {
+    "id": 6,
+    "name": "Sentry Office",
+    "address": "45 Fremont St",
+    "type": "Sushi Bar",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": true,
+      "nutFree": true
+    },
+    "price": "$$",
+    "cuisine": "Japanese",
+    "rating": 5,
+    "comment": "I love the office!",
+    "images": [],
+    "createdAt": "2025-08-20T20:57:06.568Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 7,
+    "name": "Sentry",
+    "address": "Sentry Office, 45 Fremont St, San Francisco, CA 94105",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": true,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Mexican",
+    "rating": 4,
+    "comment": "dfecjerhueu",
+    "images": [],
+    "createdAt": "2025-08-20T21:10:16.488Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 8,
+    "name": "ff",
+    "address": "Andytown Coffee, 800, Great Highway, San Francisco, California, 94121, United States",
+    "type": "Bar",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "Italian",
+    "rating": 4,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:14:12.213Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 9,
+    "name": "sentry",
+    "address": "Starbucks, 1431, North Broadway Street, North Menomonie, Menomonie, Dunn County, Wisconsin, 54751, United States",
+    "type": "Cafe",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 2,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:17:08.260Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 10,
+    "name": "Bla Bla",
+    "address": "Blandair Regional Park, 5749, Oakland Mills, Howard County, Maryland, United States",
+    "type": "Food Court",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": true,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": true
+    },
+    "price": "$",
+    "cuisine": "African",
+    "rating": 5,
+    "comment": "dcxeaaq",
+    "images": [],
+    "createdAt": "2025-08-20T21:20:21.526Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 11,
+    "name": "sentry (but not us)",
+    "address": "Sentry, Logan Street, Dewaynes Trailer Court, Holdrege, Phelps County, Nebraska, 68949, United States",
+    "type": "Pizzeria",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Thai",
+    "rating": 3,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:22:58.165Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 12,
+    "name": "rve",
+    "address": "Electrical Engineering West, Homecoming Drive, State College, Centre County, Pennsylvania, 16802, United States",
+    "type": "Pizzeria",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Mexican",
+    "rating": 2,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:25:13.059Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 13,
+    "name": "ca",
+    "address": "Sparta Community Airport-Hunter Field, Matsons Shopping Center, Sparta, Randolph County, Illinois, 62286, United States",
+    "type": "Cafe",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": true,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$$$",
+    "cuisine": "Italian",
+    "rating": 1,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:26:31.684Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 14,
+    "name": "jire&#x27;w",
+    "address": "Rew, Foster Township, McKean County, Pennsylvania, 16744, United States",
+    "type": "Cafe",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$",
+    "cuisine": "American",
+    "rating": 2,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:28:44.710Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 15,
+    "name": "bhj",
+    "address": "BGH Builds, 15552, East Fremont Drive, Cherry Creek Business Center, Centennial, Arapahoe County, Colorado, 80112, United States",
+    "type": "Pizzeria",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$",
+    "cuisine": "American",
+    "rating": 1,
+    "comment": "",
+    "images": [],
+    "createdAt": "2025-08-20T21:31:30.725Z",
+    "createdBy": "current_user"
+  },
+  {
+    "id": 16,
+    "name": "dws",
+    "address": "O&#x27;Hare International Airport, 10000, East Old Higgins Road, Chicago, Elk Grove Township, Cook County, Illinois, 60666, United States",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": true
+    },
+    "price": "$$$$",
+    "cuisine": "French",
+    "rating": 3,
+    "comment": "rvheilqwhdyqudggyrhstekrqkjsai",
+    "images": [],
+    "createdAt": "2025-08-20T21:33:39.360Z",
+    "createdBy": "current_user"
   }
 ]

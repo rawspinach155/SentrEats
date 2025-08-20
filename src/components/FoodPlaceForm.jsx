@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { X, Upload, Star, Plus } from 'lucide-react'
+import AddressAutocomplete from './AddressAutocomplete'
 
 const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,31 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
   })
 
   const [imagePreview, setImagePreview] = useState([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // Reset form when it opens
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: '',
+        address: '',
+        type: '',
+        dietaryOptions: {
+          glutenFree: false,
+          vegan: false,
+          vegetarian: false,
+          dairyFree: false,
+          nutFree: false
+        },
+        price: '',
+        cuisine: '',
+        rating: 0,
+        images: [],
+        comment: ''
+      })
+      setImagePreview([])
+    }
+  }, [isOpen])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -72,28 +98,30 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
     setImagePreview(newPreviews)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    onSubmit(formData)
-    // Reset form
-    setFormData({
-      name: '',
-      address: '',
-      type: '',
-      dietaryOptions: {
-        glutenFree: false,
-        vegan: false,
-        vegetarian: false,
-        dairyFree: false,
-        nutFree: false
-      },
-      price: '',
-      cuisine: '',
-      rating: 0,
-      images: [],
-      comment: ''
-    })
-    setImagePreview([])
+    
+    // Validate required fields
+    if (!formData.name || !formData.address || !formData.type || !formData.cuisine || !formData.price) {
+      alert('Please fill in all required fields')
+      return
+    }
+    
+    setIsSubmitting(true)
+    
+    try {
+      // Call the parent onSubmit function
+      await onSubmit(formData)
+      
+      // Close form immediately after success
+      onClose()
+      
+    } catch (error) {
+      console.error('❌ Form submission failed:', error)
+      // Don't reset form on error
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   // Place type options including sweet places for sweet potato ratings
@@ -160,6 +188,7 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
         <button
           onClick={onClose}
           className="text-[#382c5c] hover:text-[#2a1f45] transition-colors p-2 hover:bg-[#f6f6f8] rounded-lg"
+          disabled={isSubmitting}
         >
           <X className="w-6 h-6" />
         </button>
@@ -187,14 +216,11 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
           <label className="block text-sm font-semibold text-[#181225] mb-2 font-rubik">
             Address *
           </label>
-          <textarea
-            name="address"
+          <AddressAutocomplete
             value={formData.address}
-            onChange={handleInputChange}
-            required
-            rows="3"
-            className="input-field font-rubik"
-            placeholder="Enter full address"
+            onChange={(address) => setFormData(prev => ({ ...prev, address }))}
+            placeholder="Start typing to search for an address..."
+            className="font-rubik"
           />
         </div>
 
@@ -417,13 +443,20 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen }) => {
           )}
         </div>
 
+
+
         {/* Submit Button */}
         <div className="pt-4">
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl font-rubik"
+            disabled={isSubmitting}
+            className={`w-full font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl font-rubik ${
+              isSubmitting 
+                ? 'bg-gray-400 cursor-not-allowed transform-none' 
+                : 'bg-gradient-to-r from-[#382c5c] to-[#2a1f45] hover:from-[#2a1f45] hover:to-[#1a142f] text-white'
+            }`}
           >
-            Add Eatery
+            {isSubmitting ? 'Adding Eatery...' : 'Add Eatery'}
           </button>
         </div>
       </form>

@@ -63,6 +63,7 @@ function App() {
   }, [searchTerm, activeFilters, eateries])
 
   const applySearchAndFilters = () => {
+    console.log('🔍 Applying filters to eateries:', eateries.length)
     let filtered = [...eateries]
 
     // Apply search term
@@ -113,6 +114,7 @@ function App() {
       )
     }
 
+    console.log('📋 Setting filtered eateries:', filtered.length)
     setFilteredEateries(filtered)
   }
 
@@ -137,15 +139,25 @@ function App() {
       const data = await response.json()
 
       if (response.ok) {
-        // Add the new eatery to local state
-        setEateries(prev => [...prev, data.eatery])
-        setShowForm(false)
-        console.log('Eatery added successfully:', data.eatery)
+        // Add the new eatery to local state with proper ID
+        const newEateryWithId = {
+          ...data.eatery,
+          id: data.eatery.id || Date.now() // Ensure ID exists
+        }
+        
+        // IMMEDIATELY update both states for instant feed update
+        setEateries(prev => [...prev, newEateryWithId])
+        setFilteredEateries(prev => [...prev, newEateryWithId])
+        
+        console.log('✅ Eatery added successfully:', newEateryWithId)
+        return true // Return success
       } else {
-        console.error('Failed to add eatery:', data.error)
+        console.error('❌ Failed to add eatery:', data.error)
+        throw new Error(data.error || 'Failed to add eatery')
       }
     } catch (error) {
-        console.error('Error adding eatery:', error)
+      console.error('❌ Error adding eatery:', error)
+      throw error // Re-throw to let form handle it
     }
   }
 

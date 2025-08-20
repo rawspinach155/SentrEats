@@ -41,8 +41,8 @@
   },
   {
     "id": 4,
-    "name": "test eatery",
-    "address": "hello",
+    "name": "Ghirardelli Chocolate Factory",
+    "address": "900 North Point Street, San Francisco, CA 94109",
     "type": "Ice Cream Shop",
     "dietaryOptions": {
       "glutenFree": true,
@@ -51,19 +51,19 @@
       "dairyFree": true,
       "nutFree": false
     },
-    "price": "$$$$",
-    "cuisine": "Mexican",
+    "price": "$$$",
+    "cuisine": "American",
     "rating": 4,
-    "comment": "good great place",
+    "comment": "Famous chocolate and ice cream. Perfect for a sweet treat after coding!",
     "createdAt": "2025-08-19T23:44:54.972Z",
     "createdBy": "vishnus",
     "userId": 4
   },
   {
     "id": 5,
-    "name": "hi",
-    "address": "hi",
-    "type": "Bar",
+    "name": "Anchor Brewing Company",
+    "address": "1705 Mariposa Street, San Francisco, CA 94107",
+    "type": "Brewery",
     "dietaryOptions": {
       "glutenFree": false,
       "vegan": false,
@@ -73,28 +73,28 @@
     },
     "price": "$$",
     "cuisine": "American",
-    "rating": 2,
-    "comment": "bad beer",
+    "rating": 4,
+    "comment": "Historic brewery with great craft beer and pub food",
     "createdAt": "2025-08-20T15:58:10.439Z",
     "createdBy": "arielle",
     "userId": 5
   },
   {
     "id": 6,
-    "name": "testing",
-    "address": "testing",
-    "type": "Ice Cream Shop",
+    "name": "Tartine Bakery",
+    "address": "600 Guerrero Street, San Francisco, CA 94110",
+    "type": "Bakery",
     "dietaryOptions": {
       "glutenFree": false,
       "vegan": false,
       "vegetarian": false,
-      "dairyFree": true,
+      "dairyFree": false,
       "nutFree": false
     },
-    "price": "$$$",
-    "cuisine": "Mexican",
-    "rating": 4,
-    "comment": "testing yay yum",
+    "price": "$$",
+    "cuisine": "French",
+    "rating": 5,
+    "comment": "Amazing pastries and bread. Worth the wait in line!",
     "images": [],
     "createdAt": "2025-08-20T21:29:29.454Z",
     "createdBy": "test",
@@ -102,8 +102,8 @@
   },
   {
     "id": 7,
-    "name": "test eatery",
-    "address": "45 fremont st",
+    "name": "Mission Chinese Food",
+    "address": "2234 Mission Street, San Francisco, CA 94110",
     "type": "Restaurant",
     "dietaryOptions": {
       "glutenFree": false,
@@ -113,11 +113,53 @@
       "nutFree": false
     },
     "price": "$$",
-    "cuisine": "American",
-    "rating": 3,
-    "comment": "testing food",
+    "cuisine": "Chinese",
+    "rating": 4,
+    "comment": "Modern Chinese cuisine with a creative twist",
     "images": [],
     "createdAt": "2025-08-20T21:46:46.144Z",
+    "createdBy": "vishnus",
+    "userId": 4
+  },
+  {
+    "id": 8,
+    "name": "primer",
+    "address": "3130 20th st san francisco",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "American",
+    "rating": 4,
+    "comment": "testign",
+    "images": [],
+    "createdAt": "2025-08-20T22:25:31.555Z",
+    "createdBy": "vishnus",
+    "userId": 4
+  },
+  {
+    "id": 9,
+    "name": "primer v2",
+    "address": "3130 20th st san francisco",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 2,
+    "comment": "testing123",
+    "images": [],
+    "createdAt": "2025-08-20T22:26:26.667Z",
     "createdBy": "vishnus",
     "userId": 4
   }

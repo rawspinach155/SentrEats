@@ -99,5 +99,26 @@
     "createdAt": "2025-08-20T21:29:29.454Z",
     "createdBy": "test",
     "userId": 1
+  },
+  {
+    "id": 7,
+    "name": "test eatery",
+    "address": "45 fremont st",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": true,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 3,
+    "comment": "testing food",
+    "images": [],
+    "createdAt": "2025-08-20T21:46:46.144Z",
+    "createdBy": "vishnus",
+    "userId": 4
   }
 ]

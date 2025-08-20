@@ -29,8 +29,9 @@
     "name": "vishnus",
     "email": "vishnus@vishnus.com",
     "password": "vishnus",
-    "avatarColor": "#fdb81b",
-    "createdAt": "2025-08-19T23:36:20.937Z"
+    "avatarColor": "#7553ff",
+    "createdAt": "2025-08-19T23:36:20.937Z",
+    "updatedAt": "2025-08-20T21:46:03.811Z"
   },
   {
     "id": 5,

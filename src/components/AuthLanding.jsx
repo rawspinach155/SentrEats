@@ -25,6 +25,16 @@ const AuthLanding = ({ onSignupSuccess, onLoginSuccess }) => {
     onLoginSuccess(user)
   }
 
+  const handleSwitchToLogin = () => {
+    setShowSignupModal(false)
+    setShowLoginModal(true)
+  }
+
+  const handleSwitchToSignup = () => {
+    setShowLoginModal(false)
+    setShowSignupModal(true)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f6f6f8] to-[#e8e8ea] flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">
@@ -116,12 +126,14 @@ const AuthLanding = ({ onSignupSuccess, onLoginSuccess }) => {
         isOpen={showSignupModal}
         onClose={() => setShowSignupModal(false)}
         onSignupSuccess={handleSignupSuccess}
+        onSwitchToLogin={handleSwitchToLogin}
       />
       
       <LoginModal
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
         onLoginSuccess={handleLoginSuccess}
+        onSwitchToSignup={handleSwitchToSignup}
       />
     </div>
   )

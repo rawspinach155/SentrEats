@@ -209,6 +209,24 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2a1f45]"
               placeholder="Enter your email"
             />
+            
+            {/* Save/Cancel Buttons - Right after form fields */}
+            <div className="flex space-x-2 pt-2">
+              <button
+                onClick={handleSave}
+                disabled={isLoading}
+                className="flex-1 bg-[#382c5c] text-white py-2 px-4 rounded-lg hover:bg-[#2a1f45] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? 'Saving...' : 'Save'}
+              </button>
+              <button
+                onClick={handleCancel}
+                disabled={isLoading}
+                className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
         
@@ -318,9 +336,9 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
         )}
       </div>
 
-      {/* Profile Actions */}
-      <div className="space-y-3">
-        {!isEditing ? (
+      {/* Profile Actions - Only show when not editing */}
+      {!isEditing && (
+        <div className="space-y-3">
           <button
             onClick={() => setIsEditing(true)}
             className="w-full bg-[#382c5c] text-white py-2 px-4 rounded-lg hover:bg-[#2a1f45] transition-colors flex items-center justify-center space-x-2"
@@ -328,38 +346,16 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
             <Edit3 className="w-4 h-4" />
             <span>Edit Profile</span>
           </button>
-        ) : (
-          <div className="flex space-x-2">
-            <button
-              onClick={handleSave}
-              disabled={isLoading}
-              className="flex-1 bg-[#382c5c] text-white py-2 px-4 rounded-lg hover:bg-[#2a1f45] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? 'Saving...' : 'Save'}
-            </button>
-            <button
-              onClick={handleCancel}
-              disabled={isLoading}
-              className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-        
-        <button className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2">
-          <Settings className="w-4 h-4" />
-          <span>Settings</span>
-        </button>
-        
-        <button 
-          onClick={onLogout}
-          className="w-full bg-red-100 text-red-600 py-2 px-4 rounded-lg hover:bg-red-200 transition-colors flex items-center justify-center space-x-2"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Logout</span>
-        </button>
-      </div>
+          
+          <button 
+            onClick={onLogout}
+            className="w-full bg-red-100 text-red-600 py-2 px-4 rounded-lg hover:bg-red-200 transition-colors flex items-center justify-center space-x-2"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Logout</span>
+          </button>
+        </div>
+      )}
     </div>
   )
 }

@@ -37,7 +37,8 @@
     "name": "arielle",
     "email": "arielle.blumenfeld@sentry.io",
     "password": "123456",
-    "avatarColor": "#92dd00",
-    "createdAt": "2025-08-20T15:55:52.803Z"
+    "avatarColor": "#ff45a8",
+    "createdAt": "2025-08-20T15:55:52.803Z",
+    "updatedAt": "2025-08-20T22:01:15.402Z"
   }
 ]

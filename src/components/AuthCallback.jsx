@@ -4,46 +4,59 @@ const AuthCallback = () => {
   const [status, setStatus] = useState('Processing authentication...');
 
   useEffect(() => {
+    console.log('AuthCallback: Component mounted');
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
     const user = urlParams.get('user');
     const error = urlParams.get('message');
+    
+    console.log('AuthCallback: URL params:', { token: token ? 'present' : 'missing', user: user ? 'present' : 'missing', error });
 
     if (error) {
       setStatus(`Authentication failed: ${error}`);
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.replace('/');
       }, 3000);
       return;
     }
 
     if (token && user) {
       try {
+        console.log('AuthCallback: Parsing user data...');
         const userData = JSON.parse(decodeURIComponent(user));
+        console.log('AuthCallback: Parsed user data:', userData);
         
         // Store authentication data
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(userData));
+        console.log('AuthCallback: Stored auth data in localStorage');
         
         setStatus('Authentication successful! Redirecting...');
         
         // Redirect to main app
         setTimeout(() => {
-          window.location.href = '/';
-          window.location.reload();
+          console.log('AuthCallback: Redirecting to main app...');
+          // Use replace to avoid back button issues
+          window.location.replace('/');
         }, 1500);
+        
+        // Fallback redirect in case setTimeout fails
+        setTimeout(() => {
+          console.log('AuthCallback: Fallback redirect...');
+          window.location.replace('/');
+        }, 3000);
         
       } catch (error) {
         console.error('Error parsing user data:', error);
         setStatus('Error processing authentication data');
         setTimeout(() => {
-          window.location.href = '/';
+          window.location.replace('/');
         }, 3000);
       }
     } else {
       setStatus('No authentication data received');
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.replace('/');
       }, 3000);
     }
   }, []);

@@ -8,7 +8,7 @@ const router = express.Router();
 const SLACK_CLIENT_ID = process.env.SLACK_CLIENT_ID || '9369401902229.9386685018882';
 // TODO: Replace with your actual Slack client secret from https://api.slack.com/apps
 const SLACK_CLIENT_SECRET = process.env.SLACK_CLIENT_SECRET || 'your_slack_client_secret_here';
-const SLACK_REDIRECT_URI = process.env.SLACK_REDIRECT_URI || 'https://3d0b9d215ce7.ngrok-free.app/api/auth/slack/callback';
+const SLACK_REDIRECT_URI = process.env.SLACK_REDIRECT_URI || 'https://4604188c763a.ngrok-free.app/api/auth/slack/callback';
 
 // Debug environment variables
 console.log('Slack OAuth Config:', {

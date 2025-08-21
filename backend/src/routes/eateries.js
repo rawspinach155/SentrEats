@@ -213,7 +213,7 @@ router.post('/', [
       images,
       coordinates: coordinates || null,
       createdAt: new Date().toISOString(),
-      createdBy: user.name,
+      createdBy: user.email,
       userId: parseInt(userId)
     };
     

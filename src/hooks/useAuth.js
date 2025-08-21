@@ -19,7 +19,7 @@ export const useAuth = () => {
         
         // Verify token with backend
         try {
-          const response = await fetch('https://3d0b9d215ce7.ngrok-free.app/api/auth/me', {
+          const response = await fetch('https://4604188c763a.ngrok-free.app/api/auth/me', {
             headers: {
               'Authorization': `Bearer ${token}`
             }

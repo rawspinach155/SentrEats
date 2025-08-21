@@ -3,7 +3,7 @@ import React from 'react';
 const SlackLogin = () => {
   const handleSlackLogin = () => {
     // Redirect to our backend Slack OAuth endpoint
-    window.location.href = 'https://3d0b9d215ce7.ngrok-free.app/api/auth/slack';
+    window.location.href = 'https://4604188c763a.ngrok-free.app/api/auth/slack';
   };
 
   return (

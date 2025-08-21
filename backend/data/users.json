@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "name": "test",
-    "email": "test@sentry.io",
+    "name": "Alex Chen",
+    "email": "alex.chen@example.com",
     "password": "password123",
     "avatarColor": "#226dfc",
     "createdAt": "2024-01-15T10:00:00Z",
@@ -10,27 +10,28 @@
   },
   {
     "id": 2,
-    "name": "Jane Smith",
-    "email": "jane.smith@example.com",
+    "name": "Maria Rodriguez",
+    "email": "maria.rodriguez@example.com",
     "password": "password456",
     "avatarColor": "#ff45a8",
     "createdAt": "2024-01-16T12:00:00Z"
   },
   {
     "id": 3,
-    "name": "vishnu satish",
-    "email": "vishnu@sentry.io",
-    "password": "hellohello",
+    "name": "David Kim",
+    "email": "david.kim@example.com",
+    "password": "password789",
     "avatarColor": "#ee8019",
     "createdAt": "2025-08-19T23:08:25.937Z"
   },
   {
     "id": 4,
-    "name": "vishnus",
-    "email": "vishnus@vishnus.com",
-    "password": "vishnus",
-    "avatarColor": "#fdb81b",
-    "createdAt": "2025-08-19T23:36:20.937Z"
+    "name": "Arielle Johnson",
+    "email": "sarah.johnson@example.com",
+    "password": "password101",
+    "avatarColor": "#7553ff",
+    "createdAt": "2025-08-19T23:36:20.937Z",
+    "updatedAt": "2025-08-20T23:17:50.950Z"
   },
   {
     "id": 5,
@@ -48,6 +49,6 @@
     "avatar": "https://avatars.slack-edge.com/2025-08-18/9359060851063_ecf702c54960ea03aa04_512.png",
     "avatarColor": "#fdb81b",
     "createdAt": "2025-08-21T09:30:29.949Z",
-    "updatedAt": "2025-08-21T10:24:34.882Z"
+    "updatedAt": "2025-08-21T18:43:49.866Z"
   }
 ]

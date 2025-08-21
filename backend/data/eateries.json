@@ -166,5 +166,40 @@
     ],
     "createdAt": "2025-08-21T02:09:38.887Z",
     "updatedAt": "2025-08-21T10:23:39.107Z"
+  },
+  {
+    "id": 11,
+    "name": "sentry cafe",
+    "address": "45 Fremont Street, 45 Fremont St, San Francisco, CA 94105, USA",
+    "coordinates": {
+      "lat": 37.7912679,
+      "lng": -122.3971963
+    },
+    "type": "Cafe",
+    "cuisine": "Italian",
+    "price": "$$",
+    "reviewIds": [
+      19,
+      21
+    ],
+    "createdAt": "2025-08-21T18:45:55.268Z",
+    "updatedAt": "2025-08-21T18:46:56.570Z"
+  },
+  {
+    "id": 12,
+    "name": "45 fremont st",
+    "address": "45 Fremont St, San Francisco, CA 94105, USA",
+    "coordinates": {
+      "lat": 37.7914192,
+      "lng": -122.3974862
+    },
+    "type": "Bar",
+    "cuisine": "Italian",
+    "price": "$$",
+    "reviewIds": [
+      20
+    ],
+    "createdAt": "2025-08-21T18:46:25.101Z",
+    "updatedAt": "2025-08-21T18:46:25.101Z"
   }
 ]

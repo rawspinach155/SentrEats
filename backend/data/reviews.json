@@ -412,5 +412,83 @@
     "createdBy": "Jovi Tseng",
     "userId": 6,
     "eateryId": 10
+  },
+  {
+    "id": 19,
+    "name": "sentry cafe",
+    "address": "45 Fremont Street, 45 Fremont St, San Francisco, CA 94105, USA",
+    "type": "Cafe",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 3,
+    "comment": "fsdkjbfbhjfs",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7912679,
+      "lng": -122.3971963
+    },
+    "createdAt": "2025-08-21T18:45:55.268Z",
+    "createdBy": "jovi.tseng@sentry.io",
+    "userId": 6,
+    "eateryId": 11
+  },
+  {
+    "id": 20,
+    "name": "45 fremont st",
+    "address": "45 Fremont St, San Francisco, CA 94105, USA",
+    "type": "Bar",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Italian",
+    "rating": 3,
+    "comment": "testing2",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7914192,
+      "lng": -122.3974862
+    },
+    "createdAt": "2025-08-21T18:46:25.101Z",
+    "createdBy": "jovi.tseng@sentry.io",
+    "userId": 6,
+    "eateryId": 12
+  },
+  {
+    "id": 21,
+    "name": "testing3",
+    "address": "45 Fremont Street, 45 Fremont St, San Francisco, CA 94105, USA",
+    "type": "Bar",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": true,
+      "nutFree": false
+    },
+    "price": "$$$",
+    "cuisine": "Italian",
+    "rating": 4,
+    "comment": "testing3",
+    "images": [],
+    "coordinates": {
+      "lat": 37.7912679,
+      "lng": -122.3971963
+    },
+    "createdAt": "2025-08-21T18:46:56.570Z",
+    "createdBy": "jovi.tseng@sentry.io",
+    "userId": 6,
+    "eateryId": 11
   }
 ]

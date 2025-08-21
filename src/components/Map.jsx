@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { loadGoogleMapsAPI } from '../utils/googleMapsLoader'
 import { MapPin } from 'lucide-react'
 
 const Map = ({ eateries = [] }) => {
@@ -12,48 +13,17 @@ const Map = ({ eateries = [] }) => {
   const eateryMarkersRef = useRef([])
 
   useEffect(() => {
-    // Load Google Maps API
-    const loadGoogleMaps = () => {
-      // Check if Google Maps API is already loaded and ready
-      if (window.google && window.google.maps && window.google.maps.Map) {
-        initMap()
-        return
-      }
-
-      // Check if script is already being loaded
-      const existingScript = document.querySelector('script[src*="maps.googleapis.com"]')
-      if (existingScript) {
-        // Script is already loading, wait for it
-        existingScript.addEventListener('load', () => {
-          // Add a small delay to ensure the API is fully initialized
-          setTimeout(initMap, 100)
-        })
-        return
-      }
-
-      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-      
-      console.log('Google Maps API Key:', apiKey ? 'Present' : 'Missing')
-      
-      if (!apiKey) {
-        setError('Google Maps API key is missing. Please create a .env file with VITE_GOOGLE_MAPS_API_KEY=your_api_key')
-        setIsLoading(false)
-        return
-      }
-      
-      const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`
-      script.async = true
-      script.defer = true
-      script.onload = () => {
+    // Load Google Maps API using shared loader
+    const loadGoogleMaps = async () => {
+      try {
+        await loadGoogleMapsAPI()
         // Add a small delay to ensure the API is fully initialized
         setTimeout(initMap, 100)
-      }
-      script.onerror = () => {
-        setError('Failed to load Google Maps API. Please check your internet connection and API key.')
+      } catch (error) {
+        console.error('Failed to load Google Maps API:', error)
+        setError(error.message || 'Failed to load Google Maps API')
         setIsLoading(false)
       }
-      document.head.appendChild(script)
     }
 
     const initMap = () => {

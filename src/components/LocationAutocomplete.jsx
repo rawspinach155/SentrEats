@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { loadGoogleMapsAPI, isGoogleMapsLoaded } from '../utils/googleMapsLoader'
 import { Search, MapPin, X } from 'lucide-react'
 
 const LocationAutocomplete = ({ 
@@ -14,28 +15,15 @@ const LocationAutocomplete = ({
   const inputRef = useRef(null)
   const autocompleteRef = useRef(null)
 
-  // Load Google Maps API
+  // Load Google Maps API using shared loader
   useEffect(() => {
-    const loadGoogleMaps = () => {
-      if (window.google && window.google.maps && window.google.maps.places) {
+    const loadGoogleMaps = async () => {
+      try {
+        await loadGoogleMapsAPI()
         setIsGoogleMapsLoaded(true)
-        return
+      } catch (error) {
+        console.error('Failed to load Google Maps API:', error)
       }
-
-      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-      
-      if (!apiKey) {
-        console.error('Google Maps API key is missing')
-        return
-      }
-      
-      const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`
-      script.async = true
-      script.defer = true
-      script.onload = () => setIsGoogleMapsLoaded(true)
-      script.onerror = () => console.error('Failed to load Google Maps API')
-      document.head.appendChild(script)
     }
 
     loadGoogleMaps()

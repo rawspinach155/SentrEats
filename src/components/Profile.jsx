@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { User, Settings, LogOut, Edit3, MapPin, Star, Trash2, Plus } from 'lucide-react'
 import { buildApiUrl, API_ENDPOINTS } from '../config/api'
 
-const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, currentUser, onLogout, onProfileUpdate }) => {
+const Profile = ({ reviews = [], onDelete = () => {}, onAddNew = () => {}, currentUser, onLogout, onProfileUpdate }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState({
     name: '',
@@ -228,58 +228,69 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
       {/* Stats */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="text-center p-3 bg-[#f6f6f8] rounded-lg">
-          <div className="text-2xl font-bold text-[#382c5c]">{eateries.length}</div>
-          <div className="text-sm text-gray-600">Places</div>
+          <div className="text-2xl font-bold text-[#382c5c]">{reviews.length}</div>
+          <div className="text-sm text-gray-600">Reviews</div>
         </div>
         <div className="text-center p-3 bg-[#f6f6f8] rounded-lg">
           <div className="text-2xl font-bold text-[#382c5c]">
-            {eateries.length > 0 ? (eateries.reduce((sum, place) => sum + (place.rating || 0), 0) / eateries.length).toFixed(1) : 0}
+            {reviews.length > 0 ? (reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length).toFixed(1) : 0}
           </div>
           <div className="text-sm text-gray-600">Avg Rating</div>
         </div>
       </div>
 
-      {/* My Restaurants Section */}
+      {/* My Reviews Section */}
       <div className="mb-6">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-[#181225]">My Eateries</h3>
+          <h3 className="text-lg font-semibold text-[#181225]">My Reviews</h3>
         </div>
         
-        {eateries.length === 0 ? (
+        {reviews.length === 0 ? (
           <div className="text-center py-8 bg-[#f6f6f8] rounded-lg">
             <div className="text-4xl mb-2">🍽️</div>
-            <p className="text-gray-600 mb-2">No eateries added yet</p>
-            <p className="text-sm text-gray-500">Start building your eatery collection!</p>
+            <p className="text-gray-600 mb-2">No reviews yet</p>
+            <p className="text-sm text-gray-500">Start reviewing eateries to see them here!</p>
           </div>
         ) : (
           <div className="space-y-3 max-h-96 overflow-y-auto">
-            {eateries.map((place) => (
-              <div key={place.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow">
+            {reviews.map((review) => (
+              <div key={review.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-[#181225] mb-1">{place.name}</h4>
+                    <h4 className="font-semibold text-[#181225] mb-1">{review.name}</h4>
                     <div className="flex items-center text-sm text-gray-600 mb-2">
                       <MapPin className="w-3 h-3 mr-1" />
-                      <span className="truncate">{place.address}</span>
+                      <span className="truncate">{review.address}</span>
                     </div>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center space-x-2">
                         <span className="text-xs bg-[#382c5c] text-white px-2 py-1 rounded">
-                          {place.type}
+                          {review.type}
                         </span>
                         <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-                          {place.cuisine}
+                          {review.cuisine}
+                        </span>
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+                          {review.price}
                         </span>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <span className="text-sm text-gray-600">{getRatingEmoji(place.type, place.rating)}</span>
+                        <span className="text-sm text-gray-600">{getRatingEmoji(review.type, review.rating)}</span>
+                        <span className="text-sm text-gray-500">({review.rating}/5)</span>
                       </div>
                     </div>
                     
+                    {/* Review Comment */}
+                    {review.comment && (
+                      <div className="text-sm text-gray-700 mb-2 italic">
+                        "{review.comment}"
+                      </div>
+                    )}
+                    
                     {/* Dietary Options */}
-                    {place.dietaryOptions && Object.values(place.dietaryOptions).some(Boolean) && (
+                    {review.dietaryOptions && Object.values(review.dietaryOptions).some(Boolean) && (
                       <div className="flex flex-wrap gap-1">
-                        {Object.entries(place.dietaryOptions).map(([option, isActive]) => {
+                        {Object.entries(review.dietaryOptions).map(([option, isActive]) => {
                           if (!isActive) return null
                           
                           const dietaryColors = {
@@ -302,12 +313,16 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
                       </div>
                     )}
                     
+                    {/* Review Date */}
+                    <div className="text-xs text-gray-500 mt-2">
+                      Reviewed on {new Date(review.createdAt).toLocaleDateString()}
+                    </div>
 
                   </div>
                   <button
-                    onClick={() => onDelete(place.id)}
+                    onClick={() => onDelete(review.id)}
                     className="ml-2 text-red-500 hover:text-red-700 transition-colors p-1"
-                    title="Delete eatery"
+                    title="Delete review"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -365,3 +380,4 @@ const Profile = ({ eateries = [], onDelete = () => {}, onAddNew = () => {}, curr
 }
 
 export default Profile
+

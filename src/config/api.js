@@ -6,7 +6,8 @@ export const API_ENDPOINTS = {
   HEALTH: '/api/health',
   EATERIES: '/api/eateries',
   USERS: '/api/users',
-  AUTH: '/api/auth'
+  AUTH: '/api/auth',
+  REVIEWS: '/api/reviews'
 }
 
 // Helper function to build full API URLs

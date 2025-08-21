@@ -14,7 +14,8 @@ const Map = ({ eateries = [] }) => {
   useEffect(() => {
     // Load Google Maps API
     const loadGoogleMaps = () => {
-      if (window.google && window.google.maps) {
+      // Check if Google Maps API is already loaded and ready
+      if (window.google && window.google.maps && window.google.maps.Map) {
         initMap()
         return
       }
@@ -23,7 +24,10 @@ const Map = ({ eateries = [] }) => {
       const existingScript = document.querySelector('script[src*="maps.googleapis.com"]')
       if (existingScript) {
         // Script is already loading, wait for it
-        existingScript.addEventListener('load', initMap)
+        existingScript.addEventListener('load', () => {
+          // Add a small delay to ensure the API is fully initialized
+          setTimeout(initMap, 100)
+        })
         return
       }
 
@@ -32,16 +36,19 @@ const Map = ({ eateries = [] }) => {
       console.log('Google Maps API Key:', apiKey ? 'Present' : 'Missing')
       
       if (!apiKey) {
-        setError('Google Maps API key is missing. Please check your environment configuration.')
+        setError('Google Maps API key is missing. Please create a .env file with VITE_GOOGLE_MAPS_API_KEY=your_api_key')
         setIsLoading(false)
         return
       }
       
       const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&loading=async`
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`
       script.async = true
       script.defer = true
-      script.onload = initMap
+      script.onload = () => {
+        // Add a small delay to ensure the API is fully initialized
+        setTimeout(initMap, 100)
+      }
       script.onerror = () => {
         setError('Failed to load Google Maps API. Please check your internet connection and API key.')
         setIsLoading(false)
@@ -51,36 +58,49 @@ const Map = ({ eateries = [] }) => {
 
     const initMap = () => {
       try {
-        if (mapRef.current && window.google) {
-          const defaultLocation = { lat: 37.7912, lng: -122.3971 } // SF as default
-          
-          mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
-            center: defaultLocation,
-            zoom: 13,
-            mapTypeControl: false,
-            styles: [
-              {
-                featureType: 'poi.business',
-                elementType: 'labels',
-                stylers: [{ visibility: 'off' }]
-              }
-            ]
-          })
-
-          // Create info window
-          infowindowRef.current = new window.google.maps.InfoWindow()
-
-          // Create marker
-          markerRef.current = new window.google.maps.Marker({
-            map: mapInstanceRef.current,
-            anchorPoint: new window.google.maps.Point(0, -29),
-          })
-
+        // Double-check that Google Maps API is fully loaded
+        if (!window.google || !window.google.maps || !window.google.maps.Map) {
+          console.error('Google Maps API not fully loaded')
+          setError('Google Maps API failed to load properly. Please refresh the page.')
           setIsLoading(false)
-          
-          // Create eatery markers after map is initialized
-          createEateryMarkers()
+          return
         }
+
+        if (!mapRef.current) {
+          console.error('Map container ref not available')
+          setError('Map container not found')
+          setIsLoading(false)
+          return
+        }
+
+        const defaultLocation = { lat: 37.7912, lng: -122.3971 } // SF as default
+        
+        mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
+          center: defaultLocation,
+          zoom: 13,
+          mapTypeControl: false,
+          styles: [
+            {
+              featureType: 'poi.business',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            }
+          ]
+        })
+
+        // Create info window
+        infowindowRef.current = new window.google.maps.InfoWindow()
+
+        // Create marker
+        markerRef.current = new window.google.maps.Marker({
+          map: mapInstanceRef.current,
+          anchorPoint: new window.google.maps.Point(0, -29),
+        })
+
+        setIsLoading(false)
+        
+        // Create eatery markers after map is initialized
+        createEateryMarkers()
       } catch (err) {
         console.error('Map initialization error:', err)
         setError(`Failed to initialize map: ${err.message}`)

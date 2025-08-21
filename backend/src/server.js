@@ -6,6 +6,7 @@ require('dotenv').config();
 const { initDatabase } = require('./config/database');
 const userRoutes = require('./routes/users');
 const eateryRoutes = require('./routes/eateries');
+const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 const PORT = process.env.PORT || 9000;
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/eateries', eateryRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

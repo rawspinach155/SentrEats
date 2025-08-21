@@ -17,13 +17,15 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilters, setActiveFilters] = useState({})
   const [filteredEateries, setFilteredEateries] = useState([])
+  const [userReviews, setUserReviews] = useState([])
   
   // Fetch eateries when component mounts - this hook is always called
   useEffect(() => {
     if (isAuthenticated) {
       fetchEateries()
+      fetchUserReviews()
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, currentUser?.id])
 
   // Apply search and filters whenever they change
   useEffect(() => {
@@ -40,6 +42,21 @@ function App() {
       }
     } catch (error) {
       console.error('Error fetching eateries:', error)
+    }
+  }
+
+  const fetchUserReviews = async () => {
+    if (!currentUser?.id) return
+    
+    try {
+      const response = await fetch(buildApiUrl(`${API_ENDPOINTS.REVIEWS}/user/${currentUser.id}`))
+      const data = await response.json()
+      if (response.ok) {
+        setUserReviews(data.reviews || [])
+        console.log('User reviews fetched:', data.reviews)
+      }
+    } catch (error) {
+      console.error('Error fetching user reviews:', error)
     }
   }
 
@@ -154,6 +171,7 @@ function App() {
       if (response.ok) {
         // Refresh the entire eateries list to get updated data
         fetchEateries()
+        fetchUserReviews()
         setShowForm(false)
         console.log('Eatery added successfully')
       } else {
@@ -180,6 +198,7 @@ function App() {
 
       if (response.ok) {
         setEateries(eateries.filter(place => place.id !== id))
+        fetchUserReviews()
         console.log('Eatery deleted successfully')
       } else {
         alert('Failed to delete eatery')
@@ -187,6 +206,31 @@ function App() {
     } catch (error) {
       console.error('Error deleting eatery:', error)
       alert('Error deleting eatery. Please try again.')
+    }
+  }
+
+  const deleteReview = async (id) => {
+    const review = userReviews.find(review => review.id === id)
+    
+    if (!review || review.userId !== currentUser?.id) {
+      alert('You can only delete your own reviews')
+      return
+    }
+    
+    try {
+      const response = await fetch(buildApiUrl(`${API_ENDPOINTS.REVIEWS}/${id}`), {
+        method: 'DELETE'
+      })
+
+      if (response.ok) {
+        setUserReviews(userReviews.filter(review => review.id !== id))
+        console.log('Review deleted successfully')
+      } else {
+        alert('Failed to delete review')
+      }
+    } catch (error) {
+      console.error('Error deleting review:', error)
+      alert('Error deleting review. Please try again.')
     }
   }
 
@@ -198,8 +242,8 @@ function App() {
     if (activeTab === 'profile') {
       return (
         <Profile 
-          eateries={eateries.filter(eatery => eatery.userId === currentUser?.id)}
-          onDelete={deleteEatery}
+          reviews={userReviews}
+          onDelete={deleteReview}
           onAddNew={() => setShowForm(true)}
           currentUser={currentUser}
           onLogout={handleLogoutClick}

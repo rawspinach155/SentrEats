@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from './hooks/useAuth'
-import AuthLanding from './components/AuthLanding'
+import SlackLogin from './components/SlackLogin'
+import AuthCallback from './components/AuthCallback'
 import Header from './components/Header'
 import Map from './components/Map'
 import FoodPlaceForm from './components/FoodPlaceForm'
@@ -123,15 +124,15 @@ function App() {
   
   console.log('App.jsx: Test - isAuthenticated:', isAuthenticated, 'currentUser:', currentUser)
   
-  // If user is not authenticated, show the auth landing page
+  // Check if we're on the auth callback route
+  if (window.location.pathname === '/auth/callback' || window.location.search.includes('token=')) {
+    return <AuthCallback />;
+  }
+
+  // If user is not authenticated, show the Slack login page
   if (!isAuthenticated) {
-    console.log('App.jsx: User not authenticated, showing AuthLanding')
-    return (
-      <AuthLanding
-        onSignupSuccess={(user) => signup({ email: user.email, name: user.name })}
-        onLoginSuccess={(user) => login(user)}
-      />
-    )
+    console.log('App.jsx: User not authenticated, showing SlackLogin')
+    return <SlackLogin />
   }
   
   console.log('App.jsx: User authenticated, showing app')

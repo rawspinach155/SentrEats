@@ -7,6 +7,7 @@ const { initDatabase } = require('./config/database');
 const userRoutes = require('./routes/users');
 const eateryRoutes = require('./routes/eateries');
 const reviewRoutes = require('./routes/reviews');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 const PORT = process.env.PORT || 9000;
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoutes);
 app.use('/api/eateries', eateryRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/auth', authRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

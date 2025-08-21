@@ -152,7 +152,8 @@ function App() {
       console.log('Backend response:', data)
 
       if (response.ok) {
-        setEateries(prev => [...prev, data.eatery])
+        // Refresh the entire eateries list to get updated data
+        fetchEateries()
         setShowForm(false)
         console.log('Eatery added successfully')
       } else {

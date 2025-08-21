@@ -10,7 +10,9 @@
     "type": "Restaurant",
     "cuisine": "American",
     "price": "$$$",
-    "reviewIds": [2],
+    "reviewIds": [
+      2
+    ],
     "createdAt": "2024-01-16T12:00:00Z",
     "updatedAt": "2024-01-16T12:00:00Z"
   },
@@ -25,7 +27,9 @@
     "type": "Sushi Bar",
     "cuisine": "Japanese",
     "price": "$$",
-    "reviewIds": [3],
+    "reviewIds": [
+      3
+    ],
     "createdAt": "2024-01-17T18:00:00Z",
     "updatedAt": "2024-01-17T18:00:00Z"
   },
@@ -37,7 +41,9 @@
     "type": "Ice Cream Shop",
     "cuisine": "Mexican",
     "price": "$$$$",
-    "reviewIds": [4],
+    "reviewIds": [
+      4
+    ],
     "createdAt": "2025-08-19T23:44:54.972Z",
     "updatedAt": "2025-08-19T23:44:54.972Z"
   },
@@ -49,7 +55,9 @@
     "type": "Bar",
     "cuisine": "American",
     "price": "$$",
-    "reviewIds": [5],
+    "reviewIds": [
+      5
+    ],
     "createdAt": "2025-08-20T15:58:10.439Z",
     "updatedAt": "2025-08-20T15:58:10.439Z"
   },
@@ -61,7 +69,9 @@
     "type": "Ice Cream Shop",
     "cuisine": "Mexican",
     "price": "$$$",
-    "reviewIds": [6],
+    "reviewIds": [
+      6
+    ],
     "createdAt": "2025-08-20T21:29:29.454Z",
     "updatedAt": "2025-08-20T21:29:29.454Z"
   },
@@ -76,7 +86,10 @@
     "type": "Restaurant",
     "cuisine": "Italian",
     "price": "$$",
-    "reviewIds": [7, 8],
+    "reviewIds": [
+      7,
+      8
+    ],
     "createdAt": "2025-08-20T21:52:07.003Z",
     "updatedAt": "2025-08-20T22:14:59.243Z"
   },
@@ -91,7 +104,9 @@
     "type": "Restaurant",
     "cuisine": "Mexican",
     "price": "$$$",
-    "reviewIds": [9],
+    "reviewIds": [
+      9
+    ],
     "createdAt": "2025-08-20T22:16:53.070Z",
     "updatedAt": "2025-08-20T22:16:53.070Z"
   },
@@ -106,7 +121,9 @@
     "type": "Restaurant",
     "cuisine": "American",
     "price": "$$$",
-    "reviewIds": [10],
+    "reviewIds": [
+      10
+    ],
     "createdAt": "2025-08-20T22:31:12.851Z",
     "updatedAt": "2025-08-20T22:31:12.851Z"
   },
@@ -121,8 +138,31 @@
     "type": "Restaurant",
     "cuisine": "American",
     "price": "$$",
-    "reviewIds": [11, 12],
+    "reviewIds": [
+      11,
+      12
+    ],
     "createdAt": "2025-08-20T22:50:44.664Z",
     "updatedAt": "2025-08-20T22:50:59.411Z"
+  },
+  {
+    "id": 10,
+    "name": "Test",
+    "address": "3284 Adeline St, Berkeley, CA 94703, USA",
+    "coordinates": {
+      "lat": 37.84892019999999,
+      "lng": -122.2717026
+    },
+    "type": "Cafe",
+    "cuisine": "Spanish",
+    "price": "$$",
+    "reviewIds": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "createdAt": "2025-08-21T02:09:38.887Z",
+    "updatedAt": "2025-08-21T02:24:37.990Z"
   }
 ]

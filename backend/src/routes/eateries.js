@@ -199,6 +199,24 @@ router.post('/', [
       });
     }
     
+    // Create new review first
+    const newReview = {
+      id: reviews.length > 0 ? Math.max(...reviews.map(r => r.id)) + 1 : 1,
+      name,
+      address,
+      type,
+      dietaryOptions,
+      price,
+      cuisine,
+      rating,
+      comment,
+      images,
+      coordinates: coordinates || null,
+      createdAt: new Date().toISOString(),
+      createdBy: user.name,
+      userId: parseInt(userId)
+    };
+    
     // Check if eatery with this address already exists
     const existingEatery = eateries.find(eatery => 
       eatery.address.toLowerCase().trim() === address.toLowerCase().trim()
@@ -231,6 +249,7 @@ router.post('/', [
       
       eateryToReturn = existingEatery;
       eateryId = existingEatery.id;
+      newReview.eateryId = eateryId; // Add eatery ID to review
       console.log('Updated existing eatery:', existingEatery.name, 'with review ID:', newReview.id);
     } else {
       // Create new eatery
@@ -250,27 +269,9 @@ router.post('/', [
       eateries.push(newEatery);
       eateryToReturn = newEatery;
       eateryId = newEatery.id;
+      newReview.eateryId = eateryId; // Add eatery ID to review
       console.log('Created new eatery:', newEatery.name, 'with review ID:', newReview.id);
     }
-    
-    // Create new review with eatery ID
-    const newReview = {
-      id: reviews.length > 0 ? Math.max(...reviews.map(r => r.id)) + 1 : 1,
-      eateryId: eateryId, // Add the eatery ID to the review
-      name,
-      address,
-      type,
-      dietaryOptions,
-      price,
-      cuisine,
-      rating,
-      comment,
-      images,
-      coordinates: coordinates || null,
-      createdAt: new Date().toISOString(),
-      createdBy: user.name,
-      userId: parseInt(userId)
-    };
     
     // Add new review to array
     reviews.push(newReview);
@@ -285,10 +286,16 @@ router.post('/', [
       fs.writeFileSync(eateriesPath, JSON.stringify(eateries, null, 2), 'utf8');
       console.log('Reviews and eateries files updated successfully');
       
+      // Attach the new review to the eatery before returning
+      const eateryWithReviews = {
+        ...eateryToReturn,
+        reviews: [newReview]
+      };
+      
       res.status(201).json({
         success: true,
         message: 'Review created successfully',
-        eatery: eateryToReturn
+        eatery: eateryWithReviews
       });
     } catch (writeError) {
       console.error('Error writing to reviews or eateries file:', writeError);

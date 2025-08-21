@@ -103,7 +103,6 @@ const FoodPlaceForm = ({ onSubmit, isOpen, onClose, onOpen, currentUser }) => {
       images: [],
       comment: ''
     })
-    setImagePreview([])
     setSelectedLocation(null)
   }
 

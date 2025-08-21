@@ -19,6 +19,14 @@ const Map = ({ eateries = [] }) => {
         return
       }
 
+      // Check if script is already being loaded
+      const existingScript = document.querySelector('script[src*="maps.googleapis.com"]')
+      if (existingScript) {
+        // Script is already loading, wait for it
+        existingScript.addEventListener('load', initMap)
+        return
+      }
+
       const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
       
       console.log('Google Maps API Key:', apiKey ? 'Present' : 'Missing')
@@ -30,7 +38,7 @@ const Map = ({ eateries = [] }) => {
       }
       
       const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&loading=async`
       script.async = true
       script.defer = true
       script.onload = initMap

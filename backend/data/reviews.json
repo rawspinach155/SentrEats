@@ -256,5 +256,109 @@
     "createdAt": "2025-08-20T22:50:59.411Z",
     "createdBy": "test",
     "userId": 1
+  },
+  {
+    "id": 13,
+    "name": "Test",
+    "address": "3284 Adeline St, Berkeley, CA 94703, USA",
+    "type": "Cafe",
+    "dietaryOptions": {
+      "glutenFree": false,
+      "vegan": false,
+      "vegetarian": true,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Spanish",
+    "rating": 3,
+    "comment": "test",
+    "images": [],
+    "coordinates": {
+      "lat": 37.84892019999999,
+      "lng": -122.2717026
+    },
+    "createdAt": "2025-08-21T02:09:38.887Z",
+    "createdBy": "test",
+    "userId": 1,
+    "eateryId": 10
+  },
+  {
+    "id": 14,
+    "name": "test 2",
+    "address": "3284 Adeline St, Berkeley, CA 94703, USA",
+    "type": "Cafe",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "Greek",
+    "rating": 3,
+    "comment": "I wanna try to write a really long review and see if it is still viewable. One thing I think we could still try to implement is slack auth. I feel like slack auth should be doable, and it would make it so much easier to interact with website. Having it standalone really raises the barrier to entry. I have a little more confidence in cursor now that we&#x27;ve made it this far. I realized looking at console logs is very helpful for debugging this application.",
+    "images": [],
+    "coordinates": {
+      "lat": 37.84892019999999,
+      "lng": -122.2717026
+    },
+    "createdAt": "2025-08-21T02:17:46.125Z",
+    "createdBy": "test",
+    "userId": 1,
+    "eateryId": 10
+  },
+  {
+    "id": 15,
+    "name": "test",
+    "address": "3284 Adeline St, Berkeley, CA 94703, USA",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 5,
+    "comment": "f",
+    "images": [],
+    "coordinates": {
+      "lat": 37.84892019999999,
+      "lng": -122.2717026
+    },
+    "createdAt": "2025-08-21T02:21:08.690Z",
+    "createdBy": "test",
+    "userId": 1,
+    "eateryId": 10
+  },
+  {
+    "id": 16,
+    "name": "test",
+    "address": "3284 Adeline St, Berkeley, CA 94703, USA",
+    "type": "Restaurant",
+    "dietaryOptions": {
+      "glutenFree": true,
+      "vegan": false,
+      "vegetarian": false,
+      "dairyFree": false,
+      "nutFree": false
+    },
+    "price": "$$",
+    "cuisine": "American",
+    "rating": 3,
+    "comment": "f in the chat",
+    "images": [],
+    "coordinates": {
+      "lat": 37.84892019999999,
+      "lng": -122.2717026
+    },
+    "createdAt": "2025-08-21T02:24:37.990Z",
+    "createdBy": "test",
+    "userId": 1,
+    "eateryId": 10
   }
 ]

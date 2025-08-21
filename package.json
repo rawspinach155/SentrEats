@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx,ts,tsx",
-    "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix"
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
+    "kill": "pkill -f \"vite\" && pkill -f \"node.*server.js\" && pkill -f \"nodemon\""
   },
   "dependencies": {
     "react": "^18.2.0",

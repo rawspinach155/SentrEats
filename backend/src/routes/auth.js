@@ -134,24 +134,52 @@ router.get('/slack/callback', async (req, res) => {
       return res.redirect('http://localhost:3000/auth/error?message=Failed to get access token');
     }
 
-    const { access_token, user: slackUserData } = tokenResponse.data;
+    // Check if we have user data in the response
+    if (!tokenResponse.data.authed_user) {
+      console.error('No user data in Slack response:', tokenResponse.data);
+      return res.redirect('http://localhost:3000/auth/error?message=No user data received from Slack');
+    }
+
+    const slackUser = tokenResponse.data.authed_user;
     
-    // For OAuth v2 identity scopes, the user data is already in the token response
-    const slackUser = slackUserData;
+    // Get additional user info using the access token
+    let userInfo = { id: slackUser.id };
+    
+    if (slackUser.access_token) {
+      try {
+        const userInfoResponse = await axios.get('https://slack.com/api/users.info', {
+          headers: {
+            'Authorization': `Bearer ${slackUser.access_token}`
+          },
+          params: {
+            user: slackUser.id
+          }
+        });
+        
+        if (userInfoResponse.data.ok) {
+          userInfo = userInfoResponse.data.user;
+          console.log('Additional user info:', userInfo);
+        }
+      } catch (error) {
+        console.log('Could not fetch additional user info:', error.message);
+      }
+    }
     
     // Create or update user in our system
     const userData = {
       slackId: slackUser.id,
-      name: slackUser.name,
-      email: slackUser.email,
-      avatar: slackUser.image_192,
-      avatarColor: generateAvatarColor(slackUser.name)
+      name: userInfo.real_name || userInfo.name || 'Unknown User',
+      email: userInfo.profile?.email || '',
+      avatar: userInfo.profile?.image_192 || '',
+      avatarColor: generateAvatarColor(userInfo.real_name || userInfo.name || 'User')
     };
 
     const user = createOrUpdateUser(userData);
+    console.log('Created/updated user:', user);
     
     // Generate JWT token
     const token = generateJWT(user);
+    console.log('Generated token for user ID:', user.id);
     
     // Redirect to frontend with token
     res.redirect(`http://localhost:3000/auth/callback?token=${token}&user=${encodeURIComponent(JSON.stringify(user))}`);

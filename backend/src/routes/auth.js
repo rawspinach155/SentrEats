@@ -147,35 +147,36 @@ router.get('/slack/callback', async (req, res) => {
     
     if (slackUser.access_token) {
       try {
-        const userInfoResponse = await axios.get('https://slack.com/api/users.info', {
+        const userInfoResponse = await axios.get('https://slack.com/api/openid.connect.userInfo', {
           headers: {
             'Authorization': `Bearer ${slackUser.access_token}`
-          },
-          params: {
-            user: slackUser.id
           }
         });
         
-        if (userInfoResponse.data.ok) {
-          userInfo = userInfoResponse.data.user;
-          console.log('Additional user info:', userInfo);
+        if (userInfoResponse.data) {
+          userInfo = userInfoResponse.data;
+          console.log('OpenID Connect user info:', userInfo);
         }
       } catch (error) {
-        console.log('Could not fetch additional user info:', error.message);
+        console.log('Could not fetch OpenID Connect user info:', error.message);
+        console.log('Error details:', error.response?.data);
       }
     }
     
     // Create or update user in our system
     const userData = {
       slackId: slackUser.id,
-      name: userInfo.real_name || userInfo.name || 'Unknown User',
-      email: userInfo.profile?.email || '',
-      avatar: userInfo.profile?.image_192 || '',
-      avatarColor: generateAvatarColor(userInfo.real_name || userInfo.name || 'User')
+      name: userInfo.name || userInfo.real_name || 'Unknown User',
+      email: userInfo.email || '',
+      avatar: userInfo.picture || userInfo.image_192 || '',
+      avatarColor: generateAvatarColor(userInfo.name || userInfo.real_name || 'User')
     };
 
     const user = createOrUpdateUser(userData);
+    console.log('=== USER CREATION DEBUG ===');
+    console.log('Input userData:', userData);
     console.log('Created/updated user:', user);
+    console.log('==========================');
     
     // Generate JWT token
     const token = generateJWT(user);
